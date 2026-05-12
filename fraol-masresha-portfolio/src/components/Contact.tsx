@@ -30,40 +30,29 @@ const Contact: React.FC = () => {
   ];
 
   return (
-    <section
-      id="contact"
-      className="min-h-screen w-full flex items-center justify-center relative overflow-hidden py-20"
-    >
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] via-[#0a0a0a] to-[#1a1a1a]" />
-      
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full blur-3xl bg-blue-900/20" />
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full blur-3xl bg-purple-900/20" />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 px-5 max-w-6xl mx-auto">
+    <section id="contact" className="min-h-screen w-full flex items-center justify-center py-20" style={{ background: 'linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%)', fontFamily: "'Poppins', sans-serif" }}>
+      <div className="px-5 max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 animate-fade-in text-white">
-            Get In <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Touch</span>
+          <h1 
+            className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 text-white opacity-90 relative inline-block" 
+            style={{ letterSpacing: '-2px', textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}
+          >
+            CONTACT
           </h1>
-          <p className="text-base md:text-lg lg:text-xl max-w-3xl mx-auto text-gray-400">
-            Have a project in mind? Let's work together to create something amazing
+          <p className="text-base md:text-lg lg:text-xl max-w-3xl mx-auto text-gray-400 italic" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            Contact form, office locations, phone numbers, and social media links
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Contact Form */}
-          <div className="p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
-            <h2 className="text-2xl font-bold mb-6 text-white">
+          <div className="p-8 rounded-xl bg-[#1a1a1a] border border-[#333]">
+            <h2 className="text-2xl font-bold mb-6 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
               Send me a message
             </h2>
             
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label className="block text-sm font-medium mb-2 text-gray-300">
+                <label className="block text-sm font-medium mb-2 text-gray-300" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Name
                 </label>
                 <input
@@ -72,13 +61,14 @@ const Contact: React.FC = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 rounded-lg border border-[#333] bg-[#1a1a1a] text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                  className="w-full px-4 py-2 rounded-lg border border-[#333] bg-[#0a0a0a] text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                  style={{ fontFamily: "'Poppins', sans-serif" }}
                   placeholder="Your name"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium mb-2 text-gray-300">
+                <label className="block text-sm font-medium mb-2 text-gray-300" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Email
                 </label>
                 <input
@@ -87,13 +77,14 @@ const Contact: React.FC = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 rounded-lg border border-[#333] bg-[#1a1a1a] text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                  className="w-full px-4 py-2 rounded-lg border border-[#333] bg-[#0a0a0a] text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                  style={{ fontFamily: "'Poppins', sans-serif" }}
                   placeholder="your.email@example.com"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium mb-2 text-gray-300">
+                <label className="block text-sm font-medium mb-2 text-gray-300" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Message
                 </label>
                 <textarea
@@ -102,14 +93,16 @@ const Contact: React.FC = () => {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full px-4 py-2 rounded-lg border border-[#333] bg-[#1a1a1a] text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                  className="w-full px-4 py-2 rounded-lg border border-[#333] bg-[#0a0a0a] text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                  style={{ fontFamily: "'Poppins', sans-serif" }}
                   placeholder="Tell me about your project..."
                 />
               </div>
               
               <button
                 type="submit"
-                className="w-full py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:shadow-lg hover:transform hover:-translate-y-0.5"
+                className="w-full py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2 bg-white text-black hover:bg-gray-200 hover:transform hover:-translate-y-0.5"
+                style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 {formStatus === 'success' ? (
                   <>
@@ -131,10 +124,9 @@ const Contact: React.FC = () => {
             </form>
           </div>
 
-          {/* Contact Info */}
           <div className="space-y-6">
-            <div className="p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10">
-              <h2 className="text-2xl font-bold mb-6 text-white">
+            <div className="p-8 rounded-xl bg-[#1a1a1a] border border-[#333]">
+              <h2 className="text-2xl font-bold mb-6 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Contact Information
               </h2>
               <div className="space-y-4">
@@ -142,16 +134,16 @@ const Contact: React.FC = () => {
                   <a
                     key={index}
                     href={info.link}
-                    className="flex items-center gap-4 p-4 rounded-xl transition-all duration-300 hover:bg-white/10 group"
+                    className="flex items-center gap-4 p-4 rounded-xl transition-all duration-300 hover:bg-[#2a2a2a] group"
                   >
-                    <div className="p-3 rounded-full bg-blue-500/20 text-blue-400">
+                    <div className="p-3 rounded-full bg-[#2a2a2a] text-blue-400">
                       <info.icon size={20} />
                     </div>
                     <div>
-                      <p className="text-sm text-gray-400">
+                      <p className="text-sm text-gray-400" style={{ fontFamily: "'Poppins', sans-serif" }}>
                         {info.label}
                       </p>
-                      <p className="font-medium text-white">
+                      <p className="font-medium text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
                         {info.value}
                       </p>
                     </div>
@@ -160,18 +152,17 @@ const Contact: React.FC = () => {
               </div>
             </div>
 
-            {/* Availability Card */}
-            <div className="p-8 rounded-2xl bg-gradient-to-r from-blue-900/20 to-purple-900/20 backdrop-blur-sm border border-white/10">
-              <h3 className="text-lg font-bold mb-2 text-white">
+            <div className="p-8 rounded-xl bg-[#1a1a1a] border border-[#333]">
+              <h3 className="text-lg font-bold mb-2 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 Available for Freelance
               </h3>
-              <p className="text-sm text-gray-300">
+              <p className="text-sm text-gray-300" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 I'm currently available for freelance work and full-time opportunities. 
                 Feel free to reach out for collaborations!
               </p>
               <div className="mt-4 flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-xs text-gray-400">
+                <span className="text-xs text-gray-400" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   Response within 24 hours
                 </span>
               </div>

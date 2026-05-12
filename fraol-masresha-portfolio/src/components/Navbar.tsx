@@ -16,7 +16,6 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Update active section
       const sections = navItems.map(item => document.getElementById(item.id));
       const scrollPosition = window.scrollY + 200;
 
@@ -28,7 +27,6 @@ const Navbar: React.FC = () => {
         }
       }
 
-      // Update navbar background on scroll
       setIsScrolled(window.scrollY > 50);
     };
 
@@ -45,85 +43,89 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className={`fixed top-5 left-1/2 transform -translate-x-1/2 transition-all duration-300 z-50 ${
-      isScrolled ? 'w-[95%] md:w-[90%] lg:w-[85%]' : 'w-[calc(100%-30px)] max-w-[500px] md:max-w-[800px] lg:max-w-[1000px]'
-    }`}>
-      <div className="backdrop-blur-md rounded-full border border-[#333] shadow-lg shadow-black/30 bg-[#1a1a1a]/90">
-        <div className="flex items-center justify-between px-4 py-2 md:px-6 md:py-3">
-          {/* Logo */}
-          <a
-            href="#home"
-            onClick={(e) => {
-              e.preventDefault();
-              handleNavClick('home');
-            }}
-            className="text-xl md:text-2xl font-extrabold text-white"
-          >
-            PORTFOLIO
-          </a>
+    <>
+      <nav className={`fixed top-5 left-1/2 transform -translate-x-1/2 transition-all duration-300 z-50 ${
+        isScrolled ? 'w-[95%] md:w-[90%] lg:w-[85%]' : 'w-[calc(100%-30px)] max-w-[500px] md:max-w-[800px] lg:max-w-[1000px]'
+      }`}>
+        <div className="backdrop-blur-md rounded-full border border-[#333] shadow-lg shadow-black/30 bg-[#1a1a1a]/90">
+          <div className="flex items-center justify-between px-4 py-2 md:px-6 md:py-3">
+            <a
+              href="#home"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick('home');
+              }}
+              className="text-xl md:text-2xl font-extrabold text-white"
+              style={{ fontFamily: "'Poppins', sans-serif" }}
+            >
+              PORTFOLIO
+            </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6 lg:gap-8">
-            <ul className="flex gap-6 lg:gap-8">
-              {navItems.map((item) => (
-                <li key={item.id}>
-                  <a
-                    href={`#${item.id}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleNavClick(item.id);
-                    }}
-                    className={`text-sm font-medium transition-all duration-300 relative ${
-                      activeSection === item.id
-                        ? 'text-white'
-                        : 'text-gray-400 hover:text-white'
-                    }`}
-                  >
-                    {item.label}
-                    {activeSection === item.id && (
-                      <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-full h-0.5 bg-white rounded-full transition-all duration-300"></span>
-                    )}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <div className="hidden md:flex items-center gap-6 lg:gap-8">
+              <ul className="flex gap-6 lg:gap-8">
+                {navItems.map((item) => (
+                  <li key={item.id}>
+                    <a
+                      href={`#${item.id}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleNavClick(item.id);
+                      }}
+                      className={`text-sm font-medium transition-all duration-300 relative ${
+                        activeSection === item.id
+                          ? 'text-white'
+                          : 'text-gray-400 hover:text-white'
+                      }`}
+                      style={{ fontFamily: "'Poppins', sans-serif" }}
+                    >
+                      {item.label}
+                      {activeSection === item.id && (
+                        <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-full h-0.5 bg-white rounded-full transition-all duration-300"></span>
+                      )}
+                    </a>
+                  </li>
+                ))}
+              </ul>
 
-            {/* Desktop Auth Buttons */}
-            <div className="flex gap-3">
-              <a
-                href="#"
-                className="px-5 py-2 rounded-full text-sm font-medium border border-[#333] text-gray-300 hover:border-gray-500 hover:text-white transition-all duration-300"
+              <div className="flex gap-3">
+                <a
+                  href="#"
+                  className="px-5 py-2 rounded-full text-sm font-medium border border-[#333] text-gray-300 hover:border-gray-500 hover:text-white transition-all duration-300"
+                  style={{ fontFamily: "'Poppins', sans-serif" }}
+                >
+                  Login
+                </a>
+                <a
+                  href="#"
+                  className="px-5 py-2 rounded-full text-sm font-medium bg-white text-black hover:bg-gray-200 transition-all duration-300 hover:transform hover:-translate-y-0.5"
+                  style={{ fontFamily: "'Poppins', sans-serif" }}
+                >
+                  Sign Up
+                </a>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 md:hidden">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-2xl text-white focus:outline-none"
+                aria-label="Toggle menu"
               >
-                Login
-              </a>
-              <a
-                href="#"
-                className="px-5 py-2 rounded-full text-sm font-medium bg-white text-gray-900 hover:bg-gray-200 transition-all duration-300 hover:transform hover:-translate-y-0.5"
-              >
-                Sign Up
-              </a>
+                {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+              </button>
             </div>
           </div>
-
-          {/* Mobile Controls */}
-          <div className="flex items-center gap-2 md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-2xl text-white focus:outline-none"
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-            </button>
-          </div>
         </div>
+      </nav>
 
-        {/* Mobile Menu */}
-        <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ${
-            isMenuOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'
-          }`}
-        >
-          <div className="px-4 pb-4 space-y-3 bg-[#1a1a1a]/95 backdrop-blur-md rounded-2xl mt-1">
+      {/* Mobile Menu Dropdown - Separate from navbar to avoid circular issues */}
+      <div
+        className={`md:hidden fixed top-[72px] left-1/2 transform -translate-x-1/2 transition-all duration-300 z-40 w-[calc(100%-30px)] max-w-[500px] ${
+          isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        }`}
+      >
+        <div className="bg-[#1a1a1a]/95 backdrop-blur-md rounded-2xl border border-[#333] shadow-xl overflow-hidden">
+          <div className="p-5 space-y-4">
             <ul className="flex flex-col gap-3">
               {navItems.map((item) => (
                 <li key={item.id}>
@@ -133,27 +135,30 @@ const Navbar: React.FC = () => {
                       e.preventDefault();
                       handleNavClick(item.id);
                     }}
-                    className={`block py-2 text-center transition-all duration-300 ${
+                    className={`block py-3 px-4 text-center transition-all duration-300 rounded-xl ${
                       activeSection === item.id
-                        ? 'text-white font-semibold'
-                        : 'text-gray-400'
+                        ? 'bg-white/10 text-white font-semibold'
+                        : 'text-gray-400 hover:bg-white/5 hover:text-white'
                     }`}
+                    style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
                     {item.label}
                   </a>
                 </li>
               ))}
             </ul>
-            <div className="flex flex-col gap-3 pt-2">
+            <div className="flex flex-col gap-3 pt-3 border-t border-[#333]">
               <a
                 href="#"
-                className="px-5 py-2 rounded-full text-sm font-medium text-center border border-[#333] text-gray-300 transition-all duration-300"
+                className="px-5 py-3 rounded-xl text-sm font-medium text-center border border-[#333] text-gray-300 hover:border-gray-500 hover:text-white transition-all duration-300"
+                style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 Login
               </a>
               <a
                 href="#"
-                className="px-5 py-2 rounded-full text-sm font-medium text-center bg-white text-gray-900 transition-all duration-300"
+                className="px-5 py-3 rounded-xl text-sm font-medium text-center bg-white text-black hover:bg-gray-200 transition-all duration-300"
+                style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 Sign Up
               </a>
@@ -161,7 +166,7 @@ const Navbar: React.FC = () => {
           </div>
         </div>
       </div>
-    </nav>
+    </>
   );
 };
 

@@ -51,61 +51,49 @@ const Services: React.FC = () => {
   ];
 
   return (
-    <section
-      id="services"
-      className="min-h-screen w-full flex items-center justify-center relative overflow-hidden py-20"
-    >
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a] via-[#2a2a2a] to-[#0a0a0a]" />
-      
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-40 right-20 w-96 h-96 rounded-full blur-3xl bg-green-900/20" />
-        <div className="absolute bottom-40 left-20 w-96 h-96 rounded-full blur-3xl bg-yellow-900/20" />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 px-5 max-w-7xl mx-auto">
+    <section id="services" className="min-h-screen w-full flex items-center justify-center py-20" style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #2a2a2a 100%)', fontFamily: "'Poppins', sans-serif" }}>
+      <div className="px-5 max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 animate-fade-in text-white">
-            My <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Services</span>
+          <h1 
+            className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 text-white opacity-90 relative inline-block" 
+            style={{ letterSpacing: '-2px', textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}
+          >
+            SERVICES
           </h1>
-          <p className="text-base md:text-lg lg:text-xl max-w-3xl mx-auto text-gray-400">
-            Comprehensive solutions tailored to your business needs
+          <p className="text-base md:text-lg lg:text-xl max-w-3xl mx-auto text-gray-400 italic" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            Service offerings, features, pricing plans, and detailed descriptions
           </p>
         </div>
 
-        {/* Features Banner */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12 max-w-3xl mx-auto">
           {features.map((feature, index) => (
             <div
               key={index}
-              className="flex items-center justify-center gap-2 p-3 rounded-xl bg-white/5 border border-white/10"
+              className="flex items-center justify-center gap-2 p-3 rounded-xl bg-[#1a1a1a] border border-[#333]"
             >
               <feature.icon className={feature.color} size={20} />
-              <span className="text-sm font-medium text-gray-300">
+              <span className="text-sm font-medium text-gray-300" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 {feature.label}
               </span>
             </div>
           ))}
         </div>
 
-        {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {services.map((service, index) => (
             <div
               key={index}
-              className="group p-6 rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-white/20"
+              className="group p-6 rounded-xl transition-all duration-300 hover:scale-105 cursor-pointer bg-[#1a1a1a] border border-[#333] hover:border-[#555]"
             >
               <service.icon className="mb-4 text-blue-400" size={32} />
-              <h3 className="text-xl font-bold mb-2 text-white">
+              <h3 className="text-xl font-bold mb-2 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 {service.name}
               </h3>
-              <p className="text-sm mb-4 leading-relaxed text-gray-400">
+              <p className="text-sm mb-4 leading-relaxed text-gray-400" style={{ fontFamily: "'Poppins', sans-serif" }}>
                 {service.description}
               </p>
-              <div className="pt-3 border-t border-white/10">
-                <p className="text-sm font-semibold text-green-400">
+              <div className="pt-3 border-t border-[#333]">
+                <p className="text-sm font-semibold text-green-400" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   {service.price}
                 </p>
               </div>
@@ -113,9 +101,8 @@ const Services: React.FC = () => {
           ))}
         </div>
 
-        {/* Pricing Note */}
-        <div className="text-center p-6 rounded-2xl bg-gradient-to-r from-blue-900/20 to-purple-900/20 backdrop-blur-sm border border-white/10">
-          <p className="text-sm text-gray-300">
+        <div className="text-center p-6 rounded-xl bg-[#1a1a1a] border border-[#333]">
+          <p className="text-sm text-gray-300" style={{ fontFamily: "'Poppins', sans-serif" }}>
             💼 Custom packages available for long-term partnerships. Contact me for detailed quotes and tailored solutions.
           </p>
         </div>

@@ -46,31 +46,20 @@ const Portfolio: React.FC = () => {
     : projects.filter(p => p.category === filter);
 
   return (
-    <section
-      id="portfolio"
-      className="min-h-screen w-full flex items-center justify-center relative overflow-hidden py-20"
-    >
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#2a2a2a] via-[#1a1a1a] to-[#0a0a0a]" />
-      
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-40 w-80 h-80 rounded-full blur-3xl bg-purple-900/20" />
-        <div className="absolute bottom-20 right-40 w-80 h-80 rounded-full blur-3xl bg-pink-900/20" />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 px-5 max-w-7xl mx-auto">
+    <section id="portfolio" className="min-h-screen w-full flex items-center justify-center py-20" style={{ background: 'linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%)', fontFamily: "'Poppins', sans-serif" }}>
+      <div className="px-5 max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 animate-fade-in text-white">
-            My <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Portfolio</span>
+          <h1 
+            className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 text-white opacity-90 relative inline-block" 
+            style={{ letterSpacing: '-2px', textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}
+          >
+            PORTFOLIO
           </h1>
-          <p className="text-base md:text-lg lg:text-xl max-w-3xl mx-auto text-gray-400">
-            A showcase of my best work and successful projects
+          <p className="text-base md:text-lg lg:text-xl max-w-3xl mx-auto text-gray-400 italic" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            Project showcase, case studies, client work, and achievements gallery
           </p>
         </div>
 
-        {/* Filter Buttons */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           {categories.map((cat) => (
             <button
@@ -78,58 +67,57 @@ const Portfolio: React.FC = () => {
               onClick={() => setFilter(cat)}
               className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 capitalize ${
                 filter === cat
-                  ? 'bg-white text-gray-900'
-                  : 'bg-white/10 text-gray-300 hover:bg-white/20'
+                  ? 'bg-white text-black'
+                  : 'bg-[#1a1a1a] text-gray-300 hover:bg-[#2a2a2a]'
               }`}
+              style={{ fontFamily: "'Poppins', sans-serif" }}
             >
               {cat}
             </button>
           ))}
         </div>
 
-        {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {filteredProjects.map((project, index) => (
             <div
               key={index}
-              className="group rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 bg-white/5 backdrop-blur-sm border border-white/10"
+              className="group rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 bg-[#1a1a1a] border border-[#333]"
             >
-              {/* Project Image Placeholder */}
-              <div className="h-48 relative overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
+              <div className="h-48 relative overflow-hidden bg-[#2a2a2a]">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <FiCode className="text-gray-600" size={48} />
                 </div>
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
                   <a
                     href={project.github}
                     className="p-2 bg-white rounded-full hover:scale-110 transition-transform duration-300"
                     aria-label="GitHub"
                   >
-                    <FiGithub className="text-gray-900" size={20} />
+                    <FiGithub className="text-black" size={20} />
                   </a>
                   <a
                     href={project.demo}
                     className="p-2 bg-white rounded-full hover:scale-110 transition-transform duration-300"
                     aria-label="Live Demo"
                   >
-                    <FiExternalLink className="text-gray-900" size={20} />
+                    <FiExternalLink className="text-black" size={20} />
                   </a>
                 </div>
               </div>
               
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2 text-white">
+                <h3 className="text-xl font-bold mb-2 text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   {project.title}
                 </h3>
-                <p className="text-sm mb-4 leading-relaxed text-gray-400">
+                <p className="text-sm mb-4 leading-relaxed text-gray-400" style={{ fontFamily: "'Poppins', sans-serif" }}>
                   {project.description}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {project.tech.map((tech, i) => (
                     <span
                       key={i}
-                      className="text-xs px-2 py-1 rounded-full bg-white/10 text-gray-300"
+                      className="text-xs px-2 py-1 rounded-full bg-[#2a2a2a] text-gray-300"
+                      style={{ fontFamily: "'Poppins', sans-serif" }}
                     >
                       {tech}
                     </span>
