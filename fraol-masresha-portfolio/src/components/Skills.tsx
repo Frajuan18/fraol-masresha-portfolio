@@ -1,5 +1,5 @@
-// Skills.tsx - Clean version with no gradients
-import React, { useState } from 'react';
+// Skills.tsx - Fixed unused variables
+import React from 'react';
 import { 
   FiCode, 
   FiDatabase, 
@@ -23,8 +23,6 @@ import {
 } from 'react-icons/si';
 
 const Skills: React.FC = () => {
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
-
   const skillCategories = [
     {
       id: 'frontend',
@@ -85,16 +83,6 @@ const Skills: React.FC = () => {
     { name: 'Postman', category: 'tools', icon: <SiPostman size={14} /> },
   ];
 
-  const getCategoryColor = (category: string) => {
-    switch(category) {
-      case 'frontend': return 'blue';
-      case 'backend': return 'purple';
-      case 'database': return 'emerald';
-      case 'tools': return 'orange';
-      default: return 'gray';
-    }
-  };
-
   const getCategoryIconBg = (category: string) => {
     switch(category) {
       case 'frontend': return 'bg-blue-500/20 text-blue-400';
@@ -138,10 +126,8 @@ const Skills: React.FC = () => {
             <div
               key={category.id}
               className="group relative overflow-hidden rounded-2xl backdrop-blur-md bg-[#1a1a1a]/90 border border-[#333] transition-all duration-500 hover:scale-[1.02] hover:border-gray-500 hover:shadow-2xl"
-              onMouseEnter={() => setHoveredCard(category.id)}
-              onMouseLeave={() => setHoveredCard(null)}
             >
-              {/* Card Header - Solid color border bottom */}
+              {/* Card Header */}
               <div className="p-5 border-b border-[#333]">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-xl bg-blue-500/20 text-blue-400">
