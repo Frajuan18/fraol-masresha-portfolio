@@ -7,7 +7,6 @@ import {
   FiZap,
   FiHeart,
   FiCpu,
-  FiBriefcase,
   FiChevronDown,
   FiChevronUp
 } from 'react-icons/fi';
