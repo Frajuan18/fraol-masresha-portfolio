@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FiMenu, FiX, FiArrowRight, FiMail, FiInstagram, FiSend, FiCopy, FiCheck, FiBriefcase, FiUser, FiCode, FiTool, FiHome, FiHeart, FiStar } from 'react-icons/fi';
+import { FiMenu, FiX, FiArrowRight, FiMail, FiInstagram, FiSend, FiCopy, FiCheck, FiBriefcase, FiUser, FiCode, FiTool, FiHome, FiHeart } from 'react-icons/fi';
 import { FaTelegramPlane } from 'react-icons/fa';
 
 const Navbar: React.FC = () => {

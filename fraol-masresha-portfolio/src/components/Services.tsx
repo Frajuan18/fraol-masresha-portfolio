@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   FiCode, 
   FiLayout, 
@@ -14,8 +14,6 @@ import {
 } from 'react-icons/fi';
 
 const Services: React.FC = () => {
-  const [hoveredService, setHoveredService] = useState<number | null>(null);
-
   const services = [
     {
       id: 1,
@@ -266,8 +264,6 @@ const Services: React.FC = () => {
               key={service.id}
               className="service-card relative rounded-2xl p-6 cursor-pointer"
               style={{ animationDelay: `${idx * 0.1}s` }}
-              onMouseEnter={() => setHoveredService(service.id)}
-              onMouseLeave={() => setHoveredService(null)}
             >
               {/* Popular Badge - Premium Design */}
               {service.popular && (

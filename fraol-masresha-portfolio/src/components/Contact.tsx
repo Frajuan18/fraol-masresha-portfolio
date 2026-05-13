@@ -20,7 +20,6 @@ const Contact: React.FC = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   const contactInfo = [
     {
@@ -29,7 +28,6 @@ const Contact: React.FC = () => {
       value: 'fraol@example.com',
       icon: <FiMail size={24} />,
       link: 'mailto:fraol@example.com',
-      color: '#A3CF00'
     },
     {
       id: 2,
@@ -37,7 +35,6 @@ const Contact: React.FC = () => {
       value: '+251 912 345 678',
       icon: <FiPhone size={24} />,
       link: 'tel:+251912345678',
-      color: '#A3CF00'
     },
     {
       id: 3,
@@ -45,7 +42,6 @@ const Contact: React.FC = () => {
       value: 'Addis Ababa, Ethiopia',
       icon: <FiMapPin size={24} />,
       link: '#',
-      color: '#A3CF00'
     }
   ];
 
@@ -166,7 +162,8 @@ const Contact: React.FC = () => {
         }
         
         .social-link:hover {
-          color: #A3CF00;
+          background: #A3CF00;
+          color: #1a1a1a;
           transform: translateY(-5px);
         }
       `}</style>
@@ -193,10 +190,8 @@ const Contact: React.FC = () => {
               <a
                 key={info.id}
                 href={info.link}
-                className="contact-card block rounded-2xl p-6 transition-all duration-300 cursor-pointer"
+                className="contact-card block rounded-2xl p-6 transition-all duration-300 cursor-pointer fade-up"
                 style={{ animationDelay: `${idx * 0.1}s` }}
-                onMouseEnter={() => setHoveredCard(info.id)}
-                onMouseLeave={() => setHoveredCard(null)}
               >
                 <div className="flex items-center gap-4">
                   <div className="contact-icon w-14 h-14 rounded-xl bg-[#2a2a2a] flex items-center justify-center text-[#A3CF00] transition-all duration-300">
@@ -211,14 +206,14 @@ const Contact: React.FC = () => {
             ))}
 
             {/* Social Links */}
-            <div className="contact-card rounded-2xl p-6">
+            <div className="contact-card rounded-2xl p-6 fade-up" style={{ animationDelay: '0.3s' }}>
               <h3 className="text-lg font-semibold text-white mb-4">Connect With Me</h3>
               <div className="flex gap-4">
                 {socialLinks.map((social, idx) => (
                   <a
                     key={idx}
                     href={social.link}
-                    className="social-link w-12 h-12 rounded-xl bg-[#2a2a2a] flex items-center justify-center text-gray-400 transition-all duration-300 hover:bg-[#A3CF00] hover:text-[#1a1a1a]"
+                    className="social-link w-12 h-12 rounded-xl bg-[#2a2a2a] flex items-center justify-center text-gray-400 transition-all duration-300"
                     aria-label={social.label}
                   >
                     {social.icon}
@@ -228,7 +223,7 @@ const Contact: React.FC = () => {
             </div>
 
             {/* Availability Status */}
-            <div className="contact-card rounded-2xl p-6">
+            <div className="contact-card rounded-2xl p-6 fade-up" style={{ animationDelay: '0.4s' }}>
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <div className="w-3 h-3 bg-[#A3CF00] rounded-full animate-pulse"></div>
@@ -243,7 +238,7 @@ const Contact: React.FC = () => {
           </div>
 
           {/* Right Side - Contact Form */}
-          <div className="slide-right rounded-2xl p-6 md:p-8" style={{ animationDelay: '0.2s' }}>
+          <div className="slide-right" style={{ animationDelay: '0.2s' }}>
             <div className="bg-[#1a1a1a] rounded-2xl p-6 md:p-8 border-2 border-[#2a2a2a]">
               <h3 className="text-2xl font-bold text-white mb-6">Send Me a Message</h3>
               
@@ -291,37 +286,37 @@ const Contact: React.FC = () => {
                   <span>Send Message</span>
                   <FiSend size={18} className="transition-transform group-hover:translate-x-1" />
                 </button>
-                
-                {/* Success Message */}
-                {isSubmitted && (
-                  <div className="fixed top-20 right-4 z-50 animate-fade-in">
-                    <div className="bg-[#A3CF00] text-[#1a1a1a] px-6 py-3 rounded-xl shadow-lg flex items-center gap-2">
-                      <FiCheckCircle size={20} />
-                      <span className="font-semibold">Message sent successfully!</span>
-                    </div>
-                  </div>
-                )}
-                
-                {/* Error Message */}
-                {isError && (
-                  <div className="fixed top-20 right-4 z-50 animate-fade-in">
-                    <div className="bg-red-500 text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-2">
-                      <FiAlertCircle size={20} />
-                      <span className="font-semibold">Please fill all fields</span>
-                    </div>
-                  </div>
-                )}
               </form>
             </div>
           </div>
         </div>
       </div>
 
+      {/* Success Message Toast */}
+      {isSubmitted && (
+        <div className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 animate-slide-in-right">
+          <div className="bg-[#A3CF00] text-[#1a1a1a] px-4 py-3 md:px-6 md:py-3 rounded-xl shadow-2xl flex items-center gap-2">
+            <FiCheckCircle size={18} />
+            <span className="font-semibold text-sm">Message sent successfully!</span>
+          </div>
+        </div>
+      )}
+      
+      {/* Error Message Toast */}
+      {isError && (
+        <div className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 animate-slide-in-right">
+          <div className="bg-red-500 text-white px-4 py-3 md:px-6 md:py-3 rounded-xl shadow-2xl flex items-center gap-2">
+            <FiAlertCircle size={18} />
+            <span className="font-semibold text-sm">Please fill all fields</span>
+          </div>
+        </div>
+      )}
+
       <style>{`
-        @keyframes fade-in {
+        @keyframes slide-in-right {
           from {
             opacity: 0;
-            transform: translateX(20px);
+            transform: translateX(100px);
           }
           to {
             opacity: 1;
@@ -329,8 +324,49 @@ const Contact: React.FC = () => {
           }
         }
         
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.5;
+          }
+        }
+        
+        @keyframes ping {
+          0% {
+            transform: scale(1);
+            opacity: 0.75;
+          }
+          100% {
+            transform: scale(2);
+            opacity: 0;
+          }
+        }
+        
+        .animate-slide-in-right {
+          animation: slide-in-right 0.3s ease-out forwards;
+        }
+        
         .animate-fade-in {
-          animation: fade-in 0.3s ease-out forwards;
+          animation: fade-in 0.2s ease-out;
+        }
+        
+        .animate-pulse {
+          animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .animate-ping {
+          animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
         }
       `}</style>
     </section>

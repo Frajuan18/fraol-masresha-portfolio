@@ -21,9 +21,7 @@ import {
   FiServer, 
   FiLayout, 
   FiZap, 
-  FiStar,
-  FiTrendingUp,
-  FiAward
+  FiTrendingUp
 } from 'react-icons/fi';
 
 const Skills: React.FC = () => {
