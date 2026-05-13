@@ -1,133 +1,357 @@
-// Services.tsx - Clean version with no gradients
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   FiCode, 
+  FiLayout, 
+  FiServer, 
   FiDatabase, 
-  FiMonitor,
+  FiZap, 
+  FiSmartphone,
+  FiCloud,
+  FiShield,
+  FiTrendingUp,
+  FiUsers,
+  FiBriefcase,
+  FiStar,
+  FiArrowRight
 } from 'react-icons/fi';
-import { 
-  MdOutlineDesignServices, 
-  MdOutlineApi,
-  MdCloudQueue
-} from 'react-icons/md';
 
 const Services: React.FC = () => {
+  const [hoveredService, setHoveredService] = useState<number | null>(null);
+
   const services = [
     {
       id: 1,
-      title: 'Frontend Development',
-      description: 'Building responsive, interactive, and performant user interfaces using modern frameworks like React and TypeScript.',
-      icon: <FiMonitor size={28} />,
-      features: ['Responsive Design', 'SPA Development', 'Performance Optimization']
+      title: 'Web Development',
+      subtitle: 'Full Stack Solutions',
+      icon: <FiCode size={28} />,
+      description: 'Building responsive, scalable web applications with modern technologies.',
+      features: ['React/Next.js', 'Node.js/Express', 'MongoDB/PostgreSQL', 'RESTful APIs'],
+      price: 'From $999',
+      popular: true
     },
     {
       id: 2,
-      title: 'Backend Development',
-      description: 'Creating robust server-side applications, RESTful APIs, and microservices with Node.js and Express.',
-      icon: <FiCode size={28} />,
-      features: ['REST APIs', 'Authentication', 'Microservices']
+      title: 'UI/UX Design',
+      subtitle: 'Beautiful Interfaces',
+      icon: <FiLayout size={28} />,
+      description: 'Creating intuitive, user-friendly designs that delight your audience.',
+      features: ['Wireframing', 'Prototyping', 'Responsive Design', 'User Testing'],
+      price: 'From $799',
+      popular: false
     },
     {
       id: 3,
-      title: 'UI/UX Design',
-      description: 'Designing intuitive, user-centered interfaces with focus on usability, accessibility, and visual appeal.',
-      icon: <MdOutlineDesignServices size={28} />,
-      features: ['Wireframing', 'Prototyping', 'User Research']
+      title: 'Backend Development',
+      subtitle: 'Robust APIs',
+      icon: <FiServer size={28} />,
+      description: 'Secure, scalable server-side solutions and database architecture.',
+      features: ['Node.js/Express', 'Database Design', 'Authentication', 'Cloud Deployment'],
+      price: 'From $899',
+      popular: false
     },
     {
       id: 4,
-      title: 'Database Design',
-      description: 'Designing efficient database schemas, optimizing queries, and managing data storage solutions.',
-      icon: <FiDatabase size={28} />,
-      features: ['Schema Design', 'Query Optimization', 'Data Migration']
+      title: 'Mobile Development',
+      subtitle: 'Cross Platform Apps',
+      icon: <FiSmartphone size={28} />,
+      description: 'Native-like mobile experiences with React Native.',
+      features: ['iOS & Android', 'Push Notifications', 'Offline Support', 'App Store Deploy'],
+      price: 'From $1299',
+      popular: false
     },
     {
       id: 5,
-      title: 'API Development',
-      description: 'Building secure, scalable, and well-documented APIs for seamless integration between services.',
-      icon: <MdOutlineApi size={28} />,
-      features: ['RESTful APIs', 'GraphQL', 'API Documentation']
+      title: 'Cloud Solutions',
+      subtitle: 'Scalable Infrastructure',
+      icon: <FiCloud size={28} />,
+      description: 'Cloud deployment, DevOps, and scalable infrastructure setup.',
+      features: ['AWS/Azure', 'Docker', 'CI/CD Pipeline', 'Monitoring'],
+      price: 'From $1099',
+      popular: false
     },
     {
       id: 6,
-      title: 'Cloud Deployment',
-      description: 'Deploying and managing applications on cloud platforms with CI/CD pipelines and containerization.',
-      icon: <MdCloudQueue size={28} />,
-      features: ['AWS/Azure', 'Docker', 'CI/CD']
-    },
+      title: 'Performance Optimization',
+      subtitle: 'Speed & Efficiency',
+      icon: <FiZap size={28} />,
+      description: 'Make your applications faster, leaner, and more efficient.',
+      features: ['Code Splitting', 'Caching Strategy', 'Database Indexing', 'Load Testing'],
+      price: 'From $699',
+      popular: true
+    }
+  ];
+
+  const stats = [
+    { value: '50+', label: 'Projects Delivered', icon: <FiBriefcase size={20} /> },
+    { value: '30+', label: 'Happy Clients', icon: <FiUsers size={20} /> },
+    { value: '98%', label: 'Satisfaction Rate', icon: <FiStar size={20} /> },
+    { value: '24/7', label: 'Support', icon: <FiTrendingUp size={20} /> }
   ];
 
   return (
-    <section 
-      id="services" 
-      className="min-h-screen w-full flex items-center justify-center py-20 md:py-24"
-      style={{ 
-        fontFamily: "'Poppins', sans-serif",
-        background: '#1a1a1a'
-      }}
-    >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+    <section className="relative w-full min-h-screen bg-[#0a0a0a] py-20 md:py-28">
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&display=swap');
+        
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes spreadFromCorner {
+          0% {
+            width: 0%;
+            height: 0%;
+          }
+          70% {
+            width: 100%;
+            height: 100%;
+          }
+          100% {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        
+        @keyframes splashEffect {
+          0% {
+            transform: scale(0);
+            opacity: 0;
+          }
+          50% {
+            transform: scale(1);
+            opacity: 0.8;
+          }
+          100% {
+            transform: scale(1.5);
+            opacity: 0;
+          }
+        }
+        
+        .service-card {
+          animation: fadeInUp 0.6s ease-out forwards;
+          opacity: 0;
+          position: relative;
+          overflow: hidden;
+          border: 2px solid #A3CF00;
+          background: #1a1a1a;
+          transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        
+        .service-card:hover {
+          transform: translateY(-8px);
+        }
+        
+        /* Corner spread effect - 1 second */
+        .service-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 0%;
+          height: 0%;
+          background: #A3CF00;
+          transition: all 1s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+          z-index: 0;
+        }
+        
+        .service-card:hover::before {
+          width: 100%;
+          height: 100%;
+        }
+        
+        /* Splash effect at bottom right */
+        .service-card::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 0;
+          height: 0;
+          background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 2;
+        }
+        
+        .service-card:hover::after {
+          animation: splashEffect 0.6s ease-out forwards;
+        }
+        
+        /* Content wrapper */
+        .service-card > * {
+          position: relative;
+          z-index: 1;
+          transition: color 0.3s ease 0.1s;
+        }
+        
+        /* Hover text colors */
+        .service-card:hover .service-icon {
+          background: rgba(26, 26, 26, 0.15);
+          color: #1a1a1a;
+        }
+        
+        .service-card:hover .service-title,
+        .service-card:hover .service-subtitle,
+        .service-card:hover .service-price,
+        .service-card:hover .service-description,
+        .service-card:hover .price-label,
+        .service-card:hover .features-label {
+          color: #1a1a1a;
+        }
+        
+        .service-card:hover .service-feature {
+          background: rgba(26, 26, 26, 0.2);
+          color: #1a1a1a;
+        }
+        
+        .service-card:hover .border-line {
+          border-color: rgba(26, 26, 26, 0.2);
+        }
+        
+        .service-card:hover .btn-hover {
+          background: #1a1a1a;
+          color: #A3CF00;
+        }
+        
+        .font-bebas {
+          font-family: 'Bebas Neue', cursive;
+        }
+        
+        .font-poppins {
+          font-family: 'Poppins', sans-serif;
+        }
+        
+        /* Stats cards */
+        .stat-card {
+          transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+          transform: translateY(-4px);
+        }
+        
+        /* CTA section */
+        .cta-section {
+          transition: transform 0.3s ease;
+        }
+        
+        .cta-section:hover {
+          transform: translateY(-4px);
+        }
+      `}</style>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
-          <p className="text-blue-400 text-sm uppercase tracking-wider font-medium mb-2 inline-block px-4 py-1 rounded-full bg-blue-500/10 border border-blue-500/20">
-            What I offer
-          </p>
-          <h2 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-4"
-            style={{ letterSpacing: '-1px' }}
-          >
-            My <span className="text-blue-400">Services</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#A3CF00]/10 border border-[#A3CF00]/20 mb-4">
+            <FiBriefcase className="text-[#A3CF00]" size={16} />
+            <span className="text-[#A3CF00] text-sm font-semibold uppercase tracking-wider">What I Do</span>
+          </div>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bebas text-white mb-3">
+            My <span className="text-[#A3CF00]">Services</span>
           </h2>
-          <div className="w-20 h-1 bg-blue-500 mx-auto mt-4 rounded-full" />
-          <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
-            Comprehensive development solutions tailored to your business needs
-          </p>
+          <p className="text-gray-400 max-w-2xl mx-auto">Comprehensive solutions tailored to your needs</p>
+          <div className="w-16 h-0.5 bg-[#A3CF00] mx-auto mt-5 rounded-full"></div>
         </div>
 
-        {/* Services Grid - 3x2 on desktop */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service) => (
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          {services.map((service, idx) => (
             <div
               key={service.id}
-              className="group relative overflow-hidden rounded-2xl backdrop-blur-md bg-[#1a1a1a]/90 border border-[#333] transition-all duration-500 hover:scale-[1.03] hover:border-gray-500 hover:shadow-2xl cursor-pointer"
+              className="service-card relative rounded-2xl p-6 cursor-pointer"
+              style={{ animationDelay: `${idx * 0.1}s` }}
+              onMouseEnter={() => setHoveredService(service.id)}
+              onMouseLeave={() => setHoveredService(null)}
             >
-              {/* Card Content */}
-              <div className="p-6">
-                {/* Icon - Solid color */}
-                <div className="mb-4 inline-flex p-3 rounded-xl bg-blue-500/20 text-blue-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
-                  {service.icon}
+              {/* Popular Badge - Premium Design */}
+              {service.popular && (
+                <div className="absolute -top-3 right-6 z-20">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-[#A3CF00] blur-md rounded-full opacity-50"></div>
+                    <div className="relative bg-gradient-to-r from-[#A3CF00] to-[#8fb300] text-[#1a1a1a] text-xs font-bold px-4 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
+                      <FiStar size={12} className="fill-current" />
+                      <span>POPULAR CHOICE</span>
+                    </div>
+                  </div>
                 </div>
-                
-                {/* Title */}
-                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">
-                  {service.title}
-                </h3>
-                
-                {/* Description */}
-                <p className="text-gray-400 text-sm leading-relaxed mb-4">
-                  {service.description}
-                </p>
-                
-                {/* Features List */}
+              )}
+              
+              {/* Icon */}
+              <div className="service-icon w-16 h-16 rounded-xl bg-[#A3CF00]/10 flex items-center justify-center mb-5 transition-all duration-300 text-[#A3CF00]">
+                {service.icon}
+              </div>
+              
+              {/* Title */}
+              <h3 className="service-title text-xl font-bold text-white mb-1 transition-colors duration-300">{service.title}</h3>
+              <p className="service-subtitle text-sm text-[#A3CF00] font-semibold mb-3 transition-colors duration-300">{service.subtitle}</p>
+              <p className="service-description text-gray-400 text-sm leading-relaxed mb-4 transition-colors duration-300">{service.description}</p>
+              
+              {/* Features */}
+              <div className="mb-4">
+                <p className="features-label text-xs text-gray-500 uppercase tracking-wider mb-2 transition-colors duration-300">What's included:</p>
                 <div className="flex flex-wrap gap-2">
                   {service.features.map((feature, i) => (
-                    <span
-                      key={i}
-                      className="text-xs px-2 py-1 rounded-full bg-white/5 border border-white/10 text-gray-300 transition-all duration-300 group-hover:bg-white/10"
-                    >
+                    <span key={i} className="service-feature text-xs px-2 py-1 bg-gray-800 rounded-md text-gray-300 transition-all duration-300">
                       {feature}
                     </span>
                   ))}
                 </div>
               </div>
-
-              {/* Shimmer effect on hover */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
               
-              {/* Bottom accent line - Solid color */}
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+              {/* Price & CTA */}
+              <div className="border-line flex items-center justify-between pt-3 border-t border-gray-700 transition-colors duration-300">
+                <div>
+                  <span className="price-label text-xs text-gray-500 transition-colors duration-300">Starting at</span>
+                  <p className="service-price text-2xl font-bold text-white transition-colors duration-300">{service.price}</p>
+                </div>
+                <button className="btn-hover flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 bg-gray-800 text-white">
+                  <span>Learn More</span>
+                  <FiArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                </button>
+              </div>
             </div>
           ))}
+        </div>
+
+        {/* Stats Section */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+          {stats.map((stat, idx) => (
+            <div
+              key={idx}
+              className="stat-card bg-[#1a1a1a] rounded-xl p-5 text-center border-2 border-[#A3CF00] transition-all duration-300 cursor-pointer"
+              style={{ animationDelay: `${idx * 0.1}s` }}
+            >
+              <div className="w-12 h-12 rounded-full bg-[#A3CF00]/10 flex items-center justify-center mx-auto mb-3">
+                <div className="text-[#A3CF00]">{stat.icon}</div>
+              </div>
+              <div className="text-2xl font-bold text-white">{stat.value}</div>
+              <div className="text-xs text-gray-400 mt-1">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA Section */}
+        <div className="cta-section bg-[#1a1a1a] rounded-2xl p-8 border-2 border-[#A3CF00] text-center transition-all duration-300">
+          <div className="max-w-2xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#A3CF00]/10 border border-[#A3CF00]/20 mb-4">
+              <FiStar className="text-[#A3CF00]" size={14} />
+              <span className="text-[#A3CF00] text-xs font-semibold uppercase tracking-wider">Ready to start?</span>
+            </div>
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">Let's bring your ideas to life</h3>
+            <p className="text-gray-400 text-sm mb-6">Get a free consultation and quote for your project</p>
+            <button className="bg-[#A3CF00] text-[#1a1a1a] font-bold py-3 px-8 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center gap-2 mx-auto">
+              <span>Hire Me</span>
+              <FiArrowRight size={18} />
+            </button>
+          </div>
         </div>
       </div>
     </section>
