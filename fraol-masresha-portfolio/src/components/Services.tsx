@@ -87,7 +87,7 @@ const Services: React.FC = () => {
   ];
 
   return (
-    <section className="relative w-full min-h-screen bg-[#0a0a0a] py-20 md:py-28">
+    <section id="services" className="relative w-full min-h-screen bg-[#0a0a0a] py-20 md:py-28">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&display=swap');
         

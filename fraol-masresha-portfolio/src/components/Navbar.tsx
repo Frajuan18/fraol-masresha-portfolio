@@ -1,6 +1,5 @@
-// Navbar.tsx
 import React, { useState, useEffect } from 'react';
-import { FiMenu, FiX, FiArrowRight, FiMail, FiInstagram, FiSend, FiCopy, FiCheck } from 'react-icons/fi';
+import { FiMenu, FiX, FiArrowRight, FiMail, FiInstagram, FiSend, FiCopy, FiCheck, FiBriefcase, FiUser, FiCode, FiTool, FiHome, FiHeart, FiStar } from 'react-icons/fi';
 import { FaTelegramPlane } from 'react-icons/fa';
 
 const Navbar: React.FC = () => {
@@ -11,13 +10,13 @@ const Navbar: React.FC = () => {
   const [copiedField, setCopiedField] = useState<string | null>(null);
 
   const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'timeline', label: 'Timeline' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'services', label: 'Services' },
-    { id: 'portfolio', label: 'Portfolio' },
-    { id: 'contact', label: 'Contact' },
+    { id: 'home', label: 'Home', icon: <FiHome size={16} /> },
+    { id: 'about', label: 'About', icon: <FiUser size={16} /> },
+    { id: 'timeline', label: 'Timeline', icon: <FiBriefcase size={16} /> },
+    { id: 'skills', label: 'Skills', icon: <FiCode size={16} /> },
+    { id: 'services', label: 'Services', icon: <FiTool size={16} /> },
+    { id: 'portfolio', label: 'Portfolio', icon: <FiBriefcase size={16} /> },
+    { id: 'contact', label: 'Contact', icon: <FiMail size={16} /> },
   ];
 
   const contactInfo = [
@@ -25,27 +24,18 @@ const Navbar: React.FC = () => {
       platform: 'Instagram',
       username: '@fres.h925',
       icon: <FiInstagram size={24} />,
-      color: 'text-pink-500',
-      bgColor: 'bg-pink-500/20',
-      borderColor: 'border-pink-500/30',
       link: 'https://instagram.com/fres.h925'
     },
     {
       platform: 'Telegram',
       username: '@Fra_juan',
       icon: <FaTelegramPlane size={22} />,
-      color: 'text-blue-400',
-      bgColor: 'bg-blue-500/20',
-      borderColor: 'border-blue-500/30',
       link: 'https://t.me/Fra_juan'
     },
     {
       platform: 'Email',
       username: 'fraolabmas@gmail.com',
       icon: <FiMail size={24} />,
-      color: 'text-emerald-400',
-      bgColor: 'bg-emerald-500/20',
-      borderColor: 'border-emerald-500/30',
       link: 'mailto:fraolabmas@gmail.com'
     }
   ];
@@ -67,7 +57,7 @@ const Navbar: React.FC = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -100,7 +90,7 @@ const Navbar: React.FC = () => {
       <nav className={`fixed top-5 left-1/2 transform -translate-x-1/2 transition-all duration-500 z-50 ${
         isScrolled ? 'w-[95%] md:w-[90%] lg:w-[85%]' : 'w-[calc(100%-30px)] max-w-[500px] md:max-w-[800px] lg:max-w-[1000px]'
       }`}>
-        <div className="backdrop-blur-md rounded-full border border-[#333] shadow-lg shadow-black/30 bg-[#1a1a1a]/90">
+        <div className="backdrop-blur-md rounded-full border border-[#2a2a2a] shadow-lg shadow-black/30 bg-[#1a1a1a]/95">
           <div className="flex items-center justify-between px-4 py-2 md:px-6 md:py-3">
             <a
               href="#home"
@@ -108,10 +98,9 @@ const Navbar: React.FC = () => {
                 e.preventDefault();
                 handleNavClick('home');
               }}
-              className="text-xl md:text-2xl font-extrabold text-white"
-              style={{ fontFamily: "'Poppins', sans-serif" }}
+              className="text-xl md:text-2xl font-bebas text-white tracking-wide"
             >
-              PORTFOLIO
+              <span className="text-[#A3CF00]">F</span>RAOL
             </a>
 
             {/* Desktop Navigation */}
@@ -125,15 +114,15 @@ const Navbar: React.FC = () => {
                         e.preventDefault();
                         handleNavClick(item.id);
                       }}
-                      className={`text-sm font-medium transition-all duration-300 relative ${
+                      className={`text-sm font-medium transition-all duration-300 relative py-1 ${
                         activeSection === item.id
-                          ? 'text-white'
+                          ? 'text-[#A3CF00]'
                           : 'text-gray-400 hover:text-white'
                       }`}
                       style={{ fontFamily: "'Poppins', sans-serif" }}
                     >
                       {item.label}
-                      <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-white rounded-full transition-all duration-300 ${
+                      <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-[#A3CF00] rounded-full transition-all duration-300 ${
                         activeSection === item.id ? 'scale-x-100' : 'scale-x-0'
                       }`} />
                     </a>
@@ -144,8 +133,7 @@ const Navbar: React.FC = () => {
               {/* Hire Me Button */}
               <button
                 onClick={handleHireMe}
-                className="group px-5 py-2 rounded-full text-sm font-medium bg-white text-black hover:bg-gray-200 transition-all duration-300 hover:transform hover:-translate-y-0.5 hover:shadow-lg flex items-center gap-2"
-                style={{ fontFamily: "'Poppins', sans-serif" }}
+                className="group px-5 py-2 rounded-full text-sm font-medium bg-[#A3CF00] text-[#1a1a1a] hover:bg-[#8fb300] transition-all duration-300 hover:transform hover:-translate-y-0.5 hover:shadow-lg flex items-center gap-2 font-semibold"
               >
                 Hire Me
                 <FiArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
@@ -174,7 +162,7 @@ const Navbar: React.FC = () => {
             : 'opacity-0 invisible -translate-y-10'
         }`}
       >
-        <div className="bg-[#1a1a1a]/95 backdrop-blur-md rounded-2xl border border-[#333] shadow-xl overflow-hidden">
+        <div className="bg-[#1a1a1a]/95 backdrop-blur-md rounded-2xl border border-[#2a2a2a] shadow-xl overflow-hidden">
           <div className="p-6 space-y-4">
             <ul className="flex flex-col gap-2">
               {navItems.map((item, idx) => (
@@ -196,27 +184,29 @@ const Navbar: React.FC = () => {
                     }}
                     className={`flex items-center justify-between py-3 px-4 transition-all duration-300 rounded-xl ${
                       activeSection === item.id
-                        ? 'bg-blue-500/20 text-white font-semibold border border-blue-500/30'
+                        ? 'bg-[#A3CF00]/10 text-[#A3CF00] font-semibold border border-[#A3CF00]/30'
                         : 'text-gray-400 hover:bg-white/5 hover:text-white'
                     }`}
-                    style={{ fontFamily: "'Poppins', sans-serif" }}
                   >
-                    <span>{item.label}</span>
+                    <span className="flex items-center gap-3">
+                      {item.icon}
+                      <span>{item.label}</span>
+                    </span>
                     {activeSection === item.id && (
-                      <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#A3CF00] animate-pulse" />
                     )}
                   </a>
                 </li>
               ))}
             </ul>
             
-            <div className="pt-4 border-t border-[#333]">
+            <div className="pt-4 border-t border-[#2a2a2a]">
               <button
                 onClick={handleHireMe}
-                className={`w-full py-3 rounded-xl text-sm font-medium text-center bg-white text-black hover:bg-gray-200 transition-all duration-300 flex items-center justify-center gap-2 transform transition-all duration-300 ${
+                className={`w-full py-3 rounded-xl text-sm font-semibold text-center bg-[#A3CF00] text-[#1a1a1a] hover:bg-[#8fb300] transition-all duration-300 flex items-center justify-center gap-2 ${
                   isMenuOpen ? 'animate-slide-in opacity-100 translate-x-0' : 'opacity-0 -translate-x-5'
                 }`}
-                style={{ fontFamily: "'Poppins', sans-serif", animationDelay: '200ms' }}
+                style={{ animationDelay: '200ms' }}
               >
                 Hire Me
                 <FiArrowRight size={14} />
@@ -228,47 +218,52 @@ const Navbar: React.FC = () => {
 
       {/* Overlay for mobile menu */}
       <div
-        className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-300 z-30 md:hidden ${
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm transition-all duration-300 z-30 md:hidden ${
           isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
         }`}
         onClick={() => setIsMenuOpen(false)}
       />
 
-      {/* Hire Me Popup Modal */}
+      {/* Hire Me Popup Modal - Responsive and matching design */}
       {showPopup && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           {/* Backdrop */}
           <div 
-            className="absolute inset-0 bg-black/80 backdrop-blur-md transition-all duration-300 animate-fade-in"
+            className="absolute inset-0 bg-black/90 backdrop-blur-md transition-all duration-300 animate-fade-in"
             onClick={closePopup}
           />
           
           {/* Popup Content */}
-          <div className="relative bg-[#1a1a1a] rounded-2xl border border-[#333] shadow-2xl max-w-md w-full overflow-hidden animate-scale-up">
+          <div className="relative bg-[#1a1a1a] rounded-2xl border-2 border-[#2a2a2a] shadow-2xl max-w-md w-full overflow-hidden animate-scale-up">
             {/* Header */}
-            <div className="p-6 border-b border-[#333] bg-gradient-to-r from-blue-500/10 to-purple-500/10">
-              <h3 className="text-2xl font-bold text-white text-center">Let's Connect!</h3>
-              <p className="text-gray-400 text-sm text-center mt-1">Choose your preferred way to reach me</p>
+            <div className="p-5 md:p-6 border-b border-[#2a2a2a] bg-gradient-to-r from-[#A3CF00]/5 to-transparent">
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-[#A3CF00]/10 mb-3">
+                  <FiHeart className="text-[#A3CF00]" size={24} />
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bebas text-white">Let's <span className="text-[#A3CF00]">Connect</span>!</h3>
+                <p className="text-gray-400 text-xs md:text-sm mt-1">Choose your preferred way to reach me</p>
+              </div>
             </div>
             
             {/* Contact Options */}
-            <div className="p-6 space-y-4">
+            <div className="p-5 md:p-6 space-y-3 md:space-y-4">
               {contactInfo.map((info, idx) => (
                 <div
                   key={idx}
-                  className={`group relative p-4 rounded-xl ${info.bgColor} border ${info.borderColor} transition-all duration-300 hover:scale-[1.02] hover:shadow-lg animate-slide-up`}
+                  className="group relative p-3 md:p-4 rounded-xl bg-[#2a2a2a]/50 border border-[#2a2a2a] hover:border-[#A3CF00]/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg animate-slide-up"
                   style={{ animationDelay: `${idx * 100}ms` }}
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3 md:gap-4">
                     {/* Icon */}
-                    <div className={`p-3 rounded-full ${info.bgColor} ${info.color} transition-all duration-300 group-hover:scale-110`}>
+                    <div className={`p-2 md:p-3 rounded-lg bg-[#A3CF00]/10 text-[#A3CF00] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#A3CF00] group-hover:text-[#1a1a1a]`}>
                       {info.icon}
                     </div>
                     
                     {/* Info */}
                     <div className="flex-1">
-                      <p className="text-gray-400 text-xs uppercase tracking-wider">{info.platform}</p>
-                      <p className="text-white font-medium text-sm md:text-base">{info.username}</p>
+                      <p className="text-gray-400 text-[10px] md:text-xs uppercase tracking-wider">{info.platform}</p>
+                      <p className="text-white font-medium text-xs md:text-sm break-all">{info.username}</p>
                     </div>
                     
                     {/* Actions */}
@@ -276,13 +271,13 @@ const Navbar: React.FC = () => {
                       {/* Copy Button */}
                       <button
                         onClick={() => copyToClipboard(info.username, info.platform)}
-                        className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 group/copy"
+                        className="p-2 rounded-lg bg-[#2a2a2a] hover:bg-[#3a3a3a] transition-all duration-300 group/copy"
                         title="Copy to clipboard"
                       >
                         {copiedField === info.platform ? (
-                          <FiCheck size={18} className="text-green-400" />
+                          <FiCheck size={16} className="text-green-400" />
                         ) : (
-                          <FiCopy size={18} className="text-gray-400 group-hover/copy:text-white" />
+                          <FiCopy size={16} className="text-gray-400 group-hover/copy:text-[#A3CF00]" />
                         )}
                       </button>
                       
@@ -291,10 +286,10 @@ const Navbar: React.FC = () => {
                         href={info.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300"
+                        className="p-2 rounded-lg bg-[#2a2a2a] hover:bg-[#3a3a3a] transition-all duration-300"
                         title={`Open ${info.platform}`}
                       >
-                        <FiSend size={18} className="text-gray-400 hover:text-white transition-colors" />
+                        <FiSend size={16} className="text-gray-400 hover:text-[#A3CF00] transition-colors" />
                       </a>
                     </div>
                   </div>
@@ -303,8 +298,8 @@ const Navbar: React.FC = () => {
             </div>
             
             {/* Footer */}
-            <div className="p-5 border-t border-[#333] bg-white/5">
-              <p className="text-gray-500 text-xs text-center">
+            <div className="p-4 md:p-5 border-t border-[#2a2a2a] bg-[#1f1f1f]">
+              <p className="text-gray-500 text-[10px] md:text-xs text-center">
                 Click the copy icon to copy username or the send icon to open directly
               </p>
             </div>
@@ -312,15 +307,17 @@ const Navbar: React.FC = () => {
             {/* Close Button */}
             <button
               onClick={closePopup}
-              className="absolute top-4 right-4 p-1 rounded-full hover:bg-white/10 transition-all duration-300"
+              className="absolute top-3 right-3 md:top-4 md:right-4 p-1.5 rounded-full hover:bg-white/10 transition-all duration-300"
             >
-              <FiX size={20} className="text-gray-400 hover:text-white" />
+              <FiX size={18} className="text-gray-400 hover:text-white" />
             </button>
           </div>
         </div>
       )}
 
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&display=swap');
+        
         @keyframes slideIn {
           from {
             opacity: 0;
@@ -387,6 +384,28 @@ const Navbar: React.FC = () => {
         
         .animate-pulse {
           animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        .font-bebas {
+          font-family: 'Bebas Neue', cursive;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+          width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+          background: #1a1a1a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+          background: #A3CF00;
+          border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+          background: #8fb300;
         }
       `}</style>
     </>

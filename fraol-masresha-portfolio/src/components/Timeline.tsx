@@ -134,7 +134,7 @@ const Timeline: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full min-h-screen bg-[#1a1a1a] py-16 md:py-20 overflow-hidden">
+    <section id="timeline" className="relative w-full min-h-screen bg-[#1a1a1a] py-16 md:py-20 overflow-hidden">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&display=swap');
         

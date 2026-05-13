@@ -72,7 +72,7 @@ const Skills: React.FC = () => {
   };
 
   return (
-    <section className="relative w-full min-h-screen bg-[#F2F2F2] py-20 md:py-28 overflow-hidden">
+    <section id="skills" className="relative w-full min-h-screen bg-[#F2F2F2] py-20 md:py-28 overflow-hidden">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&display=swap');
         
