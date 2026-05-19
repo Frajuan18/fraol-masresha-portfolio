@@ -10,6 +10,7 @@ import {
   FiBriefcase,
   FiStar
 } from 'react-icons/fi';
+import healthImg from '../assets/health care.png';
 const Portfolio: React.FC = () => {
   const [filter, setFilter] = useState('all');
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
@@ -28,7 +29,7 @@ const Portfolio: React.FC = () => {
       category: 'healthcare',
       description: 'Comprehensive hospital management system with patient records, appointment scheduling, and billing.',
       tech: ['React', 'Node.js', 'MongoDB', 'Express', 'Tailwind'],
-      image: '../assets/health care.png',
+      image: <img src={healthImg} alt="Hospital Management System" className="w-48 h-48 object-contain" />,
       github: 'https://medicare-app-phi.vercel.app/',
       demo: 'https://medicare-app-phi.vercel.app/',
       featured: true
