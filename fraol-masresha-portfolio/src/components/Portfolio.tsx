@@ -10,7 +10,7 @@ import {
   FiBriefcase,
   FiStar
 } from 'react-icons/fi';
-
+import healthImg from '../assets/health care.png';
 const Portfolio: React.FC = () => {
   const [filter, setFilter] = useState('all');
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
@@ -25,13 +25,13 @@ const Portfolio: React.FC = () => {
   const projects = [
     {
       id: 1,
-      title: 'E-Commerce Platform',
-      category: 'ecommerce',
-      description: 'Full-featured e-commerce platform with shopping cart, payment integration, and admin dashboard.',
-      tech: ['React', 'Node.js', 'MongoDB', 'Stripe', 'Tailwind'],
-      image: <FiShoppingCart size={48} className="text-[#A3CF00]" />,
-      github: '#',
-      demo: '#',
+      title: 'Hospital Management System',
+      category: 'healthcare',
+      description: 'Comprehensive hospital management system with patient records, appointment scheduling, and billing.',
+      tech: ['React', 'Node.js', 'MongoDB', 'Express', 'Tailwind'],
+      image: {healthImg},
+      github: 'https://medicare-app-phi.vercel.app/',
+      demo: 'https://medicare-app-phi.vercel.app/',
       featured: true
     },
     {
