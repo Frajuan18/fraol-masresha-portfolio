@@ -29,7 +29,7 @@ const Portfolio: React.FC = () => {
       category: 'healthcare',
       description: 'Comprehensive hospital management system with patient records, appointment scheduling, and billing.',
       tech: ['React', 'Node.js', 'MongoDB', 'Express', 'Tailwind'],
-      image: <img src={healthImg} alt="Hospital Management System" className="w-48 h-48 object-contain" />,
+      image: <img src={healthImg} alt="Hospital Management System" className="w-full h-full object-cover" />,
       github: 'https://medicare-app-phi.vercel.app/',
       demo: 'https://medicare-app-phi.vercel.app/',
       featured: true
