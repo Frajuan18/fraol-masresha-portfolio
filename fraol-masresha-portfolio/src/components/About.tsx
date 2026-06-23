@@ -1,294 +1,311 @@
-// About.tsx - Seamlessly integrated with Hero section design
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
-  FiCode, 
-  FiDatabase, 
-  FiLayout, 
-  FiServer, 
-  FiUsers,
-  FiLayers,
-  FiZap,
-  FiSmile,
-  FiCoffee,
-  FiHeart,
-  FiTrendingUp,
-  FiAward
+  FiGithub, 
+  FiExternalLink, 
+  FiCode,
+  FiImage,
+  FiShoppingCart,
+  FiCloud,
+  FiMessageCircle,
+  FiBriefcase,
+  FiStar
 } from 'react-icons/fi';
-import { MdOutlineApi } from 'react-icons/md';
+import healthImg from '../assets/health care.png';
 
-const About: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('specialize');
+const Portfolio: React.FC = () => {
+  const [filter, setFilter] = useState('all');
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
-  const specializeItems = [
-    { icon: <FiLayout size={20} />, title: 'Frontend Development', desc: 'React, TypeScript, TailwindCSS, UI/UX best practices' },
-    { icon: <FiServer size={20} />, title: 'Backend Development', desc: 'Node.js, RESTful APIs, Express, Authentication' },
-    { icon: <FiDatabase size={20} />, title: 'Database Management', desc: 'PostgreSQL, MongoDB, Prisma, Database Design' },
+  const categories = [
+    { id: 'all', label: 'All Projects', icon: <FiCode size={14} /> },
+    { id: 'web', label: 'Web Apps', icon: <FiCode size={14} /> },
+    { id: 'ecommerce', label: 'E-commerce', icon: <FiShoppingCart size={14} /> },
+    { id: 'cloud', label: 'Cloud', icon: <FiCloud size={14} /> },
   ];
 
-  const problemsItems = [
-    { icon: <FiZap size={18} />, title: 'Performance optimization', desc: 'Making slow apps fast and responsive' },
-    { icon: <FiLayers size={18} />, title: 'Clean architecture', desc: 'Building maintainable, scalable codebases' },
-    { icon: <FiSmile size={18} />, title: 'User experience', desc: 'Creating intuitive interfaces people love using' },
-    { icon: <FiCoffee size={18} />, title: 'Complex data flows', desc: 'Managing state and data in large applications' },
+  const projects = [
+    {
+      id: 1,
+      title: 'Hospital Management System',
+      category: 'healthcare',
+      description: 'Comprehensive hospital management system with patient records, appointment scheduling, and billing.',
+      tech: ['React', 'Node.js', 'MongoDB', 'Express', 'Tailwind'],
+      image: <img src={healthImg} alt="Hospital Management System" className="w-full h-full object-cover" />,
+      github: 'https://medicare-app-phi.vercel.app/',
+      demo: 'https://medicare-app-phi.vercel.app/',
+      featured: true
+    },
+    {
+      id: 2,
+      title: 'AI Analytics Dashboard',
+      category: 'web',
+      description: 'Real-time analytics dashboard with machine learning predictions and data visualization.',
+      tech: ['Python', 'TensorFlow', 'React', 'D3.js', 'FastAPI'],
+      image: <FiImage size={48} className="text-[#A3CF00]" />,
+      github: '#',
+      demo: '#',
+      featured: true
+    },
+    {
+      id: 3,
+      title: 'Social Media App',
+      category: 'web',
+      description: 'Cross-platform social media application with real-time messaging and content sharing.',
+      tech: ['React Native', 'Firebase', 'Node.js', 'Socket.io'],
+      image: <FiMessageCircle size={48} className="text-[#A3CF00]" />,
+      github: '#',
+      demo: '#',
+      featured: false
+    },
+    {
+      id: 4,
+      title: 'Cloud Migration Suite',
+      category: 'cloud',
+      description: 'Enterprise cloud migration tools and monitoring system for seamless infrastructure transition.',
+      tech: ['AWS', 'Terraform', 'Python', 'Docker', 'Kubernetes'],
+      image: <FiCloud size={48} className="text-[#A3CF00]" />,
+      github: '#',
+      demo: '#',
+      featured: false
+    },
+    {
+      id: 5,
+      title: 'Task Management System',
+      category: 'web',
+      description: 'Collaborative task management platform with team workspace and project tracking.',
+      tech: ['React', 'Express', 'PostgreSQL', 'Socket.io'],
+      image: <FiCode size={48} className="text-[#A3CF00]" />,
+      github: '#',
+      demo: '#',
+      featured: false
+    },
+    {
+      id: 6,
+      title: 'Food Delivery App',
+      category: 'ecommerce',
+      description: 'Online food ordering platform with real-time order tracking and payment integration.',
+      tech: ['React Native', 'Node.js', 'MongoDB', 'Razorpay'],
+      image: <FiShoppingCart size={48} className="text-[#A3CF00]" />,
+      github: '#',
+      demo: '#',
+      featured: false
+    },
   ];
 
-  const statsItems = [
-    { value: '20+', label: 'Projects shipped', icon: <FiCode size={20} /> },
-    { value: '10+', label: 'Happy clients', icon: <FiUsers size={20} /> },
-    { value: '50+', label: 'APIs built', icon: <MdOutlineApi size={20} /> },
-    { value: '100%', label: 'Commitment', icon: <FiHeart size={20} /> },
-  ];
+  const filteredProjects = filter === 'all' 
+    ? projects 
+    : projects.filter(p => p.category === filter);
+
+  // Intersection Observer for scroll animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { 
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    const cards = document.querySelectorAll('.project-card');
+    cards.forEach(card => observer.observe(card));
+
+    return () => {
+      cards.forEach(card => observer.unobserve(card));
+    };
+  }, [filteredProjects]);
 
   return (
     <section 
-      id="about" 
-      className="relative min-h-screen w-full flex items-center justify-center py-20 md:py-24 overflow-hidden"
-      style={{ 
-        fontFamily: "'Poppins', sans-serif",
-        background: '#F2F2F2'
-      }}
+      id="portfolio" 
+      ref={sectionRef}
+      className="relative w-full min-h-screen bg-[#F7F7F7] py-20 md:py-28"
     >
-      
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&display=swap');
+        
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .project-card {
+          transition: all 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+          background: #ffffff;
+          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.03);
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        
+        .project-card.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        
+        .project-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 8px 30px rgba(163, 207, 0, 0.15), 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .project-card:hover .project-icon {
+          transform: scale(1.1);
+        }
+        
+        .font-bebas {
+          font-family: 'Bebas Neue', cursive;
+        }
+        
+        .font-poppins {
+          font-family: 'Poppins', sans-serif;
+        }
+        
+        .category-active {
+          background: #A3CF00;
+          color: #1a1a1a;
+          transform: scale(1.05);
+          box-shadow: 0 2px 12px rgba(163, 207, 0, 0.25);
+        }
+      `}</style>
 
-      {/* Decorative elements matching hero section */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-[#A3CF00]/5 rounded-full blur-3xl"></div>
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-96 h-96 bg-[#A3CF00]/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#A3CF00]/5 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-10">
-        {/* Section Header - Matching Hero typography */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+        {/* Section Header */}
         <div className="text-center mb-12 md:mb-16">
-          <p className="text-[#A3CF00] text-sm uppercase tracking-wider font-semibold mb-2 inline-block px-4 py-1 rounded-full bg-[#A3CF00]/10 border border-[#A3CF00]/20">
-            Get to know me
-          </p>
-          <h2 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#1A1A1A] mt-4"
-            style={{ letterSpacing: '-1px', fontFamily: "'Bebas Neue', cursive" }}
-          >
-            About <span className="text-[#A3CF00]">Me</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#A3CF00]/10 border border-[#A3CF00]/20 mb-4">
+            <FiBriefcase className="text-[#A3CF00]" size={16} />
+            <span className="text-[#A3CF00] text-sm font-semibold uppercase tracking-wider">My Portfolio</span>
+          </div>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bebas text-[#1A1A1A] mb-3">
+            Featured <span className="text-[#A3CF00]">Projects</span>
           </h2>
-          <div className="w-20 h-1 bg-[#A3CF00] mx-auto mt-4 rounded-full" />
+          <p className="text-gray-600 max-w-2xl mx-auto">A showcase of my recent work and personal projects</p>
+          <div className="w-16 h-0.5 bg-[#A3CF00] mx-auto mt-5 rounded-full"></div>
         </div>
 
-        {/* Interactive Tabs - Matching Hero button styles */}
-        <div className="flex justify-center gap-3 mb-12 flex-wrap">
-          <button
-            onClick={() => setActiveTab('specialize')}
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-              activeTab === 'specialize'
-                ? 'bg-[#A3CF00] text-[#1A1A1A] shadow-lg scale-105'
-                : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:border-[#A3CF00]'
-            }`}
-          >
-            What I Do
-          </button>
-          <button
-            onClick={() => setActiveTab('problems')}
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-              activeTab === 'problems'
-                ? 'bg-[#A3CF00] text-[#1A1A1A] shadow-lg scale-105'
-                : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:border-[#A3CF00]'
-            }`}
-          >
-            Problems I Solve
-          </button>
-          <button
-            onClick={() => setActiveTab('stats')}
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-              activeTab === 'stats'
-                ? 'bg-[#A3CF00] text-[#1A1A1A] shadow-lg scale-105'
-                : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:border-[#A3CF00]'
-            }`}
-          >
-            Impact
-          </button>
+        {/* Category Filters */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setFilter(cat.id)}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+                filter === cat.id
+                  ? 'category-active bg-[#A3CF00] text-[#1a1a1a]'
+                  : 'bg-white text-gray-600 border border-gray-200 shadow-[0_1px_4px_rgba(0,0,0,0.04)]'
+              }`}
+            >
+              {cat.icon}
+              <span>{cat.label}</span>
+            </button>
+          ))}
         </div>
 
-        {/* Tab Content */}
-        <div className="min-h-[400px]">
-          {/* What I Specialize In Tab */}
-          {activeTab === 'specialize' && (
-            <div>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                {/* Left side - Cards */}
-                <div className="space-y-4">
-                  {specializeItems.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="group relative overflow-hidden rounded-xl bg-white border border-gray-200 transition-all duration-500 hover:scale-105 hover:border-[#A3CF00] hover:shadow-xl cursor-pointer"
-                    >
-                      <div className="flex items-start gap-4 p-5">
-                        <div className="p-3 rounded-xl bg-[#A3CF00]/10 text-[#A3CF00] transition-all duration-300 group-hover:scale-110">
-                          {item.icon}
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="text-[#1A1A1A] font-semibold text-lg">{item.title}</h3>
-                          <p className="text-gray-600 text-sm mt-1">{item.desc}</p>
-                        </div>
-                      </div>
-                      {/* Shimmer effect */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#A3CF00]/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                    </div>
-                  ))}
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredProjects.map((project, idx) => (
+            <div
+              key={project.id}
+              className="project-card rounded-2xl overflow-hidden cursor-pointer"
+              style={{ transitionDelay: `${idx * 0.1}s` }}
+              onMouseEnter={() => setHoveredCard(project.id)}
+              onMouseLeave={() => setHoveredCard(null)}
+            >
+              {/* Project Image Area */}
+              <div className="relative h-48 overflow-hidden bg-gray-50 flex items-center justify-center border-b border-gray-100">
+                <div className={`project-icon transition-all duration-500 ${hoveredCard === project.id ? 'scale-110' : 'scale-100'}`}>
+                  {project.image}
                 </div>
-
-                {/* Right side - Experience + Quote */}
-                <div className="space-y-6">
-                  <div className="relative rounded-2xl bg-white border border-gray-200 p-6 overflow-hidden group hover:border-[#A3CF00] transition-all duration-300">
-                    <div className="relative z-10">
-                      <h3 className="text-xl font-bold text-[#1A1A1A] mb-3">5+ Years Journey</h3>
-                      <div className="space-y-3">
-                        <div>
-                          <div className="flex justify-between text-sm mb-2">
-                            <span className="text-gray-600">Experience growth</span>
-                            <span className="text-[#A3CF00] font-semibold">100%</span>
-                          </div>
-                          <div className="w-full bg-gray-200 rounded-full h-2">
-                            <div className="bg-[#A3CF00] h-2 rounded-full w-full"></div>
-                          </div>
-                        </div>
-                        <div>
-                          <div className="flex justify-between text-sm mb-2">
-                            <span className="text-gray-600">Projects completed</span>
-                            <span className="text-[#A3CF00] font-semibold">20+</span>
-                          </div>
-                          <div className="w-full bg-gray-200 rounded-full h-2">
-                            <div className="bg-[#A3CF00] h-2 rounded-full" style={{ width: '85%' }}></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Quote */}
-                  <div className="p-5 rounded-xl bg-white border border-gray-200 hover:border-[#A3CF00]/30 transition-all duration-300 group">
-                    <FiHeart className="text-red-400 mb-3 group-hover:scale-110 transition-transform" size={24} />
-                    <p className="text-gray-700 italic text-sm leading-relaxed">
-                      "I believe great software is built at the intersection of clean code and genuine empathy for users."
-                    </p>
-                    <p className="text-[#A3CF00] text-sm mt-2 font-medium">— Fraol</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Problems I Solve Tab */}
-          {activeTab === 'problems' && (
-            <div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {problemsItems.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="group relative overflow-hidden rounded-xl bg-white border border-gray-200 p-5 transition-all duration-500 hover:scale-105 hover:border-[#A3CF00] hover:shadow-xl cursor-pointer"
+                
+                {/* Overlay with links */}
+                <div className={`absolute inset-0 bg-white/95 flex items-center justify-center gap-4 transition-all duration-300 ${
+                  hoveredCard === project.id ? 'opacity-100' : 'opacity-0'
+                }`}>
+                  <a
+                    href={project.github}
+                    className="p-3 bg-[#A3CF00] rounded-full hover:scale-110 transition-transform duration-300 shadow-md"
+                    aria-label="GitHub"
                   >
-                    <div className="flex items-start gap-4">
-                      <div className="p-2 rounded-lg bg-[#A3CF00]/10 text-[#A3CF00] group-hover:scale-110 transition-transform">
-                        {item.icon}
-                      </div>
-                      <div>
-                        <h3 className="text-[#1A1A1A] font-semibold">{item.title}</h3>
-                        <p className="text-gray-600 text-sm mt-1">{item.desc}</p>
-                      </div>
-                    </div>
-                    {/* Bottom accent line */}
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#A3CF00] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                  </div>
-                ))}
+                    <FiGithub className="text-[#1a1a1a]" size={20} />
+                  </a>
+                  <a
+                    href={project.demo}
+                    className="p-3 bg-[#A3CF00] rounded-full hover:scale-110 transition-transform duration-300 shadow-md"
+                    aria-label="Live Demo"
+                  >
+                    <FiExternalLink className="text-[#1a1a1a]" size={20} />
+                  </a>
+                </div>
               </div>
-
-              {/* Current Challenge Box */}
-              <div className="mt-8 p-6 rounded-2xl bg-white border border-[#A3CF00]/20 text-center group hover:shadow-xl transition-all duration-300">
-                <FiTrendingUp className="text-[#A3CF00] mx-auto mb-3 group-hover:scale-110 transition-transform" size={28} />
-                <h4 className="text-[#1A1A1A] font-semibold mb-2">Current Challenge I'm Solving</h4>
-                <p className="text-gray-600 text-sm">Building a real-time collaborative platform with WebSocket and React</p>
-                <div className="mt-3 flex justify-center gap-2 flex-wrap">
-                  {['React', 'Node.js', 'Socket.io', 'Redis'].map((tech, i) => (
-                    <span key={i} className="text-xs px-2 py-1 rounded-full bg-[#A3CF00]/10 text-gray-700 group-hover:bg-[#A3CF00]/20 transition-colors">
+              
+              {/* Project Info */}
+              <div className="p-5">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-xl font-bold text-gray-900">
+                    {project.title}
+                  </h3>
+                  {project.featured && (
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-[#A3CF00] blur-md rounded-full opacity-30"></div>
+                      <span className="relative flex items-center gap-1 text-xs px-3 py-1 rounded-full bg-gradient-to-r from-[#A3CF00] to-[#8fb300] text-[#1a1a1a] font-bold">
+                        <FiStar size={10} className="fill-current" />
+                        FEATURED
+                      </span>
+                    </div>
+                  )}
+                </div>
+                
+                <p className="text-gray-600 text-sm leading-relaxed mb-3">
+                  {project.description}
+                </p>
+                
+                {/* Tech Stack */}
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.slice(0, 4).map((tech, i) => (
+                    <span
+                      key={i}
+                      className="text-xs px-2 py-1 rounded-full bg-gray-100 border border-gray-200 text-gray-700 transition-all duration-300 hover:bg-[#A3CF00] hover:text-[#1a1a1a] hover:border-[#A3CF00] cursor-pointer"
+                    >
                       {tech}
                     </span>
                   ))}
+                  {project.tech.length > 4 && (
+                    <span className="text-xs px-2 py-1 rounded-full bg-gray-100 border border-gray-200 text-gray-700">
+                      +{project.tech.length - 4}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
-          )}
+          ))}
+        </div>
 
-          {/* Impact/Stats Tab */}
-          {activeTab === 'stats' && (
-            <div>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                {statsItems.map((stat, idx) => (
-                  <div
-                    key={idx}
-                    className="group text-center p-5 rounded-xl bg-white border border-gray-200 transition-all duration-500 hover:scale-110 hover:border-[#A3CF00] hover:shadow-xl cursor-pointer"
-                  >
-                    <div className="p-3 rounded-full bg-[#A3CF00]/10 inline-flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                      <div className="text-[#A3CF00]">{stat.icon}</div>
-                    </div>
-                    <p className="text-3xl font-bold text-[#1A1A1A] group-hover:text-[#A3CF00] transition-colors">
-                      {stat.value}
-                    </p>
-                    <p className="text-gray-600 text-sm mt-1">{stat.label}</p>
-                  </div>
-                ))}
-              </div>
-
-              {/* Impact timeline */}
-              <div className="relative p-6 rounded-xl bg-white border border-gray-200 overflow-hidden">
-                <h4 className="text-[#1A1A1A] font-semibold mb-6 text-center">Impact Timeline</h4>
-                <div className="flex justify-between items-center flex-wrap sm:flex-nowrap gap-4">
-                  <div className="text-center flex-1 group cursor-pointer">
-                    <div className="w-3 h-3 rounded-full bg-[#A3CF00] mx-auto mb-2 group-hover:scale-150 transition-transform" />
-                    <p className="text-xs text-gray-500">2022</p>
-                    <p className="text-xs text-[#1A1A1A] opacity-0 group-hover:opacity-100 transition-opacity">Started</p>
-                  </div>
-                  <div className="h-0.5 flex-1 bg-gradient-to-r from-[#A3CF00] to-[#A3CF00]/30 min-w-[20px]" />
-                  <div className="text-center flex-1 group cursor-pointer">
-                    <div className="w-3 h-3 rounded-full bg-[#A3CF00] mx-auto mb-2 group-hover:scale-150 transition-transform" />
-                    <p className="text-xs text-gray-500">2023</p>
-                    <p className="text-xs text-[#1A1A1A] opacity-0 group-hover:opacity-100 transition-opacity">10 Projects</p>
-                  </div>
-                  <div className="h-0.5 flex-1 bg-gradient-to-r from-[#A3CF00] to-[#A3CF00]/30 min-w-[20px]" />
-                  <div className="text-center flex-1 group cursor-pointer">
-                    <div className="w-3 h-3 rounded-full bg-[#A3CF00] mx-auto mb-2 group-hover:scale-150 transition-transform" />
-                    <p className="text-xs text-gray-500">2024</p>
-                    <p className="text-xs text-[#1A1A1A] opacity-0 group-hover:opacity-100 transition-opacity">20+ Projects</p>
-                  </div>
-                  <div className="h-0.5 flex-1 bg-gradient-to-r from-[#A3CF00] to-[#A3CF00]/30 min-w-[20px]" />
-                  <div className="text-center flex-1 group cursor-pointer">
-                    <div className="w-3 h-3 rounded-full bg-[#A3CF00] mx-auto mb-2 group-hover:scale-150 transition-transform" />
-                    <p className="text-xs text-gray-500">2025</p>
-                    <p className="text-xs text-[#1A1A1A] opacity-0 group-hover:opacity-100 transition-opacity">Going strong</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Additional Impact Metric */}
-              <div className="mt-6 p-4 rounded-xl bg-gradient-to-r from-[#A3CF00]/10 to-transparent border border-[#A3CF00]/20">
-                <div className="flex items-center justify-between flex-wrap gap-3">
-                  <div className="flex items-center gap-3">
-                    <FiAward className="text-[#A3CF00]" size={24} />
-                    <div>
-                      <p className="text-[#1A1A1A] font-semibold">Client Satisfaction</p>
-                      <p className="text-gray-600 text-sm">98% positive feedback</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {[1,2,3,4,5].map((star) => (
-                      <svg key={star} className="w-5 h-5 text-[#A3CF00] fill-current" viewBox="0 0 24 24">
-                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                      </svg>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+        {/* View More Button */}
+        <div className="text-center mt-12">
+          <button className="bg-transparent border-2 border-[#A3CF00] text-[#A3CF00] font-semibold py-3 px-8 rounded-full transition-all duration-300 hover:bg-[#A3CF00] hover:text-[#1a1a1a] hover:scale-105 hover:shadow-lg inline-flex items-center gap-2">
+            <span>View All Projects</span>
+            <FiExternalLink size={16} />
+          </button>
         </div>
       </div>
     </section>
   );
 };
 
-export default About;
+export default Portfolio;

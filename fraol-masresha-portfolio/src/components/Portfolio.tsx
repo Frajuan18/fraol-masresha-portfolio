@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   FiGithub, 
   FiExternalLink, 
@@ -11,9 +11,11 @@ import {
   FiStar
 } from 'react-icons/fi';
 import healthImg from '../assets/health care.png';
+
 const Portfolio: React.FC = () => {
   const [filter, setFilter] = useState('all');
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   const categories = [
     { id: 'all', label: 'All Projects', icon: <FiCode size={14} /> },
@@ -95,8 +97,36 @@ const Portfolio: React.FC = () => {
     ? projects 
     : projects.filter(p => p.category === filter);
 
+  // Intersection Observer for scroll animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { 
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    const cards = document.querySelectorAll('.project-card');
+    cards.forEach(card => observer.observe(card));
+
+    return () => {
+      cards.forEach(card => observer.unobserve(card));
+    };
+  }, [filteredProjects]);
+
   return (
-    <section id="portfolio" className="relative w-full min-h-screen bg-[#F2F2F2] py-20 md:py-28">
+    <section 
+      id="portfolio" 
+      ref={sectionRef}
+      className="relative w-full min-h-screen bg-[#F7F7F7] py-20 md:py-28"
+    >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&display=swap');
         
@@ -112,17 +142,21 @@ const Portfolio: React.FC = () => {
         }
         
         .project-card {
-          animation: fadeInUp 0.6s ease-out forwards;
-          opacity: 0;
-          transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-          border: 1px solid #e5e7eb;
+          transition: all 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
           background: #ffffff;
+          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.03);
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        
+        .project-card.visible {
+          opacity: 1;
+          transform: translateY(0);
         }
         
         .project-card:hover {
           transform: translateY(-8px);
-          border-color: #A3CF00;
-          box-shadow: 0 20px 30px -15px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 8px 30px rgba(163, 207, 0, 0.15), 0 4px 20px rgba(0, 0, 0, 0.08);
         }
         
         .project-card:hover .project-icon {
@@ -141,8 +175,15 @@ const Portfolio: React.FC = () => {
           background: #A3CF00;
           color: #1a1a1a;
           transform: scale(1.05);
+          box-shadow: 0 2px 12px rgba(163, 207, 0, 0.25);
         }
       `}</style>
+
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-96 h-96 bg-[#A3CF00]/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#A3CF00]/5 rounded-full blur-3xl"></div>
+      </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
         {/* Section Header */}
@@ -166,8 +207,8 @@ const Portfolio: React.FC = () => {
               onClick={() => setFilter(cat.id)}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
                 filter === cat.id
-                  ? 'category-active bg-[#A3CF00] text-[#1a1a1a] shadow-lg'
-                  : 'bg-white text-gray-600 hover:text-gray-900 border border-gray-200 hover:border-[#A3CF00]'
+                  ? 'category-active bg-[#A3CF00] text-[#1a1a1a]'
+                  : 'bg-white text-gray-600 border border-gray-200 shadow-[0_1px_4px_rgba(0,0,0,0.04)]'
               }`}
             >
               {cat.icon}
@@ -181,8 +222,8 @@ const Portfolio: React.FC = () => {
           {filteredProjects.map((project, idx) => (
             <div
               key={project.id}
-              className="project-card relative rounded-2xl overflow-hidden cursor-pointer"
-              style={{ animationDelay: `${idx * 0.1}s` }}
+              className="project-card rounded-2xl overflow-hidden cursor-pointer"
+              style={{ transitionDelay: `${idx * 0.1}s` }}
               onMouseEnter={() => setHoveredCard(project.id)}
               onMouseLeave={() => setHoveredCard(null)}
             >
@@ -251,9 +292,6 @@ const Portfolio: React.FC = () => {
                   )}
                 </div>
               </div>
-
-              {/* Bottom accent line */}
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#A3CF00] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
             </div>
           ))}
         </div>

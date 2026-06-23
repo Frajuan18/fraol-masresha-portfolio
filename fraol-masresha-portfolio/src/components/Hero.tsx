@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
   ];
 
   return (
-    <section className="relative w-full min-h-screen bg-[#F2F2F2] font-['Poppins'] overflow-hidden flex flex-col lg:flex-row">
+    <section className="relative w-full min-h-screen bg-[#F7F7F7] font-['Poppins'] overflow-hidden flex flex-col lg:flex-row">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;900&display=swap');
         .font-bebas { font-family: 'Bebas Neue', cursive; }

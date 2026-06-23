@@ -22,7 +22,6 @@ const Services: React.FC = () => {
       icon: <FiCode size={28} />,
       description: 'Building responsive, scalable web applications with modern technologies.',
       features: ['React/Next.js', 'Node.js/Express', 'MongoDB/PostgreSQL', 'RESTful APIs'],
-      price: 'From $999',
       popular: true
     },
     {
@@ -32,7 +31,6 @@ const Services: React.FC = () => {
       icon: <FiLayout size={28} />,
       description: 'Creating intuitive, user-friendly designs that delight your audience.',
       features: ['Wireframing', 'Prototyping', 'Responsive Design', 'User Testing'],
-      price: 'From $799',
       popular: false
     },
     {
@@ -42,7 +40,6 @@ const Services: React.FC = () => {
       icon: <FiServer size={28} />,
       description: 'Secure, scalable server-side solutions and database architecture.',
       features: ['Node.js/Express', 'Database Design', 'Authentication', 'Cloud Deployment'],
-      price: 'From $899',
       popular: false
     },
     {
@@ -52,7 +49,6 @@ const Services: React.FC = () => {
       icon: <FiSmartphone size={28} />,
       description: 'Native-like mobile experiences with React Native.',
       features: ['iOS & Android', 'Push Notifications', 'Offline Support', 'App Store Deploy'],
-      price: 'From $1299',
       popular: false
     },
     {
@@ -62,7 +58,6 @@ const Services: React.FC = () => {
       icon: <FiCloud size={28} />,
       description: 'Cloud deployment, DevOps, and scalable infrastructure setup.',
       features: ['AWS/Azure', 'Docker', 'CI/CD Pipeline', 'Monitoring'],
-      price: 'From $1099',
       popular: false
     },
     {
@@ -72,7 +67,6 @@ const Services: React.FC = () => {
       icon: <FiZap size={28} />,
       description: 'Make your applications faster, leaner, and more efficient.',
       features: ['Code Splitting', 'Caching Strategy', 'Database Indexing', 'Load Testing'],
-      price: 'From $699',
       popular: true
     }
   ];
@@ -100,120 +94,19 @@ const Services: React.FC = () => {
           }
         }
         
-        @keyframes spreadFromCorner {
-          0% {
-            width: 0%;
-            height: 0%;
-          }
-          70% {
-            width: 100%;
-            height: 100%;
-          }
-          100% {
-            width: 100%;
-            height: 100%;
-          }
-        }
-        
-        @keyframes splashEffect {
-          0% {
-            transform: scale(0);
-            opacity: 0;
-          }
-          50% {
-            transform: scale(1);
-            opacity: 0.8;
-          }
-          100% {
-            transform: scale(1.5);
-            opacity: 0;
-          }
-        }
-        
         .service-card {
           animation: fadeInUp 0.6s ease-out forwards;
           opacity: 0;
           position: relative;
-          overflow: hidden;
-          border: 2px solid #A3CF00;
+          overflow: visible;
           background: #1a1a1a;
           transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
         }
         
         .service-card:hover {
           transform: translateY(-8px);
-        }
-        
-        /* Corner spread effect - 1 second */
-        .service-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 0%;
-          height: 0%;
-          background: #A3CF00;
-          transition: all 1s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-          z-index: 0;
-        }
-        
-        .service-card:hover::before {
-          width: 100%;
-          height: 100%;
-        }
-        
-        /* Splash effect at bottom right */
-        .service-card::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          width: 0;
-          height: 0;
-          background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
-          border-radius: 50%;
-          pointer-events: none;
-          z-index: 2;
-        }
-        
-        .service-card:hover::after {
-          animation: splashEffect 0.6s ease-out forwards;
-        }
-        
-        /* Content wrapper */
-        .service-card > * {
-          position: relative;
-          z-index: 1;
-          transition: color 0.3s ease 0.1s;
-        }
-        
-        /* Hover text colors */
-        .service-card:hover .service-icon {
-          background: rgba(26, 26, 26, 0.15);
-          color: #1a1a1a;
-        }
-        
-        .service-card:hover .service-title,
-        .service-card:hover .service-subtitle,
-        .service-card:hover .service-price,
-        .service-card:hover .service-description,
-        .service-card:hover .price-label,
-        .service-card:hover .features-label {
-          color: #1a1a1a;
-        }
-        
-        .service-card:hover .service-feature {
-          background: rgba(26, 26, 26, 0.2);
-          color: #1a1a1a;
-        }
-        
-        .service-card:hover .border-line {
-          border-color: rgba(26, 26, 26, 0.2);
-        }
-        
-        .service-card:hover .btn-hover {
-          background: #1a1a1a;
-          color: #A3CF00;
+          box-shadow: 0 8px 40px rgba(163, 207, 0, 0.15), 0 4px 20px rgba(0, 0, 0, 0.3);
         }
         
         .font-bebas {
@@ -227,19 +120,23 @@ const Services: React.FC = () => {
         /* Stats cards */
         .stat-card {
           transition: transform 0.3s ease;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
         }
         
         .stat-card:hover {
           transform: translateY(-4px);
+          box-shadow: 0 8px 30px rgba(163, 207, 0, 0.1), 0 4px 20px rgba(0, 0, 0, 0.3);
         }
         
         /* CTA section */
         .cta-section {
           transition: transform 0.3s ease;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
         }
         
         .cta-section:hover {
           transform: translateY(-4px);
+          box-shadow: 0 8px 40px rgba(163, 207, 0, 0.1), 0 4px 20px rgba(0, 0, 0, 0.3);
         }
       `}</style>
 
@@ -262,51 +159,47 @@ const Services: React.FC = () => {
           {services.map((service, idx) => (
             <div
               key={service.id}
-              className="service-card relative rounded-2xl p-6 cursor-pointer"
+              className="service-card rounded-2xl p-6 cursor-pointer"
               style={{ animationDelay: `${idx * 0.1}s` }}
             >
-              {/* Popular Badge - Premium Design */}
+              {/* Popular Badge - Top of card with visible overflow */}
               {service.popular && (
                 <div className="absolute -top-3 right-6 z-20">
                   <div className="relative">
                     <div className="absolute inset-0 bg-[#A3CF00] blur-md rounded-full opacity-50"></div>
-                    <div className="relative bg-gradient-to-r from-[#A3CF00] to-[#8fb300] text-[#1a1a1a] text-xs font-bold px-4 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
+                    <div className="relative bg-[#A3CF00] text-[#1a1a1a] text-xs font-bold px-4 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
                       <FiStar size={12} className="fill-current" />
-                      <span>POPULAR CHOICE</span>
+                      <span>POPULAR</span>
                     </div>
                   </div>
                 </div>
               )}
               
               {/* Icon */}
-              <div className="service-icon w-16 h-16 rounded-xl bg-[#A3CF00]/10 flex items-center justify-center mb-5 transition-all duration-300 text-[#A3CF00]">
+              <div className="w-16 h-16 rounded-xl bg-[#A3CF00]/10 flex items-center justify-center mb-5 transition-all duration-300 text-[#A3CF00]">
                 {service.icon}
               </div>
               
               {/* Title */}
-              <h3 className="service-title text-xl font-bold text-white mb-1 transition-colors duration-300">{service.title}</h3>
-              <p className="service-subtitle text-sm text-[#A3CF00] font-semibold mb-3 transition-colors duration-300">{service.subtitle}</p>
-              <p className="service-description text-gray-400 text-sm leading-relaxed mb-4 transition-colors duration-300">{service.description}</p>
+              <h3 className="text-xl font-bold text-white mb-1">{service.title}</h3>
+              <p className="text-sm text-[#A3CF00] font-semibold mb-3">{service.subtitle}</p>
+              <p className="text-gray-400 text-sm leading-relaxed mb-4">{service.description}</p>
               
-              {/* Features */}
+              {/* Features - Transparent bg with lime green border */}
               <div className="mb-4">
-                <p className="features-label text-xs text-gray-500 uppercase tracking-wider mb-2 transition-colors duration-300">What's included:</p>
+                <p className="text-xs text-gray-500 uppercase tracking-wider mb-2">What's included:</p>
                 <div className="flex flex-wrap gap-2">
                   {service.features.map((feature, i) => (
-                    <span key={i} className="service-feature text-xs px-2 py-1 bg-gray-800 rounded-md text-gray-300 transition-all duration-300">
+                    <span key={i} className="text-xs px-3 py-1.5 bg-transparent border border-[#A3CF00] text-[#A3CF00] font-semibold rounded-md transition-all duration-300">
                       {feature}
                     </span>
                   ))}
                 </div>
               </div>
               
-              {/* Price & CTA */}
-              <div className="border-line flex items-center justify-between pt-3 border-t border-gray-700 transition-colors duration-300">
-                <div>
-                  <span className="price-label text-xs text-gray-500 transition-colors duration-300">Starting at</span>
-                  <p className="service-price text-2xl font-bold text-white transition-colors duration-300">{service.price}</p>
-                </div>
-                <button className="btn-hover flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 bg-gray-800 text-white">
+              {/* Learn More Button */}
+              <div className="pt-3 border-t border-gray-700">
+                <button className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 bg-gray-800 text-white hover:bg-[#A3CF00] hover:text-[#1a1a1a]">
                   <span>Learn More</span>
                   <FiArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
                 </button>
@@ -320,7 +213,7 @@ const Services: React.FC = () => {
           {stats.map((stat, idx) => (
             <div
               key={idx}
-              className="stat-card bg-[#1a1a1a] rounded-xl p-5 text-center border-2 border-[#A3CF00] transition-all duration-300 cursor-pointer"
+              className="stat-card bg-[#1a1a1a] rounded-xl p-5 text-center transition-all duration-300 cursor-pointer"
               style={{ animationDelay: `${idx * 0.1}s` }}
             >
               <div className="w-12 h-12 rounded-full bg-[#A3CF00]/10 flex items-center justify-center mx-auto mb-3">
@@ -333,7 +226,7 @@ const Services: React.FC = () => {
         </div>
 
         {/* CTA Section */}
-        <div className="cta-section bg-[#1a1a1a] rounded-2xl p-8 border-2 border-[#A3CF00] text-center transition-all duration-300">
+        <div className="cta-section bg-[#1a1a1a] rounded-2xl p-8 text-center transition-all duration-300">
           <div className="max-w-2xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#A3CF00]/10 border border-[#A3CF00]/20 mb-4">
               <FiStar className="text-[#A3CF00]" size={14} />

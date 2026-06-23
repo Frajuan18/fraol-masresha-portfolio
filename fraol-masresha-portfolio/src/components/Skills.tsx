@@ -70,7 +70,7 @@ const Skills: React.FC = () => {
   };
 
   return (
-    <section id="skills" className="relative w-full min-h-screen bg-[#F2F2F2] py-20 md:py-28 overflow-hidden">
+    <section id="skills" className="relative w-full min-h-screen bg-[#F7F7F7] py-20 md:py-28 overflow-hidden">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&display=swap');
         
@@ -129,8 +129,8 @@ const Skills: React.FC = () => {
               onClick={() => setActiveCategory(key)}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
                 activeCategory === key
-                  ? 'category-active bg-[#A3CF00] text-[#1A1A1A] shadow-lg'
-                  : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                  ? 'category-active bg-[#A3CF00] text-[#1A1A1A] shadow-[0_2px_12px_rgba(163,207,0,0.25)]'
+                  : 'bg-white text-gray-700 border border-gray-200 shadow-[0_1px_4px_rgba(0,0,0,0.04)]'
               }`}
             >
               {category.icon}
@@ -144,7 +144,7 @@ const Skills: React.FC = () => {
           {categories[activeCategory as keyof typeof categories].skills.map((skill, idx) => (
             <div
               key={idx}
-              className="skill-card bg-white rounded-xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
+              className="skill-card bg-white rounded-xl p-5 shadow-[0_2px_12px_rgba(0,0,0,0.05),0_1px_4px_rgba(0,0,0,0.03)] transition-all duration-300"
               style={{ animationDelay: `${idx * 0.1}s` }}
             >
               <div className="flex items-center gap-4">
@@ -168,29 +168,29 @@ const Skills: React.FC = () => {
 
         {/* Stats Summary */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
-          <div className="bg-white rounded-xl p-5 text-center border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
+          <div className="bg-white rounded-xl p-5 text-center shadow-[0_2px_12px_rgba(0,0,0,0.05),0_1px_4px_rgba(0,0,0,0.03)] transition-all duration-300">
             <div className="text-3xl font-bold text-[#A3CF00]">20+</div>
             <div className="text-sm text-gray-600 mt-1">Projects</div>
           </div>
           
-          <div className="bg-white rounded-xl p-5 text-center border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
+          <div className="bg-white rounded-xl p-5 text-center shadow-[0_2px_12px_rgba(0,0,0,0.05),0_1px_4px_rgba(0,0,0,0.03)] transition-all duration-300">
             <div className="text-3xl font-bold text-[#A3CF00]">87%</div>
             <div className="text-sm text-gray-600 mt-1">Avg Proficiency</div>
           </div>
           
-          <div className="bg-white rounded-xl p-5 text-center border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
+          <div className="bg-white rounded-xl p-5 text-center shadow-[0_2px_12px_rgba(0,0,0,0.05),0_1px_4px_rgba(0,0,0,0.03)] transition-all duration-300">
             <div className="text-3xl font-bold text-[#A3CF00]">12+</div>
             <div className="text-sm text-gray-600 mt-1">Technologies</div>
           </div>
           
-          <div className="bg-white rounded-xl p-5 text-center border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
+          <div className="bg-white rounded-xl p-5 text-center shadow-[0_2px_12px_rgba(0,0,0,0.05),0_1px_4px_rgba(0,0,0,0.03)] transition-all duration-300">
             <div className="text-3xl font-bold text-[#A3CF00]">100%</div>
             <div className="text-sm text-gray-600 mt-1">Commitment</div>
           </div>
         </div>
 
         {/* Currently Learning */}
-        <div className="mt-8 bg-gradient-to-r from-[#A3CF00]/10 to-transparent rounded-xl p-5 border border-[#A3CF00]/20">
+        <div className="mt-8 bg-gradient-to-r from-[#A3CF00]/10 to-transparent rounded-xl p-5 border border-[#A3CF00]/20 shadow-[0_2px_12px_rgba(0,0,0,0.05),0_1px_4px_rgba(0,0,0,0.03)]">
           <div className="flex flex-col md:flex-row items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-[#A3CF00] flex items-center justify-center">
@@ -202,9 +202,9 @@ const Skills: React.FC = () => {
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1.5 bg-white rounded-lg text-xs font-medium text-gray-700 shadow-sm">Next.js</span>
-              <span className="px-3 py-1.5 bg-white rounded-lg text-xs font-medium text-gray-700 shadow-sm">GraphQL</span>
-              <span className="px-3 py-1.5 bg-white rounded-lg text-xs font-medium text-gray-700 shadow-sm">AWS</span>
+              <span className="px-3 py-1.5 bg-white rounded-lg text-xs font-medium text-gray-700 shadow-[0_1px_4px_rgba(0,0,0,0.04)]">Next.js</span>
+              <span className="px-3 py-1.5 bg-white rounded-lg text-xs font-medium text-gray-700 shadow-[0_1px_4px_rgba(0,0,0,0.04)]">GraphQL</span>
+              <span className="px-3 py-1.5 bg-white rounded-lg text-xs font-medium text-gray-700 shadow-[0_1px_4px_rgba(0,0,0,0.04)]">AWS</span>
             </div>
           </div>
         </div>
