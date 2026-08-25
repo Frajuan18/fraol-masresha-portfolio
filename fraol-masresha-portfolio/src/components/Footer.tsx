@@ -1,157 +1,68 @@
-import React from 'react';
-import { FiMail, FiPhone, FiGithub, FiTwitter, FiLinkedin, FiArrowUp } from 'react-icons/fi';
+import { motion } from 'framer-motion';
+import { EASE } from '../lib/motion';
 
-const Footer: React.FC = () => {
-  const handleNavClick = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
+const links = [
+  { id: 'about', label: 'About' },
+  { id: 'timeline', label: 'Experience' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'services', label: 'Services' },
+  { id: 'portfolio', label: 'Work' },
+  { id: 'contact', label: 'Contact' },
+];
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+function scrollTo(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
 
-  const socialLinks = [
-    { icon: FiGithub, label: 'GitHub', link: '#', color: 'hover:text-white' },
-    { icon: FiTwitter, label: 'Twitter', link: '#', color: 'hover:text-blue-400' },
-    { icon: FiLinkedin, label: 'LinkedIn', link: '#', color: 'hover:text-blue-500' },
-  ];
-
+export default function Footer() {
   return (
-    <footer className="py-16 px-5 flex justify-center" style={{ background: 'linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%)' }}>
-      <button
-        onClick={scrollToTop}
-        className="fixed bottom-6 right-6 p-3 rounded-full shadow-lg shadow-black/30 transition-all duration-300 hover:scale-110 z-40 bg-[#1a1a1a] text-white border border-[#333] hover:bg-[#2a2a2a]"
-        aria-label="Scroll to top"
+    <motion.footer
+      initial={{ opacity: 0, y: 30, filter: 'blur(4px)' }}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.7, ease: EASE }}
+      className="border-t border-line bg-surface px-6 pb-10 pt-12 text-center"
+    >
+      <motion.span
+        initial={{ scale: 0 }}
+        whileInView={{ scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+        className="mx-auto mb-6 grid h-10 w-10 place-items-center rounded-full bg-ink text-sm font-extrabold text-canvas"
       >
-        <FiArrowUp size={20} />
-      </button>
+        F
+      </motion.span>
 
-      <div className="bg-[#1a1a1a] border border-[#333] rounded-2xl p-6 md:p-10 max-w-4xl w-full" style={{ fontFamily: "'Poppins', sans-serif" }}>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          <div>
-            <h3 className="text-lg font-bold mb-4 text-white">
-              Company
-            </h3>
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href="#about"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick('about');
-                  }}
-                  className="block transition-all duration-300 hover:translate-x-1 text-gray-400 hover:text-white text-sm"
-                >
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#services"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick('services');
-                  }}
-                  className="block transition-all duration-300 hover:translate-x-1 text-gray-400 hover:text-white text-sm"
-                >
-                  Services
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#contact"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick('contact');
-                  }}
-                  className="block transition-all duration-300 hover:translate-x-1 text-gray-400 hover:text-white text-sm"
-                >
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
+      <nav aria-label="Footer" className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+        {links.map((link, i) => (
+          <motion.a
+            key={link.id}
+            href={`#${link.id}`}
+            onClick={(e) => {
+              e.preventDefault();
+              scrollTo(link.id);
+            }}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, ease: EASE, delay: 0.15 + i * 0.05 }}
+            className="body-sm font-medium text-muted transition-colors duration-200 hover:text-ink"
+          >
+            {link.label}
+          </motion.a>
+        ))}
+      </nav>
 
-          <div>
-            <h3 className="text-lg font-bold mb-4 text-white">
-              Quick Links
-            </h3>
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href="#portfolio"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick('portfolio');
-                  }}
-                  className="block transition-all duration-300 hover:translate-x-1 text-gray-400 hover:text-white text-sm"
-                >
-                  Portfolio
-                </a>
-              </li>
-              <li>
-                <a href="#" className="block transition-all duration-300 hover:translate-x-1 text-gray-400 hover:text-white text-sm">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="block transition-all duration-300 hover:translate-x-1 text-gray-400 hover:text-white text-sm">
-                  Terms of Service
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-bold mb-4 text-white">
-              Connect
-            </h3>
-            <ul className="space-y-3">
-              <li className="flex items-center gap-2">
-                <FiMail className="text-gray-400" size={16} />
-                <a href="mailto:hello@company.com" className="transition-colors duration-300 text-gray-400 hover:text-white text-sm">
-                  hello@company.com
-                </a>
-              </li>
-              <li className="flex items-center gap-2">
-                <FiPhone className="text-gray-400" size={16} />
-                <a href="tel:+15551234567" className="transition-colors duration-300 text-gray-400 hover:text-white text-sm">
-                  +1 (555) 123-4567
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-bold mb-4 text-white">
-              Follow Us
-            </h3>
-            <div className="flex gap-3">
-              {socialLinks.map((social, index) => (
-                <a
-                  key={index}
-                  href={social.link}
-                  className={`p-2 rounded-full transition-all duration-300 hover:scale-110 bg-[#2a2a2a] text-gray-400 ${social.color}`}
-                  aria-label={social.label}
-                >
-                  <social.icon size={18} />
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-        
-        <div className="text-center pt-5 border-t border-[#333]">
-          <p className="text-sm text-gray-500">
-            &copy; 2025 Company Name. All rights reserved.
-          </p>
-        </div>
-      </div>
-    </footer>
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+        className="mt-5 text-[11px] text-placeholder"
+      >
+        &copy; {new Date().getFullYear()} Fraol Masresha. All rights reserved.
+      </motion.p>
+      <p className="mt-1 text-[11px] text-placeholder">fraolabmas@gmail.com</p>
+    </motion.footer>
   );
-};
-
-export default Footer;
+}

@@ -1,311 +1,219 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { 
-  FiGithub, 
-  FiExternalLink, 
-  FiCode,
-  FiImage,
-  FiShoppingCart,
-  FiCloud,
-  FiMessageCircle,
-  FiBriefcase,
-  FiStar
-} from 'react-icons/fi';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
+import {
+  SiReact,
+  SiNodedotjs,
+  SiMongodb,
+  SiExpress,
+  SiTailwindcss,
+  SiPython,
+  SiTensorflow,
+  SiD3,
+  SiFastapi,
+  SiPostgresql,
+  SiSocketdotio,
+  SiTerraform,
+  SiDocker,
+  SiKubernetes,
+  SiFirebase,
+  SiRazorpay,
+} from 'react-icons/si';
+import { SectionHeading, Sheet } from './ui';
+import { staggerParent, staggerItem, EASE } from '../lib/motion';
 import healthImg from '../assets/health care.png';
 
-const Portfolio: React.FC = () => {
-  const [filter, setFilter] = useState('all');
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  const categories = [
-    { id: 'all', label: 'All Projects', icon: <FiCode size={14} /> },
-    { id: 'web', label: 'Web Apps', icon: <FiCode size={14} /> },
-    { id: 'ecommerce', label: 'E-commerce', icon: <FiShoppingCart size={14} /> },
-    { id: 'cloud', label: 'Cloud', icon: <FiCloud size={14} /> },
-  ];
-
-  const projects = [
-    {
-      id: 1,
-      title: 'Hospital Management System',
-      category: 'healthcare',
-      description: 'Comprehensive hospital management system with patient records, appointment scheduling, and billing.',
-      tech: ['React', 'Node.js', 'MongoDB', 'Express', 'Tailwind'],
-      image: <img src={healthImg} alt="Hospital Management System" className="w-full h-full object-cover" />,
-      github: 'https://medicare-app-phi.vercel.app/',
-      demo: 'https://medicare-app-phi.vercel.app/',
-      featured: true
-    },
-    {
-      id: 2,
-      title: 'AI Analytics Dashboard',
-      category: 'web',
-      description: 'Real-time analytics dashboard with machine learning predictions and data visualization.',
-      tech: ['Python', 'TensorFlow', 'React', 'D3.js', 'FastAPI'],
-      image: <FiImage size={48} className="text-[#A3CF00]" />,
-      github: '#',
-      demo: '#',
-      featured: true
-    },
-    {
-      id: 3,
-      title: 'Social Media App',
-      category: 'web',
-      description: 'Cross-platform social media application with real-time messaging and content sharing.',
-      tech: ['React Native', 'Firebase', 'Node.js', 'Socket.io'],
-      image: <FiMessageCircle size={48} className="text-[#A3CF00]" />,
-      github: '#',
-      demo: '#',
-      featured: false
-    },
-    {
-      id: 4,
-      title: 'Cloud Migration Suite',
-      category: 'cloud',
-      description: 'Enterprise cloud migration tools and monitoring system for seamless infrastructure transition.',
-      tech: ['AWS', 'Terraform', 'Python', 'Docker', 'Kubernetes'],
-      image: <FiCloud size={48} className="text-[#A3CF00]" />,
-      github: '#',
-      demo: '#',
-      featured: false
-    },
-    {
-      id: 5,
-      title: 'Task Management System',
-      category: 'web',
-      description: 'Collaborative task management platform with team workspace and project tracking.',
-      tech: ['React', 'Express', 'PostgreSQL', 'Socket.io'],
-      image: <FiCode size={48} className="text-[#A3CF00]" />,
-      github: '#',
-      demo: '#',
-      featured: false
-    },
-    {
-      id: 6,
-      title: 'Food Delivery App',
-      category: 'ecommerce',
-      description: 'Online food ordering platform with real-time order tracking and payment integration.',
-      tech: ['React Native', 'Node.js', 'MongoDB', 'Razorpay'],
-      image: <FiShoppingCart size={48} className="text-[#A3CF00]" />,
-      github: '#',
-      demo: '#',
-      featured: false
-    },
-  ];
-
-  const filteredProjects = filter === 'all' 
-    ? projects 
-    : projects.filter(p => p.category === filter);
-
-  // Intersection Observer for scroll animations
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { 
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      }
-    );
-
-    const cards = document.querySelectorAll('.project-card');
-    cards.forEach(card => observer.observe(card));
-
-    return () => {
-      cards.forEach(card => observer.unobserve(card));
-    };
-  }, [filteredProjects]);
-
-  return (
-    <section 
-      id="portfolio" 
-      ref={sectionRef}
-      className="relative w-full min-h-screen bg-[#F7F7F7] py-20 md:py-28"
-    >
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700&display=swap');
-        
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .project-card {
-          transition: all 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-          background: #ffffff;
-          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05), 0 1px 4px rgba(0, 0, 0, 0.03);
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        
-        .project-card.visible {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        
-        .project-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 8px 30px rgba(163, 207, 0, 0.15), 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-        
-        .project-card:hover .project-icon {
-          transform: scale(1.1);
-        }
-        
-        .font-bebas {
-          font-family: 'Bebas Neue', cursive;
-        }
-        
-        .font-poppins {
-          font-family: 'Poppins', sans-serif;
-        }
-        
-        .category-active {
-          background: #A3CF00;
-          color: #1a1a1a;
-          transform: scale(1.05);
-          box-shadow: 0 2px 12px rgba(163, 207, 0, 0.25);
-        }
-      `}</style>
-
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-[#A3CF00]/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#A3CF00]/5 rounded-full blur-3xl"></div>
-      </div>
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#A3CF00]/10 border border-[#A3CF00]/20 mb-4">
-            <FiBriefcase className="text-[#A3CF00]" size={16} />
-            <span className="text-[#A3CF00] text-sm font-semibold uppercase tracking-wider">My Portfolio</span>
-          </div>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bebas text-[#1A1A1A] mb-3">
-            Featured <span className="text-[#A3CF00]">Projects</span>
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">A showcase of my recent work and personal projects</p>
-          <div className="w-16 h-0.5 bg-[#A3CF00] mx-auto mt-5 rounded-full"></div>
-        </div>
-
-        {/* Category Filters */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setFilter(cat.id)}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
-                filter === cat.id
-                  ? 'category-active bg-[#A3CF00] text-[#1a1a1a]'
-                  : 'bg-white text-gray-600 border border-gray-200 shadow-[0_1px_4px_rgba(0,0,0,0.04)]'
-              }`}
-            >
-              {cat.icon}
-              <span>{cat.label}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project, idx) => (
-            <div
-              key={project.id}
-              className="project-card rounded-2xl overflow-hidden cursor-pointer"
-              style={{ transitionDelay: `${idx * 0.1}s` }}
-              onMouseEnter={() => setHoveredCard(project.id)}
-              onMouseLeave={() => setHoveredCard(null)}
-            >
-              {/* Project Image Area */}
-              <div className="relative h-48 overflow-hidden bg-gray-50 flex items-center justify-center border-b border-gray-100">
-                <div className={`project-icon transition-all duration-500 ${hoveredCard === project.id ? 'scale-110' : 'scale-100'}`}>
-                  {project.image}
-                </div>
-                
-                {/* Overlay with links */}
-                <div className={`absolute inset-0 bg-white/95 flex items-center justify-center gap-4 transition-all duration-300 ${
-                  hoveredCard === project.id ? 'opacity-100' : 'opacity-0'
-                }`}>
-                  <a
-                    href={project.github}
-                    className="p-3 bg-[#A3CF00] rounded-full hover:scale-110 transition-transform duration-300 shadow-md"
-                    aria-label="GitHub"
-                  >
-                    <FiGithub className="text-[#1a1a1a]" size={20} />
-                  </a>
-                  <a
-                    href={project.demo}
-                    className="p-3 bg-[#A3CF00] rounded-full hover:scale-110 transition-transform duration-300 shadow-md"
-                    aria-label="Live Demo"
-                  >
-                    <FiExternalLink className="text-[#1a1a1a]" size={20} />
-                  </a>
-                </div>
-              </div>
-              
-              {/* Project Info */}
-              <div className="p-5">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-xl font-bold text-gray-900">
-                    {project.title}
-                  </h3>
-                  {project.featured && (
-                    <div className="relative">
-                      <div className="absolute inset-0 bg-[#A3CF00] blur-md rounded-full opacity-30"></div>
-                      <span className="relative flex items-center gap-1 text-xs px-3 py-1 rounded-full bg-gradient-to-r from-[#A3CF00] to-[#8fb300] text-[#1a1a1a] font-bold">
-                        <FiStar size={10} className="fill-current" />
-                        FEATURED
-                      </span>
-                    </div>
-                  )}
-                </div>
-                
-                <p className="text-gray-600 text-sm leading-relaxed mb-3">
-                  {project.description}
-                </p>
-                
-                {/* Tech Stack */}
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.slice(0, 4).map((tech, i) => (
-                    <span
-                      key={i}
-                      className="text-xs px-2 py-1 rounded-full bg-gray-100 border border-gray-200 text-gray-700 transition-all duration-300 hover:bg-[#A3CF00] hover:text-[#1a1a1a] hover:border-[#A3CF00] cursor-pointer"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {project.tech.length > 4 && (
-                    <span className="text-xs px-2 py-1 rounded-full bg-gray-100 border border-gray-200 text-gray-700">
-                      +{project.tech.length - 4}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* View More Button */}
-        <div className="text-center mt-12">
-          <button className="bg-transparent border-2 border-[#A3CF00] text-[#A3CF00] font-semibold py-3 px-8 rounded-full transition-all duration-300 hover:bg-[#A3CF00] hover:text-[#1a1a1a] hover:scale-105 hover:shadow-lg inline-flex items-center gap-2">
-            <span>View All Projects</span>
-            <FiExternalLink size={16} />
-          </button>
-        </div>
-      </div>
-    </section>
-  );
+const techIcons: Record<string, { Icon: typeof SiReact; color: string }> = {
+  React: { Icon: SiReact, color: '#61DAFB' },
+  'Node.js': { Icon: SiNodedotjs, color: '#339933' },
+  MongoDB: { Icon: SiMongodb, color: '#47A248' },
+  Express: { Icon: SiExpress, color: '#FFFFFF' },
+  Tailwind: { Icon: SiTailwindcss, color: '#06B6D4' },
+  Python: { Icon: SiPython, color: '#3776AB' },
+  TensorFlow: { Icon: SiTensorflow, color: '#FF6F00' },
+  'D3.js': { Icon: SiD3, color: '#F9A03C' },
+  FastAPI: { Icon: SiFastapi, color: '#009688' },
+  PostgreSQL: { Icon: SiPostgresql, color: '#4169E1' },
+  'Socket.io': { Icon: SiSocketdotio, color: '#FFFFFF' },
+  Terraform: { Icon: SiTerraform, color: '#7B42BC' },
+  Docker: { Icon: SiDocker, color: '#2496ED' },
+  Kubernetes: { Icon: SiKubernetes, color: '#326CE5' },
+  'React Native': { Icon: SiReact, color: '#61DAFB' },
+  Firebase: { Icon: SiFirebase, color: '#FFCA28' },
+  Razorpay: { Icon: SiRazorpay, color: '#072654' },
 };
 
-export default Portfolio;
+interface Project {
+  title: string;
+  description: string;
+  tech: string[];
+  link: string;
+  image?: string;
+  year: string;
+}
+
+const projects: Project[] = [
+  {
+    title: 'Hospital Management System',
+    description: 'A comprehensive hospital management platform with patient records, appointments, and billing.',
+    tech: ['React', 'Node.js', 'MongoDB', 'Express', 'Tailwind'],
+    link: 'https://medicare-app-phi.vercel.app/',
+    image: healthImg,
+    year: '2025',
+  },
+  {
+    title: 'AI Analytics Dashboard',
+    description: 'Real-time analytics with machine-learning predictions and data visualization.',
+    tech: ['Python', 'TensorFlow', 'React', 'D3.js', 'FastAPI'],
+    link: '#',
+    year: '2024',
+  },
+  {
+    title: 'Task Management System',
+    description: 'Collaborative task tracking with team workspaces and project dashboards.',
+    tech: ['React', 'Express', 'PostgreSQL', 'Socket.io'],
+    link: '#',
+    year: '2024',
+  },
+  {
+    title: 'Cloud Migration Suite',
+    description: 'Enterprise tooling for cloud migration, monitoring, and seamless transitions.',
+    tech: ['AWS', 'Terraform', 'Python', 'Docker', 'Kubernetes'],
+    link: '#',
+    year: '2024',
+  },
+  {
+    title: 'Social Media App',
+    description: 'Cross-platform app with real-time messaging and content sharing.',
+    tech: ['React Native', 'Firebase', 'Node.js', 'Socket.io'],
+    link: '#',
+    year: '2023',
+  },
+  {
+    title: 'Food Delivery App',
+    description: 'Online ordering with live order tracking and integrated payments.',
+    tech: ['React Native', 'Node.js', 'MongoDB', 'Razorpay'],
+    link: '#',
+    year: '2023',
+  },
+];
+
+export default function Portfolio() {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const selected = projects[selectedIndex];
+
+  return (
+    <Sheet id="portfolio" className="px-6 pb-10 sm:px-10">
+      <SectionHeading
+        eyebrow="Selected Work"
+        title={<span>A selection of things <span className="text-muted">I&apos;ve built.</span></span>}
+        sub="A few projects that show how I think about product, craft, and code."
+      />
+
+      <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:gap-8">
+        {/* Left — Project Links */}
+        <motion.ul
+          variants={staggerParent}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.1 }}
+          className="flex flex-col gap-2 sm:w-[20%] sm:min-w-[180px]"
+        >
+          {projects.map((project, index) => (
+            <motion.li key={project.title} variants={staggerItem}>
+              <button
+                onClick={() => setSelectedIndex(index)}
+                className={`group w-full text-left transition-all duration-200 ${
+                  index === selectedIndex
+                    ? 'text-ink font-semibold underline underline-offset-4 decoration-2'
+                    : 'text-muted hover:text-ink underline-offset-4 decoration-1 hover:underline'
+                }`}
+              >
+                <span className="text-sm">{project.title}</span>
+              </button>
+            </motion.li>
+          ))}
+        </motion.ul>
+
+        {/* Right — Screen Frame */}
+        <div className="relative flex-1 sm:min-h-[420px]">
+          {/* Tech Stack Icons — Outside screen, top right */}
+          <div className="absolute right-0 -top-3 z-10 flex flex-wrap justify-end gap-2">
+            {selected.tech.map((t) => {
+              const entry = techIcons[t];
+              if (!entry) return null;
+              const { Icon, color } = entry;
+              return (
+                <span
+                  key={t}
+                  title={t}
+                  className="grid h-8 w-8 place-items-center rounded-full border border-line bg-surface text-ink transition-colors duration-200 hover:bg-ink hover:text-canvas"
+                >
+                  <Icon size={14} style={{ color }} />
+                </span>
+              );
+            })}
+          </div>
+
+          {/* Browser Chrome */}
+          <div className="flex items-center gap-2 rounded-t-2xl border border-b-0 border-line bg-canvas/80 px-4 py-2.5">
+            <div className="flex gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+            </div>
+            <div className="ml-3 flex-1 rounded-lg bg-line/50 px-3 py-1">
+              <span className="text-[11px] text-placeholder">{selected.title.toLowerCase().replace(/\s+/g, '-')}.vercel.app</span>
+            </div>
+          </div>
+
+          {/* Screen Body */}
+          <div className="group relative overflow-hidden rounded-b-2xl border border-line bg-canvas/40 sm:min-h-[380px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selected.title}
+                initial={{ opacity: 0, filter: 'blur(8px)' }}
+                animate={{ opacity: 1, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, filter: 'blur(8px)' }}
+                transition={{ duration: 0.4, ease: EASE }}
+                className="flex h-full flex-col"
+              >
+                {selected.image ? (
+                  <div className="relative flex-1 overflow-hidden">
+                    <img
+                      src={selected.image}
+                      alt={selected.title}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex flex-1 items-center justify-center sm:min-h-[380px]">
+                    <div className="text-center">
+                      <span className="text-7xl font-extrabold tracking-tighter text-line">
+                        {selected.title.slice(0, 2)}
+                      </span>
+                      <p className="mt-2 text-sm text-placeholder">{selected.year}</p>
+                    </div>
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Hover Overlay */}
+            <div className="absolute inset-0 flex items-center justify-center bg-ink/60 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+              <a
+                href={selected.link}
+                target={selected.link.startsWith('http') ? '_blank' : undefined}
+                rel={selected.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="inline-flex items-center gap-2 rounded-full bg-canvas px-6 py-3 text-sm font-semibold text-ink transition-all duration-200 hover:scale-105"
+              >
+                Visit Project
+                <ArrowUpRight size={15} />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Sheet>
+  );
+}
