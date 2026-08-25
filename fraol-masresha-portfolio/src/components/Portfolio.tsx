@@ -147,7 +147,7 @@ export default function Portfolio() {
                 <span
                   key={t}
                   title={t}
-                  className="grid h-8 w-8 place-items-center rounded-full border border-line bg-surface text-ink transition-colors duration-200 hover:bg-ink hover:text-canvas"
+                  className="grid h-8 w-8 place-items-center rounded-full border border-line bg-surface/80 text-ink backdrop-blur-md transition-colors duration-200 hover:bg-ink hover:text-canvas"
                 >
                   <Icon size={14} style={{ color }} />
                 </span>
@@ -156,19 +156,19 @@ export default function Portfolio() {
           </div>
 
           {/* Browser Chrome */}
-          <div className="flex items-center gap-2 rounded-t-2xl border border-b-0 border-line bg-canvas/80 px-4 py-2.5">
+          <div className="flex items-center gap-2 rounded-t-2xl border border-b-0 border-line bg-surface/80 px-4 py-2.5 backdrop-blur-xl">
             <div className="flex gap-1.5">
               <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
             </div>
-            <div className="ml-3 flex-1 rounded-lg bg-line/50 px-3 py-1">
+            <div className="ml-3 flex-1 rounded-lg bg-canvas/60 px-3 py-1 backdrop-blur-sm">
               <span className="text-[11px] text-placeholder">{selected.title.toLowerCase().replace(/\s+/g, '-')}.vercel.app</span>
             </div>
           </div>
 
           {/* Screen Body */}
-          <div className="group relative overflow-hidden rounded-b-2xl border border-line bg-canvas/40 sm:min-h-[380px]">
+          <div className="group relative overflow-hidden rounded-b-2xl border border-t-0 border-line bg-canvas/50 backdrop-blur-xl sm:min-h-[380px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={selected.title}
@@ -200,12 +200,12 @@ export default function Portfolio() {
             </AnimatePresence>
 
             {/* Hover Overlay */}
-            <div className="absolute inset-0 flex items-center justify-center bg-ink/60 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+            <div className="absolute inset-0 flex items-center justify-center bg-ink/50 opacity-0 backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100">
               <a
                 href={selected.link}
                 target={selected.link.startsWith('http') ? '_blank' : undefined}
                 rel={selected.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="inline-flex items-center gap-2 rounded-full bg-canvas px-6 py-3 text-sm font-semibold text-ink transition-all duration-200 hover:scale-105"
+                className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/80 px-6 py-3 text-sm font-semibold text-ink backdrop-blur-xl transition-all duration-200 hover:scale-105 hover:bg-ink hover:text-canvas"
               >
                 Visit Project
                 <ArrowUpRight size={15} />

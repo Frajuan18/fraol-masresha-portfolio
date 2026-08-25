@@ -15,6 +15,8 @@ const socials: {
   { label: 'X', href: '#', Icon: XIcon },
 ];
 
+const roles = ['Developer', 'Problem Solver', 'Designer'];
+
 const stats = [
   { value: '3+', label: 'Years' },
   { value: '20+', label: 'Projects' },
@@ -23,7 +25,29 @@ const stats = [
 
 export default function Hero() {
   return (
-    <Sheet id="home" className="px-6 pb-10 pt-20 sm:px-10 sm:pt-24">
+    <Sheet id="home" className="relative px-6 pb-10 pt-20 sm:px-10 sm:pt-24">
+      {/* Left — Role Labels */}
+      <div className="pointer-events-none absolute left-4 top-1/2 hidden -translate-y-1/2 flex-col gap-12 lg:flex">
+        {roles.map((role) => (
+          <span
+            key={role}
+            className="text-[11px] font-bold uppercase tracking-[0.18em] text-placeholder"
+            style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
+          >
+            {role}
+          </span>
+        ))}
+      </div>
+
+      {/* Right — DEVELOPER Watermark */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute right-4 top-1/2 hidden -translate-y-1/2 select-none lg:block"
+        style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
+      >
+        <span className="text-[8vw] font-black leading-none tracking-tighter text-line/60">DEVELOPER</span>
+      </span>
+
       <SectionHeading
         eyebrow="Full-Stack Developer"
         title={

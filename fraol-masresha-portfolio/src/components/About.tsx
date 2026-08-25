@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, Code, Lightbulb, Sparkles, Target } from 'lucide-react';
 import { IconTile, SectionHeading, Sheet } from './ui';
 import { staggerItem, staggerParent } from '../lib/motion';
+import TechDock from './TechDock';
 
 const process: {
   number: string;
@@ -72,6 +73,19 @@ export default function About() {
         >
           <span className="text-muted">Build less.</span> Make it better.
         </motion.p>
+
+        <div className="mt-10">
+          <motion.p
+            initial={{ opacity: 0, y: 16, filter: 'blur(4px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-5 text-center text-[11px] font-bold uppercase tracking-[0.18em] text-placeholder"
+          >
+            Tech Stacks
+          </motion.p>
+          <TechDock />
+        </div>
       </div>
     </Sheet>
   );
