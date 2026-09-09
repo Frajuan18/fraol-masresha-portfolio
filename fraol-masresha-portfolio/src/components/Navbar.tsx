@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ArrowUpRight, Menu, Moon, Sun, X } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 import { EASE } from '../lib/motion';
+import logoImg from '../assets/logo.png';
 
 const navLinks = [
   { id: 'about', label: 'About' },
@@ -21,6 +22,14 @@ function scrollTo(id: string) {
 export default function Navbar() {
   const { theme, toggle } = useTheme();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <>
@@ -28,11 +37,15 @@ export default function Navbar() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
-        className="fixed inset-x-0 top-0 z-50 bg-surface/80 backdrop-blur-xl"
+        className={`fixed z-50 transition-[top,width,border-radius,box-shadow,background-color,backdrop-filter] duration-500 ease-in-out ${
+          scrolled
+            ? 'inset-x-0 top-3 mx-auto w-[calc(100%-1.5rem)] max-w-3xl rounded-full bg-surface/80 shadow-[0_16px_40px_-16px_rgba(0,0,0,0.3)] backdrop-blur-xl sm:w-[calc(100%-3rem)]'
+            : 'inset-x-0 top-0 w-full rounded-none bg-transparent shadow-none backdrop-blur-none'
+        }`}
       >
         <nav
           aria-label="Primary"
-          className="flex h-16 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8"
+          className="flex h-16 flex-nowrap items-center justify-between gap-3 px-4 sm:px-6 lg:px-8"
         >
           <a
             href="#home"
@@ -40,17 +53,20 @@ export default function Navbar() {
               e.preventDefault();
               scrollTo('home');
             }}
-            className="flex items-center gap-2.5"
+            className="flex shrink-0 items-center gap-2.5 whitespace-nowrap"
           >
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-sm font-extrabold text-canvas">
-              F
-            </span>
+            <img
+              src={logoImg}
+              alt="Fraol Masresha logo"
+              draggable={false}
+              className="h-9 w-9 select-none rounded-full border border-line object-cover"
+            />
             <span className="text-base font-bold tracking-tight text-heading dark:text-ink">
               Fraol<span className="text-ink dark:text-neutral-0">.</span>
             </span>
           </a>
 
-          <ul className="hidden items-center gap-1 md:flex">
+          <ul className="hidden items-center gap-1 lg:flex">
             {navLinks.map((link) => (
               <li key={link.id}>
                 <a
@@ -71,7 +87,7 @@ export default function Navbar() {
             <button
               onClick={toggle}
               aria-label="Toggle color theme"
-              className="btn-icon !h-9 !w-9"
+              className="btn-icon !h-9 !w-9 shrink-0"
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span
@@ -92,7 +108,7 @@ export default function Navbar() {
                 e.preventDefault();
                 scrollTo('contact');
               }}
-              className="hidden h-9 items-center gap-1.5 rounded-full bg-ink px-4 text-[13px] font-bold text-canvas transition-all duration-200 hover:opacity-90 active:opacity-95 sm:inline-flex"
+              className="hidden h-9 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-ink px-4 text-[13px] font-bold text-canvas transition-all duration-200 hover:opacity-90 active:opacity-95 sm:inline-flex"
             >
               Hire Me <ArrowRight size={13} />
             </a>
@@ -101,7 +117,7 @@ export default function Navbar() {
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
               aria-label="Toggle navigation menu"
-              className="grid h-9 w-9 place-items-center rounded-full border border-line bg-surface text-ink md:hidden"
+              className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line bg-surface text-ink lg:hidden"
             >
               {open ? <X size={16} /> : <Menu size={16} />}
             </button>
@@ -117,7 +133,9 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.25, ease: EASE }}
-            className="fixed inset-x-0 top-16 z-40 border-b border-line bg-surface/95 backdrop-blur-xl md:hidden"
+            className={`fixed inset-x-0 z-40 border-b border-line bg-surface/95 backdrop-blur-xl lg:hidden ${
+              scrolled ? 'top-[76px]' : 'top-16'
+            }`}
           >
             <div className="px-4 py-2">
               <ul className="flex flex-col gap-0.5">

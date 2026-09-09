@@ -79,7 +79,7 @@ export function SectionHeading({
         whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
-        className="mx-auto mt-3 max-w-xl h3 text-ink"
+        className="relative z-10 mx-auto mt-3 max-w-xl h3 text-ink"
       >
         {title}
       </motion.h2>

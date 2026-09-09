@@ -9,17 +9,20 @@ import Portfolio from './components/Portfolio';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
+import MouseEffects from './components/MouseEffects';
+import { useTheme } from './hooks/useTheme';
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const { theme } = useTheme();
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 2200);
+    const timer = setTimeout(() => setLoading(false), 3200);
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="min-h-screen bg-canvas font-sans text-ink">
+    <div className="min-h-screen bg-canvas font-mono text-ink">
       <Loader show={loading} />
       {!loading && (
         <>
@@ -34,6 +37,10 @@ function App() {
             <Contact />
           </main>
           <Footer />
+          {/* Click Effects overlay — fixed to the viewport, never intercepts clicks */}
+          <div className="pointer-events-none fixed inset-0 z-[60]">
+            <MouseEffects color={theme === 'dark' ? '#ffffff' : '#030712'} showLabel={false} />
+          </div>
         </>
       )}
     </div>

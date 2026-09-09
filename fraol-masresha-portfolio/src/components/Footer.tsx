@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { EASE } from '../lib/motion';
+import logoImg from '../assets/logo.png';
 
 const links = [
   { id: 'about', label: 'About' },
@@ -23,15 +24,16 @@ export default function Footer() {
       transition={{ duration: 0.7, ease: EASE }}
       className="border-t border-line bg-surface px-6 pb-10 pt-12 text-center"
     >
-      <motion.span
+      <motion.img
+        src={logoImg}
+        alt="Fraol Masresha logo"
+        draggable={false}
         initial={{ scale: 0 }}
         whileInView={{ scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-        className="mx-auto mb-6 grid h-10 w-10 place-items-center rounded-full bg-ink text-sm font-extrabold text-canvas"
-      >
-        F
-      </motion.span>
+        className="mx-auto mb-6 block h-10 w-10 select-none rounded-full border border-line object-cover"
+      />
 
       <nav aria-label="Footer" className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
         {links.map((link, i) => (

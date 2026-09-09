@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Lock } from 'lucide-react';
 import {
   SiReact,
   SiNodedotjs,
@@ -17,11 +17,12 @@ import {
   SiDocker,
   SiKubernetes,
   SiFirebase,
+  SiJsonwebtokens,
   SiRazorpay,
 } from 'react-icons/si';
 import { SectionHeading, Sheet } from './ui';
 import { staggerParent, staggerItem, EASE } from '../lib/motion';
-import healthImg from '../assets/health care.png';
+import childrenMsImg from '../assets/children ms.png';
 
 const techIcons: Record<string, { Icon: typeof SiReact; color: string }> = {
   React: { Icon: SiReact, color: '#61DAFB' },
@@ -40,6 +41,7 @@ const techIcons: Record<string, { Icon: typeof SiReact; color: string }> = {
   Kubernetes: { Icon: SiKubernetes, color: '#326CE5' },
   'React Native': { Icon: SiReact, color: '#61DAFB' },
   Firebase: { Icon: SiFirebase, color: '#FFCA28' },
+  JWT: { Icon: SiJsonwebtokens, color: '#FB015B' },
   Razorpay: { Icon: SiRazorpay, color: '#072654' },
 };
 
@@ -50,16 +52,19 @@ interface Project {
   link: string;
   image?: string;
   year: string;
+  private?: boolean;
 }
 
 const projects: Project[] = [
   {
-    title: 'Hospital Management System',
-    description: 'A comprehensive hospital management platform with patient records, appointments, and billing.',
-    tech: ['React', 'Node.js', 'MongoDB', 'Express', 'Tailwind'],
-    link: 'https://medicare-app-phi.vercel.app/',
-    image: healthImg,
-    year: '2025',
+    title: 'Children Management System',
+    description:
+      'A private church children management platform for registration, attendance tracking, classes, and guardian check-in/out — secured with JWT authentication.',
+    tech: ['MongoDB', 'Express', 'React', 'Node.js', 'JWT'],
+    link: '#',
+    image: childrenMsImg,
+    year: '2026',
+    private: true,
   },
   {
     title: 'AI Analytics Dashboard',
@@ -110,33 +115,46 @@ export default function Portfolio() {
         sub="A few projects that show how I think about product, craft, and code."
       />
 
-      <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:gap-8">
+      <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:gap-14 lg:gap-20">
         {/* Left — Project Links */}
         <motion.ul
           variants={staggerParent}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.1 }}
-          className="flex flex-col gap-2 sm:w-[20%] sm:min-w-[180px]"
+          className="flex flex-col gap-2 sm:w-[22%] sm:min-w-[200px] lg:min-w-[220px]"
         >
           {projects.map((project, index) => (
             <motion.li key={project.title} variants={staggerItem}>
               <button
                 onClick={() => setSelectedIndex(index)}
-                className={`group w-full text-left transition-all duration-200 ${
+                className={`group w-full border-b-2 pb-3 text-left transition-colors duration-200 ${
                   index === selectedIndex
-                    ? 'text-ink font-semibold underline underline-offset-4 decoration-2'
-                    : 'text-muted hover:text-ink underline-offset-4 decoration-1 hover:underline'
+                    ? 'border-ink text-ink font-semibold'
+                    : 'border-transparent text-muted hover:border-ink/40 hover:text-ink'
                 }`}
               >
-                <span className="text-sm">{project.title}</span>
+                <span className="font-display text-base font-bold tracking-tight">{project.title}</span>
+                <AnimatePresence initial={false}>
+                  {index === selectedIndex && (
+                    <motion.span
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: EASE }}
+                      className="block overflow-hidden text-xs font-normal leading-relaxed text-muted"
+                    >
+                      <span className="block pt-1">{project.description}</span>
+                    </motion.span>
+                  )}
+                </AnimatePresence>
               </button>
             </motion.li>
           ))}
         </motion.ul>
 
         {/* Right — Screen Frame */}
-        <div className="relative flex-1 sm:min-h-[420px]">
+        <div className="relative flex-1 sm:min-h-[380px]">
           {/* Tech Stack Icons — Outside screen, top right */}
           <div className="absolute right-0 -top-3 z-10 flex flex-wrap justify-end gap-2">
             {selected.tech.map((t) => {
@@ -187,7 +205,7 @@ export default function Portfolio() {
                     />
                   </div>
                 ) : (
-                  <div className="flex flex-1 items-center justify-center sm:min-h-[380px]">
+                  <div className="flex flex-1 items-center justify-center sm:min-h-[340px]">
                     <div className="text-center">
                       <span className="text-7xl font-extrabold tracking-tighter text-line">
                         {selected.title.slice(0, 2)}
@@ -201,15 +219,22 @@ export default function Portfolio() {
 
             {/* Hover Overlay */}
             <div className="absolute inset-0 flex items-center justify-center bg-ink/50 opacity-0 backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100">
-              <a
-                href={selected.link}
-                target={selected.link.startsWith('http') ? '_blank' : undefined}
-                rel={selected.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/80 px-6 py-3 text-sm font-semibold text-ink backdrop-blur-xl transition-all duration-200 hover:scale-105 hover:bg-ink hover:text-canvas"
-              >
-                Visit Project
-                <ArrowUpRight size={15} />
-              </a>
+              {selected.private ? (
+                <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/80 px-6 py-3 text-sm font-semibold text-ink backdrop-blur-xl">
+                  <Lock size={15} />
+                  Personal project
+                </span>
+              ) : (
+                <a
+                  href={selected.link}
+                  target={selected.link.startsWith('http') ? '_blank' : undefined}
+                  rel={selected.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/80 px-6 py-3 text-sm font-semibold text-ink backdrop-blur-xl transition-all duration-200 hover:scale-105 hover:bg-ink hover:text-canvas"
+                >
+                  Visit Project
+                  <ArrowUpRight size={15} />
+                </a>
+              )}
             </div>
           </div>
         </div>

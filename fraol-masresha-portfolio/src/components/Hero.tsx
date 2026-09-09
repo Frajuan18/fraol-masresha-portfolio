@@ -2,8 +2,10 @@ import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { staggerParent, staggerItem } from '../lib/motion';
 import { GithubIcon, LinkedinIcon, XIcon } from './icons';
-import { Sheet, SectionHeading } from './ui';
-import profileImg from '../assets/photo_2026-01-13_08-55-15-removebg-preview.png';
+import { Sheet } from './ui';
+import profileImg from '../assets/profile.png';
+import heroBgLight from '../assets/pexels-ian-panelo-35376091.jpg';
+import heroBgDark from '../assets/pexels-allan-carvalho-264847051-28579779.jpg';
 
 const socials: {
   label: string;
@@ -25,7 +27,25 @@ const stats = [
 
 export default function Hero() {
   return (
-    <Sheet id="home" className="relative px-6 pb-10 pt-20 sm:px-10 sm:pt-24">
+    <Sheet
+      id="home"
+      className="relative overflow-hidden px-6 pb-16 pt-16 sm:px-10 sm:pb-20 sm:pt-24"
+    >
+      {/* Background — themed photo (light: sky photo / dark: clouds) */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
+        <img
+          src={heroBgLight}
+          alt=""
+          className="h-full w-full object-cover object-center opacity-[0.18] brightness-[0.96] dark:hidden"
+        />
+        <img
+          src={heroBgDark}
+          alt=""
+          className="hidden h-full w-full object-cover opacity-40 dark:block"
+        />
+        <div className="absolute inset-0 hidden bg-gradient-to-b from-canvas/70 via-canvas/30 to-canvas dark:block" />
+      </div>
+
       {/* Left — Role Labels */}
       <div className="pointer-events-none absolute left-4 top-1/2 hidden -translate-y-1/2 flex-col gap-12 lg:flex">
         {roles.map((role) => (
@@ -39,47 +59,46 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* Right — DEVELOPER Watermark */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute right-4 top-1/2 hidden -translate-y-1/2 select-none lg:block"
-        style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
+      {/* Text column */}
+      <motion.div
+        variants={staggerParent}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.2 }}
+        className="relative z-10 mx-auto flex w-full max-w-xl flex-col items-center text-center"
       >
-        <span className="text-[8vw] font-black leading-none tracking-tighter text-line/60">DEVELOPER</span>
-      </span>
-
-      <SectionHeading
-        eyebrow="Full-Stack Developer"
-        title={
-          <span>
-            Designing software that works{' '}
-            <span className="text-muted">effortlessly.</span>
-          </span>
-        }
-        sub="I'm Fraol, a full-stack developer. I collaborate with companies to craft digital interfaces and build fast, scalable web applications — focused on clean code and great user experience."
-      />
-
-      <div className="mt-6 flex flex-col items-center">
-        <motion.div
-          variants={staggerParent}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className="flex flex-col items-center gap-6"
-        >
-          {/* Avatar */}
-          <motion.div variants={staggerItem} className="relative">
-            <div className="h-24 w-24 overflow-hidden rounded-full border-2 border-line">
+          {/* Online status — small profile picture with live dot */}
+          <motion.div variants={staggerItem} className="flex items-center gap-2.5">
+            <div className="relative shrink-0">
               <img
                 src={profileImg}
-                alt="Portrait of Fraol"
-                className="h-full w-full object-cover object-top"
+                alt="Fraol Masresha"
+                draggable={false}
+                className="h-10 w-10 select-none rounded-full border border-line object-cover shadow-[0_6px_12px_-3px_rgba(0,0,0,0.35)]"
               />
+              <span className="absolute -bottom-0.5 -right-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full border-2 border-canvas bg-emerald-500">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" />
+              </span>
             </div>
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted">
+              Online — Available for work
+            </span>
           </motion.div>
 
+          {/* Title */}
+          <motion.h1 variants={staggerItem} className="mt-6 h3 text-ink">
+            Designing software that works{' '}
+            <span className="text-muted">effortlessly.</span>
+          </motion.h1>
+
+          <motion.p variants={staggerItem} className="mx-auto mt-5 max-w-xl body-sm text-muted">
+            I&apos;m Fraol, a full-stack developer. I collaborate with companies
+            to craft digital interfaces and build fast, scalable web
+            applications — focused on clean code and great user experience.
+          </motion.p>
+
           {/* Buttons */}
-          <motion.div variants={staggerItem} className="flex flex-wrap items-center justify-center gap-3">
+          <motion.div variants={staggerItem} className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a href="mailto:fraolabmas@gmail.com" className="btn-primary btn">
               Start a conversation <ArrowRight size={16} />
             </a>
@@ -98,7 +117,7 @@ export default function Hero() {
           {/* Stats */}
           <motion.div
             variants={staggerItem}
-            className="grid w-full max-w-md grid-cols-3 divide-x divide-line rounded-2xl border border-line bg-canvas/60"
+            className="mx-auto mt-8 grid w-full max-w-md grid-cols-3 divide-x divide-line rounded-2xl border border-line bg-canvas/60"
           >
             {stats.map(({ value, label }) => (
               <div key={label} className="px-2 py-4 text-center">
@@ -109,10 +128,7 @@ export default function Hero() {
           </motion.div>
 
           {/* Socials */}
-          <motion.ul
-            variants={staggerItem}
-            className="flex items-center justify-center gap-2"
-          >
+          <motion.ul variants={staggerItem} className="mt-8 flex items-center justify-center gap-2">
             {socials.map(({ label, href, Icon }) => (
               <li key={label}>
                 <a
@@ -128,7 +144,6 @@ export default function Hero() {
             ))}
           </motion.ul>
         </motion.div>
-      </div>
     </Sheet>
   );
 }
