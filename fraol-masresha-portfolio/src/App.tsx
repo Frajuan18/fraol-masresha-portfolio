@@ -4,11 +4,12 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Timeline from './components/Timeline';
 import Skills from './components/Skills';
-import Services from './components/Services';
+import Experience from './components/Experience';
 import Portfolio from './components/Portfolio';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
+import AskFraol from './components/AskFraol';
 import MouseEffects from './components/MouseEffects';
 import { useTheme } from './hooks/useTheme';
 
@@ -27,16 +28,18 @@ function App() {
       {!loading && (
         <>
           <Navbar />
-          <main className="w-full space-y-16 pb-16 sm:space-y-20 lg:space-y-24">
+          <main className="w-full">
             <Hero />
             <About />
             <Timeline />
             <Skills />
-            <Services />
+            <Experience />
             <Portfolio />
             <Contact />
           </main>
           <Footer />
+          {/* Ask-anything-about-Fraol chatbot */}
+          <AskFraol />
           {/* Click Effects overlay — fixed to the viewport, never intercepts clicks */}
           <div className="pointer-events-none fixed inset-0 z-[60]">
             <MouseEffects color={theme === 'dark' ? '#ffffff' : '#030712'} showLabel={false} />

@@ -1,161 +1,200 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle2, Mail, MapPin, Send } from 'lucide-react';
-import { GithubIcon, LinkedinIcon, XIcon } from './icons';
-import { SectionHeading, Sheet } from './ui';
-import { EASE, staggerItem, staggerParent } from '../lib/motion';
+import { ArrowRight } from 'lucide-react';
+import { Sheet } from './ui';
+import { EASE } from '../lib/motion';
 
-const details: { label: string; value: string; href?: string; Icon: typeof Mail }[] = [
-  { label: 'Email', value: 'fraolabmas@gmail.com', href: 'mailto:fraolabmas@gmail.com', Icon: Mail },
-  { label: 'Location', value: 'Addis Ababa, Ethiopia', Icon: MapPin },
-];
+const EMAIL = 'fraolabmas@gmail.com';
 
-const socials: {
-  label: string;
-  href: string;
-  Icon: React.ComponentType<{ size?: number | string; className?: string }>;
-}[] = [
-  { label: 'GitHub', href: '#', Icon: GithubIcon },
-  { label: 'LinkedIn', href: '#', Icon: LinkedinIcon },
-  { label: 'X', href: '#', Icon: XIcon },
-  { label: 'Telegram', href: 'https://t.me/Fra_juan', Icon: Send },
-];
+/* Only accounts that actually exist — add real profiles here as they go live. */
+const socials = [{ label: 'Telegram', href: 'https://t.me/Fra_juan' }];
+
+const fadeUp = (delay: number) => ({
+  initial: { opacity: 0, y: 18 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.2 },
+  transition: { duration: 0.55, ease: EASE, delay },
+});
+
+const inputClass =
+  'w-full border-b border-line bg-transparent pb-2.5 font-medium text-ink placeholder:font-normal placeholder:text-placeholder outline-none transition-colors duration-200 focus:border-ink';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
-  const [sent, setSent] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  /* No backend yet — the submit composes a real email instead of faking a success state. */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (form.name && form.email && form.message) {
-      setSent(true);
-      setForm({ name: '', email: '', message: '' });
-      window.setTimeout(() => setSent(false), 5000);
-    }
+    const subject = encodeURIComponent(`Portfolio inquiry — ${form.name}`);
+    const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
+    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
   };
 
   return (
-    <Sheet id="contact" className="px-6 pb-10 sm:px-10">
-      <SectionHeading
-        eyebrow="Contact"
-        title={<span>Let&apos;s <span className="text-muted">build something</span> worth using.</span>}
-        sub="Have an idea, a project, or an opportunity in mind? I&apos;d love to hear about it."
-      />
+    <Sheet id="contact" className="px-6 pb-16 sm:px-10">
 
-      <div className="mt-6 flex justify-center">
-        <a href="mailto:fraolabmas@gmail.com" className="btn btn-primary">
-          Start a conversation <ArrowRight size={16} />
-        </a>
-      </div>
+      {/* ——— Editorial two-column layout ——— */}
+      <div className="grid gap-14 pt-14 sm:pt-16 lg:grid-cols-12 lg:gap-10">
+        {/* Left — the statement */}
+        <div className="lg:col-span-7">
+          <motion.p {...fadeUp(0)} className="eyebrow">
+            Contact
+          </motion.p>
 
-      <div className="mt-8 grid gap-5 sm:grid-cols-5">
-        <motion.ul
-          variants={staggerParent}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className="overflow-hidden rounded-3xl border border-line bg-canvas/60 sm:col-span-2"
-        >
-          {details.map(({ label, value, href, Icon }) => (
-            <motion.li
-              key={label}
-              variants={staggerItem}
-              className="flex items-center gap-4 border-b border-line p-5 last:border-b-0"
-            >
-              <Icon size={17} className="shrink-0 text-ink" />
-              <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-placeholder">{label}</p>
-                {href ? (
-                  <a href={href} className="mt-0.5 block body-sm font-semibold text-heading dark:text-ink transition-colors hover:text-ink">
-                    {value}
-                  </a>
-                ) : (
-                  <p className="mt-0.5 body-sm font-semibold text-heading dark:text-ink">{value}</p>
-                )}
-              </div>
-            </motion.li>
-          ))}
-          <motion.li variants={staggerItem} className="flex flex-wrap items-center gap-2 p-5">
-            {socials.map(({ label, href, Icon }) => (
-              <a
-                key={label}
-                href={href}
-                aria-label={label}
-                target={href.startsWith('http') ? '_blank' : undefined}
-                rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="grid h-10 w-10 place-items-center rounded-2xl border border-line bg-surface text-muted transition-all duration-200 hover:-translate-y-0.5 hover:text-ink"
-              >
-                <Icon size={15} />
-              </a>
-            ))}
-          </motion.li>
-        </motion.ul>
+          <motion.h2
+            {...fadeUp(0.08)}
+            className="mt-6 max-w-[12ch] font-display text-[clamp(2.6rem,6.5vw,4.75rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-ink"
+          >
+            Let&apos;s build something <span className="text-muted">worth talking about.</span>
+          </motion.h2>
 
-        <motion.form
-          onSubmit={handleSubmit}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: EASE, delay: 0.05 }}
-          className="rounded-3xl border border-line bg-canvas/60 p-5 sm:col-span-3"
-        >
-          <div className="grid gap-6 sm:grid-cols-2">
-            <div className="field-group">
-              <label htmlFor="contact-name" className="field-label">
-                Name
-              </label>
-              <input
-                id="contact-name"
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                placeholder="Your name"
-                className="field"
-              />
-            </div>
-            <div className="field-group">
-              <label htmlFor="contact-email" className="field-label">
-                Email
-              </label>
-              <input
-                id="contact-email"
-                name="email"
-                type="email"
-                value={form.email}
-                onChange={handleChange}
-                placeholder="you@example.com"
-                className="field"
-              />
-            </div>
-          </div>
-          <div className="field-group">
-            <label htmlFor="contact-message" className="field-label">
-              Message
-            </label>
-            <textarea
-              id="contact-message"
-              name="message"
-              rows={4}
-              value={form.message}
-              onChange={handleChange}
-              placeholder="Tell me about your project..."
-              className="field"
+          <motion.p {...fadeUp(0.16)} className="mt-7 max-w-md text-[15px] leading-relaxed text-muted sm:text-base">
+            Whether you have a product in mind, need a hand bringing an idea to life, or just want
+            to talk about building something interesting — my inbox is open. Freelance work,
+            collaborations, internships, good conversations.
+          </motion.p>
+
+          <motion.a
+            {...fadeUp(0.24)}
+            href={`mailto:${EMAIL}`}
+            className="group mt-10 inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-ink"
+          >
+            Start a conversation
+            <ArrowRight
+              size={14}
+              strokeWidth={2.5}
+              className="transition-transform duration-200 group-hover:translate-x-1"
             />
+          </motion.a>
+        </div>
+
+        {/* Right — contact details */}
+        <motion.dl
+          {...fadeUp(0.2)}
+          className="border-t border-line pt-8 lg:col-span-5 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-2"
+        >
+          <div className="border-b border-line pb-6">
+            <dt className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-placeholder">
+              Email
+            </dt>
+            <dd className="mt-2">
+              <a
+                href={`mailto:${EMAIL}`}
+                className="text-lg font-semibold text-ink transition-opacity duration-200 hover:opacity-60 sm:text-xl"
+              >
+                {EMAIL}
+              </a>
+            </dd>
           </div>
-          <button type="submit" className="btn btn-primary mt-2 w-full sm:w-auto">
-            Send message <ArrowRight size={16} />
-          </button>
-          {sent && (
-            <p className="mt-3 flex items-center gap-1.5 text-xs font-medium text-ink">
-              <CheckCircle2 size={14} /> Thanks — I&apos;ll get back to you soon.
-            </p>
-          )}
-        </motion.form>
+
+          <div className="border-b border-line py-6">
+            <dt className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-placeholder">
+              Location
+            </dt>
+            <dd className="mt-2 text-lg font-semibold text-ink sm:text-xl">Addis Ababa, Ethiopia</dd>
+          </div>
+
+          <div className="pt-6">
+            <dt className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-placeholder">
+              Socials
+            </dt>
+            <dd className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+              {socials.map(({ label, href }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-muted underline decoration-line underline-offset-4 transition-colors duration-200 hover:text-ink hover:decoration-ink"
+                >
+                  {label}
+                </a>
+              ))}
+            </dd>
+          </div>
+        </motion.dl>
       </div>
+
+      {/* ——— Minimal form — feels part of the page, not a boxed widget ——— */}
+      <motion.form
+        onSubmit={handleSubmit}
+        initial={{ opacity: 0, y: 18 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.55, ease: EASE, delay: 0.1 }}
+        className="mt-16 grid gap-8 border-t border-line pt-10 sm:grid-cols-2 sm:gap-x-10"
+      >
+        <div>
+          <label
+            htmlFor="contact-name"
+            className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-placeholder"
+          >
+            Your name
+          </label>
+          <input
+            id="contact-name"
+            name="name"
+            required
+            value={form.name}
+            onChange={handleChange}
+            placeholder="What should I call you?"
+            className={`mt-3 ${inputClass}`}
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="contact-email"
+            className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-placeholder"
+          >
+            Your email
+          </label>
+          <input
+            id="contact-email"
+            name="email"
+            type="email"
+            required
+            value={form.email}
+            onChange={handleChange}
+            placeholder="you@example.com"
+            className={`mt-3 ${inputClass}`}
+          />
+        </div>
+        <div className="sm:col-span-2">
+          <label
+            htmlFor="contact-message"
+            className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-placeholder"
+          >
+            Message
+          </label>
+          <textarea
+            id="contact-message"
+            name="message"
+            required
+            rows={3}
+            value={form.message}
+            onChange={handleChange}
+            placeholder="What are we building?"
+            className={`mt-3 resize-none ${inputClass}`}
+          />
+        </div>
+        <div className="sm:col-span-2">
+          <button
+            type="submit"
+            className="group inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-ink transition-opacity duration-200 hover:opacity-60"
+          >
+            Send message
+            <ArrowRight
+              size={14}
+              strokeWidth={2.5}
+              className="transition-transform duration-200 group-hover:translate-x-1"
+            />
+          </button>
+        </div>
+      </motion.form>
     </Sheet>
   );
 }

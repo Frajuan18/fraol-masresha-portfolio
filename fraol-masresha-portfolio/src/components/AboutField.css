@@ -1,0 +1,29 @@
+/* About — continuous upward scroll: tiles rise and loop, re-entering from the bottom blurred edge */
+
+@keyframes scroll-up {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    /* half the doubled list = one seamless loop */
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+/* Mobile marquee — single horizontal line, tiles drift left and loop */
+@keyframes scroll-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    /* half the doubled row = one seamless loop */
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-col,
+  .tech-row {
+    animation: none !important;
+  }
+}

@@ -7,8 +7,9 @@ import logoImg from '../assets/logo.png';
 
 const navLinks = [
   { id: 'about', label: 'About' },
-  { id: 'timeline', label: 'Experience' },
+  { id: 'timeline', label: 'Principles' },
   { id: 'skills', label: 'Skills' },
+  { id: 'experience', label: 'Experience' },
   { id: 'portfolio', label: 'Work' },
   { id: 'contact', label: 'Contact' },
 ];
@@ -37,10 +38,10 @@ export default function Navbar() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
-        className={`fixed z-50 transition-[top,width,border-radius,box-shadow,background-color,backdrop-filter] duration-500 ease-in-out ${
+        className={`fixed z-50 transition-[top,width,border-radius,box-shadow,background-color,border-color,backdrop-filter] duration-500 ease-in-out ${
           scrolled
-            ? 'inset-x-0 top-3 mx-auto w-[calc(100%-1.5rem)] max-w-3xl rounded-full bg-surface/80 shadow-[0_16px_40px_-16px_rgba(0,0,0,0.3)] backdrop-blur-xl sm:w-[calc(100%-3rem)]'
-            : 'inset-x-0 top-0 w-full rounded-none bg-transparent shadow-none backdrop-blur-none'
+            ? 'inset-x-0 top-3 mx-auto w-[calc(100%-1.5rem)] max-w-5xl rounded-full border border-line bg-surface/85 shadow-[0_16px_40px_-16px_rgba(0,0,0,0.3)] backdrop-blur-xl sm:w-[calc(100%-3rem)]'
+            : 'inset-x-0 top-0 w-full rounded-none border-b border-line bg-surface/85 backdrop-blur-xl'
         }`}
       >
         <nav

@@ -1,70 +1,21 @@
 import { motion } from 'framer-motion';
 import { EASE } from '../lib/motion';
-import logoImg from '../assets/logo.png';
-
-const links = [
-  { id: 'about', label: 'About' },
-  { id: 'timeline', label: 'Experience' },
-  { id: 'skills', label: 'Skills' },
-  { id: 'services', label: 'Services' },
-  { id: 'portfolio', label: 'Work' },
-  { id: 'contact', label: 'Contact' },
-];
-
-function scrollTo(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-}
 
 export default function Footer() {
   return (
     <motion.footer
-      initial={{ opacity: 0, y: 30, filter: 'blur(4px)' }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.7, ease: EASE }}
-      className="border-t border-line bg-surface px-6 pb-10 pt-12 text-center"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.4 }}
+      transition={{ duration: 0.6, ease: EASE }}
+      className="border-t border-line bg-surface px-6 py-8 sm:px-10"
     >
-      <motion.img
-        src={logoImg}
-        alt="Fraol Masresha logo"
-        draggable={false}
-        initial={{ scale: 0 }}
-        whileInView={{ scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-        className="mx-auto mb-6 block h-10 w-10 select-none rounded-full border border-line object-cover"
-      />
-
-      <nav aria-label="Footer" className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-        {links.map((link, i) => (
-          <motion.a
-            key={link.id}
-            href={`#${link.id}`}
-            onClick={(e) => {
-              e.preventDefault();
-              scrollTo(link.id);
-            }}
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, ease: EASE, delay: 0.15 + i * 0.05 }}
-            className="body-sm font-medium text-muted transition-colors duration-200 hover:text-ink"
-          >
-            {link.label}
-          </motion.a>
-        ))}
-      </nav>
-
-      <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.5 }}
-        className="mt-5 text-[11px] text-placeholder"
-      >
-        &copy; {new Date().getFullYear()} Fraol Masresha. All rights reserved.
-      </motion.p>
-      <p className="mt-1 text-[11px] text-placeholder">fraolabmas@gmail.com</p>
+      <div className="flex flex-col items-center justify-between gap-2 text-center sm:flex-row sm:text-left">
+        <p className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
+          &copy; {new Date().getFullYear()} Fraol Masresha
+        </p>
+        <p className="text-[11px] text-placeholder">Available for interesting work.</p>
+      </div>
     </motion.footer>
   );
 }
