@@ -35,10 +35,10 @@ export default function Contact() {
   };
 
   return (
-    <Sheet id="contact" className="px-6 pb-16 sm:px-10">
+    <Sheet id="contact" className="px-4 pb-14 sm:px-10 sm:pb-16">
 
       {/* ——— Editorial two-column layout ——— */}
-      <div className="grid gap-14 pt-14 sm:pt-16 lg:grid-cols-12 lg:gap-10">
+      <div className="grid gap-10 pt-10 sm:pt-16 lg:grid-cols-12 lg:gap-10">
         {/* Left — the statement */}
         <div className="lg:col-span-7">
           <motion.p {...fadeUp(0)} className="eyebrow">
@@ -47,12 +47,12 @@ export default function Contact() {
 
           <motion.h2
             {...fadeUp(0.08)}
-            className="mt-6 max-w-[12ch] font-display text-[clamp(2.6rem,6.5vw,4.75rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-ink"
+            className="mt-5 max-w-[12ch] font-display text-[clamp(2rem,8vw,4.75rem)] font-extrabold leading-[1.02] tracking-[-0.03em] text-ink sm:mt-6"
           >
             Let&apos;s build something <span className="text-muted">worth talking about.</span>
           </motion.h2>
 
-          <motion.p {...fadeUp(0.16)} className="mt-7 max-w-md text-[15px] leading-relaxed text-muted sm:text-base">
+          <motion.p {...fadeUp(0.16)} className="mt-5 max-w-md text-[15px] leading-relaxed text-muted sm:mt-7 sm:text-base">
             Whether you have a product in mind, need a hand bringing an idea to life, or just want
             to talk about building something interesting — my inbox is open. Freelance work,
             collaborations, internships, good conversations.
@@ -61,7 +61,7 @@ export default function Contact() {
           <motion.a
             {...fadeUp(0.24)}
             href={`mailto:${EMAIL}`}
-            className="group mt-10 inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-ink"
+            className="group mt-8 inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-ink sm:mt-10"
           >
             Start a conversation
             <ArrowRight
@@ -75,9 +75,9 @@ export default function Contact() {
         {/* Right — contact details */}
         <motion.dl
           {...fadeUp(0.2)}
-          className="border-t border-line pt-8 lg:col-span-5 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-2"
+          className="border-t border-line pt-6 lg:col-span-5 lg:border-l lg:border-t-0 lg:pl-12 lg:pt-2"
         >
-          <div className="border-b border-line pb-6">
+          <div className="border-b border-line pb-5 sm:pb-6">
             <dt className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-placeholder">
               Email
             </dt>
@@ -91,14 +91,14 @@ export default function Contact() {
             </dd>
           </div>
 
-          <div className="border-b border-line py-6">
+          <div className="border-b border-line py-5 sm:py-6">
             <dt className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-placeholder">
               Location
             </dt>
             <dd className="mt-2 text-lg font-semibold text-ink sm:text-xl">Addis Ababa, Ethiopia</dd>
           </div>
 
-          <div className="pt-6">
+          <div className="pt-5 sm:pt-6">
             <dt className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-placeholder">
               Socials
             </dt>
@@ -126,7 +126,7 @@ export default function Contact() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.55, ease: EASE, delay: 0.1 }}
-        className="mt-16 grid gap-8 border-t border-line pt-10 sm:grid-cols-2 sm:gap-x-10"
+        className="mt-12 grid gap-8 border-t border-line pt-8 sm:mt-16 sm:grid-cols-2 sm:gap-x-10 sm:pt-10"
       >
         <div>
           <label

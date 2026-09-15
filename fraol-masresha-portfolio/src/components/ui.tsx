@@ -55,7 +55,7 @@ export function SectionHeading({
   sub?: string;
 }) {
   return (
-    <header className="px-6 pb-2 pt-8 text-center sm:px-10 sm:pt-10">
+    <header className="px-4 pb-2 pt-8 text-center sm:px-6 sm:pt-10 lg:px-10">
       {eyebrow && (
         <motion.p
           initial={{ opacity: 0, y: 10, filter: 'blur(4px)' }}

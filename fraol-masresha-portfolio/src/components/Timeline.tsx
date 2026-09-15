@@ -22,7 +22,7 @@ function PrincipleCard({ principle, index }: { principle: Principle; index: numb
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.55, ease: EASE, delay: (index % 3) * 0.08 }}
-      className="group flex min-h-[240px] flex-col rounded-2xl border border-line p-6 transition-colors duration-300 hover:border-line-strong sm:min-h-[280px] sm:p-8"
+      className="group flex min-h-[210px] flex-col rounded-2xl border border-line p-5 transition-colors duration-300 hover:border-line-strong sm:min-h-[280px] sm:p-8"
     >
       <div className="flex items-start justify-between border-b border-line pb-4">
         <span className="text-[10px] font-bold uppercase tracking-[.2em] text-placeholder">How I build</span>
@@ -30,7 +30,7 @@ function PrincipleCard({ principle, index }: { principle: Principle; index: numb
       </div>
 
       <div className="my-auto py-7">
-        <p className="font-display text-[clamp(1.8rem,3vw,2.6rem)] font-bold leading-[.98] tracking-[-.03em] text-ink">
+        <p className="font-display text-[clamp(1.5rem,3vw,2.6rem)] font-bold leading-[.98] tracking-[-.03em] text-ink">
           {principle.title}
         </p>
       </div>
@@ -45,7 +45,7 @@ function PrincipleCard({ principle, index }: { principle: Principle; index: numb
 
 export default function Timeline() {
   return (
-    <Sheet id="timeline" className="px-6 py-14 sm:px-10 sm:py-20">
+    <Sheet id="timeline" className="px-4 py-14 sm:px-10 sm:py-20">
       <div className="mx-auto max-w-5xl">
         <motion.p
           initial={{ opacity: 0, y: 10 }}
@@ -66,7 +66,7 @@ export default function Timeline() {
           A few principles behind <span className="text-muted">the things I create.</span>
         </motion.h2>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3">
           {principles.map((principle, index) => (
             <PrincipleCard key={principle.number} principle={principle} index={index} />
           ))}

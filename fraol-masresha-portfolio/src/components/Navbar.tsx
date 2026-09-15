@@ -40,8 +40,8 @@ export default function Navbar() {
         transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
         className={`fixed z-50 transition-[top,width,border-radius,box-shadow,background-color,border-color,backdrop-filter] duration-500 ease-in-out ${
           scrolled
-            ? 'inset-x-0 top-3 mx-auto w-[calc(100%-1.5rem)] max-w-5xl rounded-full border border-line bg-surface/85 shadow-[0_16px_40px_-16px_rgba(0,0,0,0.3)] backdrop-blur-xl sm:w-[calc(100%-3rem)]'
-            : 'inset-x-0 top-0 w-full rounded-none border-b border-line bg-surface/85 backdrop-blur-xl'
+            ? 'inset-x-0 top-3 mx-auto w-[calc(100%-1.5rem)] max-w-5xl rounded-full border border-line bg-surface/55 shadow-[0_16px_40px_-16px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:w-[calc(100%-3rem)]'
+            : 'inset-x-0 top-0 w-full rounded-none border-b border-transparent bg-transparent backdrop-blur-none'
         }`}
       >
         <nav
@@ -109,7 +109,7 @@ export default function Navbar() {
                 e.preventDefault();
                 scrollTo('contact');
               }}
-              className="hidden h-9 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-ink px-4 text-[13px] font-bold text-canvas transition-all duration-200 hover:opacity-90 active:opacity-95 sm:inline-flex"
+              className="btn-3d hidden h-9 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-ink px-4 text-[13px] font-bold text-canvas transition-all duration-200 hover:-translate-y-0.5 hover:opacity-95 active:translate-y-0 active:opacity-95 sm:inline-flex"
             >
               Hire Me <ArrowRight size={13} />
             </a>
@@ -165,7 +165,7 @@ export default function Navbar() {
                     scrollTo('contact');
                     setOpen(false);
                   }}
-                  className="flex h-12 items-center justify-center gap-1.5 rounded-xl bg-ink text-sm font-bold text-canvas"
+                  className="btn-3d flex h-12 items-center justify-center gap-1.5 rounded-xl bg-ink text-sm font-bold text-canvas active:translate-y-0.5"
                 >
                   Hire Me <ArrowRight size={14} />
                 </a>

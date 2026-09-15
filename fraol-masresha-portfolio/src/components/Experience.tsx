@@ -84,7 +84,7 @@ function Entry({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6, ease: EASE, delay: index * 0.08 }}
-      className="group relative grid grid-cols-[15px_1fr] gap-x-5 pb-12 last:pb-0 lg:grid-cols-[9rem_15px_1fr]"
+      className="group relative grid grid-cols-[15px_1fr] gap-x-4 pb-9 last:pb-0 sm:gap-x-5 sm:pb-12 lg:grid-cols-[9rem_15px_1fr]"
     >
       {/* Date — left column on desktop */}
       <div
@@ -197,7 +197,7 @@ export default function Experience() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <Sheet id="experience" className="px-6 py-14 sm:px-10 sm:py-20">
+    <Sheet id="experience" className="px-4 py-14 sm:px-10 sm:py-20">
       <SectionHeading
         eyebrow="Experience"
         title={
@@ -208,7 +208,7 @@ export default function Experience() {
         sub="A timeline of the work, projects, and experiences that shaped how I build."
       />
 
-      <div className="mx-auto mt-12 max-w-3xl sm:mt-16">
+      <div className="mx-auto mt-10 max-w-3xl sm:mt-16">
         {/* The continuous timeline line — runs through the dot column */}
         <div className="relative">
           <div
@@ -227,7 +227,7 @@ export default function Experience() {
         </div>
 
         {/* Quiet footnote — studies, from the About section */}
-        <div className="mt-12 flex items-center gap-3 border-t border-line pt-6">
+        <div className="mt-10 flex items-center gap-3 border-t border-line pt-5 sm:mt-12 sm:pt-6">
           <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
           <p className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-muted">
             3rd year — BSc Information Systems, Addis Ababa University

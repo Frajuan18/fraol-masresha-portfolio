@@ -27,38 +27,39 @@ import './AboutField.css';
 
 type IconProps = { size?: number; style?: CSSProperties; className?: string; 'aria-hidden'?: boolean | 'true' | 'false' };
 type IconComponent = ComponentType<IconProps>;
-type Tech = { name: string; Icon: IconComponent; bg: string; color: string };
+type Tech = { name: string; Icon: IconComponent; color: string };
 type Column = { duration: number; delay: number; items: Tech[] };
 
-/* Skill pools — shared by the categorized index and the floating tile field */
+/* Skill pools — shared by the categorized index and the floating tile field.
+   `color` is the brand hue used to tint each tile. */
 const FRONTEND: Tech[] = [
-  { name: 'React', Icon: SiReact, bg: '#000000', color: '#61DAFB' },
-  { name: 'Next.js', Icon: SiNextdotjs, bg: '#0F172A', color: '#FFFFFF' },
-  { name: 'TypeScript', Icon: SiTypescript, bg: '#3178C6', color: '#FFFFFF' },
-  { name: 'JavaScript', Icon: SiJavascript, bg: '#F7DF1E', color: '#000000' },
-  { name: 'Tailwind CSS', Icon: SiTailwindcss, bg: '#06B6D4', color: '#FFFFFF' },
-  { name: 'Three.js', Icon: SiThreedotjs, bg: '#000000', color: '#FFFFFF' },
+  { name: 'React', Icon: SiReact, color: '#61DAFB' },
+  { name: 'Next.js', Icon: SiNextdotjs, color: '#8B5CF6' },
+  { name: 'TypeScript', Icon: SiTypescript, color: '#3B82F6' },
+  { name: 'JavaScript', Icon: SiJavascript, color: '#EAB308' },
+  { name: 'Tailwind CSS', Icon: SiTailwindcss, color: '#06B6D4' },
+  { name: 'Three.js', Icon: SiThreedotjs, color: '#F472B6' },
 ];
 
 const BACKEND_CORE: Tech[] = [
-  { name: 'Node.js', Icon: SiNodedotjs, bg: '#339933', color: '#FFFFFF' },
-  { name: 'Express', Icon: SiExpress, bg: '#000000', color: '#FFFFFF' },
-  { name: 'Python', Icon: SiPython, bg: '#3776AB', color: '#FFD43B' },
+  { name: 'Node.js', Icon: SiNodedotjs, color: '#5FA04E' },
+  { name: 'Express', Icon: SiExpress, color: '#F97316' },
+  { name: 'Python', Icon: SiPython, color: '#3776AB' },
 ];
 
 const DATABASE: Tech[] = [
-  { name: 'MongoDB', Icon: SiMongodb, bg: '#000000', color: '#47A248' },
-  { name: 'PostgreSQL', Icon: SiPostgresql, bg: '#4169E1', color: '#FFFFFF' },
-  { name: 'Firebase', Icon: SiFirebase, bg: '#FFCA28', color: '#000000' },
+  { name: 'MongoDB', Icon: SiMongodb, color: '#47A248' },
+  { name: 'PostgreSQL', Icon: SiPostgresql, color: '#4169E1' },
+  { name: 'Firebase', Icon: SiFirebase, color: '#F59E0B' },
 ];
 
 const TOOLS: Tech[] = [
-  { name: 'Git', Icon: SiGit, bg: '#F05032', color: '#FFFFFF' },
-  { name: 'GitHub', Icon: SiGithub, bg: '#181717', color: '#FFFFFF' },
-  { name: 'Docker', Icon: SiDocker, bg: '#2496ED', color: '#FFFFFF' },
-  { name: 'Figma', Icon: SiFigma, bg: '#1E1E1E', color: '#A259FF' },
-  { name: 'Vercel', Icon: SiVercel, bg: '#000000', color: '#FFFFFF' },
-  { name: 'Postman', Icon: SiPostman, bg: '#FF6C37', color: '#FFFFFF' },
+  { name: 'Git', Icon: SiGit, color: '#F05032' },
+  { name: 'GitHub', Icon: SiGithub, color: '#E879F9' },
+  { name: 'Docker', Icon: SiDocker, color: '#2496ED' },
+  { name: 'Figma', Icon: SiFigma, color: '#A259FF' },
+  { name: 'Vercel', Icon: SiVercel, color: '#6366F1' },
+  { name: 'Postman', Icon: SiPostman, color: '#FF6C37' },
 ];
 
 /* Conveyor columns — speeds and phase offsets differ so no two columns move alike */
@@ -78,21 +79,39 @@ const TILE_SHADOW =
 const TILE_SHADOW_HOVER =
   '0 18px 34px -8px rgba(0,0,0,0.4), 0 8px 14px -4px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.15)';
 
+/* Brand hex → rgba, so each tile carries its own hue at a controlled alpha */
+function tint(hex: string, alpha: number) {
+  const raw = hex.replace('#', '');
+  const full = raw.length === 3 ? raw.split('').map((c) => c + c).join('') : raw;
+  const n = Number.parseInt(full, 16);
+  return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
+}
+
+/* Every tile is tinted with its own brand colour — soft wash at rest, richer on hover */
+function tileStyle(color: string, strong: boolean): CSSProperties {
+  return {
+    backgroundColor: tint(color, strong ? 0.2 : 0.1),
+    borderColor: tint(color, strong ? 0.55 : 0.3),
+    color,
+    boxShadow: strong ? TILE_SHADOW_HOVER : TILE_SHADOW,
+  };
+}
+
 function TechTile({ tech }: { tech: Tech }) {
   return (
     <div className="w-full shrink-0">
       <div
-        className="flex aspect-square w-full items-center justify-center rounded-2xl transition-shadow duration-300 ease-out"
-        style={{ backgroundColor: tech.bg, boxShadow: TILE_SHADOW }}
+        className="flex aspect-square w-full items-center justify-center rounded-2xl border transition-[box-shadow,border-color,background-color] duration-300 ease-out"
+        style={tileStyle(tech.color, false)}
         onMouseEnter={(e) => {
-          e.currentTarget.style.boxShadow = TILE_SHADOW_HOVER;
+          Object.assign(e.currentTarget.style, tileStyle(tech.color, true));
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.boxShadow = TILE_SHADOW;
+          Object.assign(e.currentTarget.style, tileStyle(tech.color, false));
         }}
       >
-        <tech.Icon size={28} style={{ color: tech.color }} className="hidden sm:block" aria-hidden="true" />
-        <tech.Icon size={20} style={{ color: tech.color }} className="sm:hidden" aria-hidden="true" />
+        <tech.Icon size={28} className="hidden sm:block" aria-hidden="true" />
+        <tech.Icon size={20} className="sm:hidden" aria-hidden="true" />
       </div>
     </div>
   );
@@ -184,11 +203,11 @@ export default function Skills() {
   const drift = useTransform(smoothVelocity, [-2400, 0, 2400], [18, 0, -18]);
 
   return (
-    <Sheet id="skills" className="px-6 sm:px-10">
-      <div className="mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col justify-center py-16 sm:py-20">
+    <Sheet id="skills" className="px-4 sm:px-10">
+      <div className="mx-auto flex min-h-[100svh] w-full max-w-6xl flex-col justify-center py-14 sm:py-20">
         <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-10">
           {/* LEFT — skills introduction (≈60%) */}
-          <div className="lg:col-span-7">
+          <div className="min-w-0 lg:col-span-7">
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -204,7 +223,7 @@ export default function Skills() {
               whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               viewport={{ once: true }}
               transition={{ duration: 0.65, ease: EASE, delay: 0.08 }}
-              className="mt-5 text-[2.75rem] font-extrabold leading-[0.98] tracking-[-0.03em] text-ink sm:text-6xl lg:text-[4.25rem]"
+              className="mt-5 text-[clamp(2.1rem,8vw,4.25rem)] font-extrabold leading-[0.98] tracking-[-0.03em] text-ink"
             >
               Fluent across
               <br />
@@ -216,7 +235,7 @@ export default function Skills() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: EASE, delay: 0.16 }}
-              className="mt-6 max-w-xl text-[15px] leading-relaxed text-muted sm:text-base"
+              className="mt-6 max-w-[34rem] text-[15px] leading-relaxed text-muted [text-wrap:pretty] sm:text-base"
             >
               From pixel-perfect React interfaces to Express APIs and PostgreSQL schemas — I work
               comfortably across every layer of a product, picking the right tool for the job
@@ -228,7 +247,7 @@ export default function Skills() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: EASE, delay: 0.22 }}
-              className="mt-4 max-w-xl text-[15px] leading-relaxed text-muted sm:text-base"
+              className="mt-4 max-w-[34rem] text-[15px] leading-relaxed text-muted [text-wrap:pretty] sm:text-base"
             >
               Design and engineering aren&apos;t separate steps to me. The same care that shapes a
               component&apos;s hover state shapes an endpoint&apos;s response — clean, predictable,
@@ -253,7 +272,7 @@ export default function Skills() {
           </div>
 
           {/* RIGHT — vertical conveyor field (≈40%) */}
-          <div className="lg:col-span-5">
+          <div className="min-w-0 lg:col-span-5">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}

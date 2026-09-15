@@ -169,7 +169,7 @@ export default function Portfolio() {
   };
 
   return (
-    <Sheet id="portfolio" className="px-6 pb-10 sm:px-10">
+    <Sheet id="portfolio" className="px-4 pb-10 sm:px-10">
       <SectionHeading
         eyebrow="Selected Work"
         title={<span>A selection of things <span className="text-muted">I&apos;ve built.</span></span>}
@@ -279,7 +279,7 @@ export default function Portfolio() {
                 href={selected.link}
                 target={selected.link.startsWith('http') ? '_blank' : undefined}
                 rel={selected.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="inline-flex items-center gap-2 self-start rounded-full bg-ink px-5 py-2.5 text-xs font-semibold text-canvas transition-opacity duration-200 hover:opacity-85"
+                className="btn-3d inline-flex items-center gap-2 self-start rounded-full bg-ink px-5 py-2.5 text-xs font-semibold text-canvas transition-opacity duration-200 hover:opacity-85"
               >
                 Visit Project
                 <ArrowUpRight size={13} />
@@ -300,7 +300,7 @@ export default function Portfolio() {
                 <div className="aspect-[16/10] overflow-hidden border border-line bg-surface">
                   <ScreenBody project={p} />
                 </div>
-                <div className="pt-4">
+                <div className="pt-3 sm:pt-4">
                   <div className="flex items-baseline justify-between gap-3">
                     <h3 className="font-display text-lg font-bold tracking-tight text-ink">{p.title}</h3>
                     <span className="font-mono text-xs text-placeholder">{p.year}</span>
@@ -326,7 +326,7 @@ export default function Portfolio() {
                       href={p.link}
                       target={p.link.startsWith('http') ? '_blank' : undefined}
                       rel={p.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="mt-4 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-xs font-semibold text-canvas transition-opacity duration-200 hover:opacity-85"
+                      className="btn-3d mt-4 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 text-xs font-semibold text-canvas transition-opacity duration-200 hover:opacity-85"
                     >
                       Visit Project
                       <ArrowUpRight size={13} />

@@ -29,7 +29,7 @@ export default function Hero() {
   return (
     <Sheet
       id="home"
-      className="relative overflow-hidden px-6 pb-16 pt-16 sm:px-10 sm:pb-20 sm:pt-24"
+      className="relative overflow-hidden px-4 pb-12 pt-24 sm:px-10 sm:pb-20 sm:pt-32"
     >
       {/* Background — themed photo (light: sky photo / dark: clouds) */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
@@ -86,20 +86,20 @@ export default function Hero() {
           </motion.div>
 
           {/* Title */}
-          <motion.h1 variants={staggerItem} className="mt-6 h3 text-ink">
+          <motion.h1 variants={staggerItem} className="mt-5 h3 text-ink sm:mt-6">
             Designing software that works{' '}
             <span className="text-muted">effortlessly.</span>
           </motion.h1>
 
-          <motion.p variants={staggerItem} className="mx-auto mt-5 max-w-xl body-sm text-muted">
+          <motion.p variants={staggerItem} className="mx-auto mt-4 max-w-xl body-sm text-muted sm:mt-5">
             I&apos;m Fraol, a full-stack developer. I collaborate with companies
             to craft digital interfaces and build fast, scalable web
             applications — focused on clean code and great user experience.
           </motion.p>
 
           {/* Buttons */}
-          <motion.div variants={staggerItem} className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <a href="mailto:fraolabmas@gmail.com" className="btn-primary btn">
+          <motion.div variants={staggerItem} className="mt-6 flex flex-col items-center gap-3 sm:mt-8 sm:flex-row sm:justify-center">
+            <a href="mailto:fraolabmas@gmail.com" className="btn btn-primary shadow-none">
               Start a conversation <ArrowRight size={16} />
             </a>
             <a
@@ -108,7 +108,7 @@ export default function Hero() {
                 e.preventDefault();
                 document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="btn-secondary btn"
+              className="btn btn-secondary"
             >
               View selected work
             </a>
@@ -117,10 +117,10 @@ export default function Hero() {
           {/* Stats */}
           <motion.div
             variants={staggerItem}
-            className="mx-auto mt-8 grid w-full max-w-md grid-cols-3 divide-x divide-line rounded-2xl border border-line bg-canvas/60"
+            className="mx-auto mt-6 grid w-full max-w-md grid-cols-3 divide-x divide-line rounded-2xl border border-line bg-canvas/60 sm:mt-8"
           >
             {stats.map(({ value, label }) => (
-              <div key={label} className="px-2 py-4 text-center">
+              <div key={label} className="px-2 py-3 text-center sm:py-4">
                 <p className="text-lg font-extrabold tracking-tight text-ink">{value}</p>
                 <p className="text-[11px] font-medium text-muted">{label}</p>
               </div>
@@ -128,7 +128,7 @@ export default function Hero() {
           </motion.div>
 
           {/* Socials */}
-          <motion.ul variants={staggerItem} className="mt-8 flex items-center justify-center gap-2">
+          <motion.ul variants={staggerItem} className="mt-6 flex items-center justify-center gap-2 sm:mt-8">
             {socials.map(({ label, href, Icon }) => (
               <li key={label}>
                 <a

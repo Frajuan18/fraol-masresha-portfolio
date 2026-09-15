@@ -44,10 +44,10 @@ const services: {
 
 export default function About() {
   return (
-    <Sheet id="about" className="px-6 sm:px-10">
-      <div className="mx-auto w-full max-w-6xl py-20 sm:py-28">
+    <Sheet id="about" className="px-4 sm:px-10">
+      <div className="mx-auto w-full max-w-6xl py-14 sm:py-24">
         {/* Top — portrait left, oversized introduction right */}
-        <div className="grid gap-12 lg:grid-cols-12">
+        <div className="grid gap-8 sm:gap-12 lg:grid-cols-12">
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -55,7 +55,7 @@ export default function About() {
             transition={{ duration: 0.7, ease: EASE }}
             className="lg:col-span-5"
           >
-            <div className="group overflow-hidden rounded-xl border border-line">
+            <div className="group mx-auto w-full max-w-[300px] overflow-hidden rounded-xl border border-line sm:max-w-sm lg:max-w-none">
               <img
                 src={profileImg}
                 alt="Portrait of Fraol Masresha"
@@ -79,7 +79,7 @@ export default function About() {
               01 — Introduction
             </motion.p>
 
-            <h2 className="mt-6 font-display text-[clamp(3rem,10vw,7rem)] font-extrabold uppercase leading-[0.92] tracking-[-0.03em] text-ink">
+            <h2 className="mt-5 font-display text-[clamp(2.25rem,10vw,7rem)] font-extrabold uppercase leading-[0.92] tracking-[-0.03em] text-ink sm:mt-6">
               <HeadlineLine delay={0.05}>Hey — I&apos;m</HeadlineLine>
               <HeadlineLine delay={0.14}>Fraol</HeadlineLine>
               <HeadlineLine delay={0.23}>
@@ -94,12 +94,12 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: EASE, delay: 0.48 }}
             >
-              <span className="mt-10 inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-ink">
+              <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-ink sm:mt-10">
                 About me
               </span>
 
               {/* Education — expressed with icons */}
-              <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-muted">
+              <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-muted sm:mt-5">
                 <span className="flex items-center gap-2">
                   <GraduationCap size={15} className="text-ink" />
                   Addis Ababa University
@@ -114,13 +114,13 @@ export default function About() {
                 </span>
               </div>
 
-              <p className="mt-6 text-lg leading-relaxed text-ink sm:text-xl">
+              <p className="mt-5 text-base leading-relaxed text-ink sm:mt-6 sm:text-xl">
                 I&apos;m a full-stack developer who cares about the space between{' '}
                 <span className="font-semibold">great engineering</span> and{' '}
                 <span className="font-semibold">great design</span> — turning ideas into products
                 that feel simple, intentional, and genuinely good to use.
               </p>
-              <p className="mt-5 text-[15px] leading-relaxed text-muted sm:text-base">
+              <p className="mt-4 text-[15px] leading-relaxed text-muted sm:mt-5 sm:text-base">
                 My work covers the whole journey: shaping the interface, building the frontend
                 experience, architecting the backend behind it, and refining the details that make
                 something feel finished. Every decision is measured against how real people will
@@ -133,7 +133,7 @@ export default function About() {
                   e.preventDefault();
                   document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="group mt-8 inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-ink underline decoration-line underline-offset-8 transition-colors duration-200 hover:decoration-ink"
+                className="group mt-6 inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-ink underline decoration-line underline-offset-8 transition-colors duration-200 hover:decoration-ink sm:mt-8"
               >
                 See the tools I build with
                 <ArrowUpRight
@@ -154,7 +154,7 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, ease: EASE, delay: 0.55 }}
-                className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line pt-5 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-muted"
+                className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line pt-5 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-muted sm:mt-10"
               >
               <span className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
@@ -175,13 +175,13 @@ export default function About() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          className="mt-12 grid gap-4 sm:mt-16 sm:grid-cols-2 lg:grid-cols-4"
         >
           {services.map(({ title, description, scope, Icon }) => (
             <motion.li
               key={title}
               variants={staggerItem}
-              className="group flex flex-col rounded-2xl border border-line bg-canvas/60 p-5 transition-colors duration-200 hover:border-line-strong"
+              className="group flex flex-col rounded-2xl border border-line bg-canvas/60 p-4 transition-colors duration-200 hover:border-line-strong sm:p-5"
             >
               <div className="flex items-start justify-between">
                 <IconTile>
@@ -193,7 +193,7 @@ export default function About() {
                   aria-hidden="true"
                 />
               </div>
-              <p className="mt-5 body-sm font-semibold text-heading dark:text-ink">{title}</p>
+              <p className="mt-4 body-sm font-semibold text-heading dark:text-ink sm:mt-5">{title}</p>
               <p className="mt-1.5 text-xs leading-relaxed text-muted">{description}</p>
               <p className="mt-auto pt-4 text-[11px] font-medium text-placeholder">{scope.join(' · ')}</p>
             </motion.li>
