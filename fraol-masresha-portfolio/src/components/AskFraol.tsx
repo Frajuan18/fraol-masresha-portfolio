@@ -257,9 +257,7 @@ function getSpeechRecognition(): SpeechRecognitionCtor | null {
 
 export default function AskFraol() {
   const [open, setOpen] = useState(false);
-  /* Two-stage open: the logo button first stretches into a composer, then the panel rises */
-  const [expanding, setExpanding] = useState(false);
-  const [composerWidth, setComposerWidth] = useState(48);
+  const [showPanel, setShowPanel] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     { role: 'assistant', content: GREETING },
   ]);
@@ -272,44 +270,17 @@ export default function AskFraol() {
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
-  const expandTimer = useRef<number | null>(null);
 
-  /* Collapsed = a round 48px button. Stretched, the composer spans the phone
-     viewport edge-to-edge and settles at a fixed bar width on desktop. */
-  useEffect(() => {
-    const measure = () => {
-      const w = window.innerWidth;
-      setComposerWidth(w >= 640 ? 340 : Math.max(200, w - 32));
-    };
-    measure();
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
-  }, []);
-
-  const clearExpandTimer = useCallback(() => {
-    if (expandTimer.current !== null) {
-      window.clearTimeout(expandTimer.current);
-      expandTimer.current = null;
-    }
-  }, []);
-
-  /* Click — the logo button grows sideways into the input bar, then (once the
-     stretch settles) the chat panel rises vertically out of the same corner. */
-  const openChat = useCallback(() => {
-    if (open || expanding) return;
-    setExpanding(true);
-    clearExpandTimer();
-    expandTimer.current = window.setTimeout(() => setOpen(true), 520);
-  }, [open, expanding, clearExpandTimer]);
+      /* The pill below is the input itself — focusing it or pressing the arrow
+     extends the chat section vertically out of it. */
+  const openChat = useCallback(() => setOpen(true), []);
 
   const closeChat = useCallback(() => {
-    clearExpandTimer();
     setOpen(false);
-    setExpanding(false);
-  }, [clearExpandTimer]);
-
-  // Never leave a pending expand timer behind
-  useEffect(() => clearExpandTimer, [clearExpandTimer]);
+    setShowPanel(false);
+    // Drop focus so the mobile keyboard hides and the next focus re-extends the panel
+    inputRef.current?.blur();
+  }, []);
 
   // Auto-scroll to the newest message
   useEffect(() => {
@@ -327,12 +298,20 @@ export default function AskFraol() {
     return () => window.removeEventListener('keydown', onKey);
   }, [open, closeChat]);
 
-  // Focus the composer once the panel has finished expanding — desktop only,
-  // so the mobile keyboard doesn't jump up over the full-height sheet.
+      // Focus the pill when the panel opens — desktop only, so the mobile
+  // keyboard doesn't jump up uninvited.
   useEffect(() => {
     if (!open) return;
     if (!window.matchMedia('(min-width: 640px)').matches) return;
-    const t = setTimeout(() => inputRef.current?.focus(), 380);
+    const t = setTimeout(() => inputRef.current?.focus(), 250);
+    return () => clearTimeout(t);
+  }, [open]);
+
+  // Let the input settle into its centered position before extending the panel.
+  useEffect(() => {
+    if (!open) return;
+
+    const t = setTimeout(() => setShowPanel(true), 480);
     return () => clearTimeout(t);
   }, [open]);
 
@@ -348,9 +327,12 @@ export default function AskFraol() {
     setCopied(index);
   };
 
-  const send = async (text: string) => {
+      const send = async (text: string) => {
     const value = text.trim();
     if (!value || loading) return;
+
+    // Sending from the collapsed pill extends the chat section
+    setOpen(true);
 
     const nextHistory: ChatMessage[] = [...messages, { role: 'user', content: value }];
     setMessages(nextHistory);
@@ -424,95 +406,71 @@ export default function AskFraol() {
       }
     };
 
-    setInput('');
+        setInput('');
     setError(null);
     try {
       rec.start();
       setListening(true);
+      // Make the "Listening…" state and any errors visible
+      openChat();
     } catch {
       setListening(false);
     }
   };
 
+    /* Anchored stack — the pill is the resting input; the chat section extends
+     vertically out of it. */
   return (
-
-    <>
-      {/* Launcher — the assistant logo alone. Clicking it stretches the button
-          sideways into a composer bar, then the chat panel rises out of it. */}
-      <AnimatePresence>
+    <motion.div
+      layout
+      transition={{ layout: { duration: 0.55, ease: EASE } }}
+      className={`fixed z-[70] flex flex-col ${
+        open
+          ? 'inset-x-3 bottom-3 sm:bottom-6 sm:left-1/2 sm:right-auto sm:w-[min(560px,calc(100vw-3rem))] sm:-translate-x-1/2'
+          : 'bottom-3 right-3 sm:bottom-6 sm:right-6'
+      }`}
+    >
+      <AnimatePresence initial={false} mode="wait">
         {!open && (
           <motion.button
+            key="chat-launcher"
             type="button"
             onClick={openChat}
-            initial={{ opacity: 0, y: 24, scale: 0.9, width: 48 }}
-            animate={{
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              width: expanding ? composerWidth : 48,
-            }}
-            exit={{ opacity: 0, y: 14, scale: 0.9, transition: { duration: 0.2, ease: EASE } }}
-            transition={{
-              opacity: { duration: 0.5, ease: EASE, delay: 0.6 },
-              y: { duration: 0.5, ease: EASE, delay: 0.6 },
-              scale: { duration: 0.5, ease: EASE, delay: 0.6 },
-              /* Stage 1 — the horizontal stretch into the input bar */
-              width: { duration: 0.45, ease: EASE },
-            }}
-            whileHover={{ scale: 1.03, y: -2 }}
-            whileTap={{ scale: 0.96, transition: { duration: 0.12, ease: EASE } }}
-            aria-label={`Ask ${ASSISTANT_NAME} anything about Fraol`}
-            aria-expanded={open}
-            className="fixed bottom-5 right-4 z-50 flex h-12 items-center gap-2.5 overflow-hidden rounded-full border border-line bg-surface/85 p-1.5 text-left shadow-[0_18px_40px_-18px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-colors duration-200 hover:border-line-strong sm:bottom-6 sm:right-6"
+            initial={{ opacity: 0, scale: 0.7, y: 12 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.7, y: 8 }}
+            transition={{ duration: 0.35, ease: EASE }}
+            aria-label={`Open chat with ${ASSISTANT_NAME}`}
+            className="relative grid h-14 w-14 place-items-center rounded-full border border-line bg-surface shadow-[0_18px_40px_-18px_rgba(0,0,0,0.45)] transition-transform duration-200 hover:scale-105 hover:border-line-strong"
           >
-            <span className="relative shrink-0">
-              <img
-                src={chatLogo}
-                alt=""
-                draggable={false}
-                className="h-8 w-8 select-none rounded-full border border-line object-cover"
-              />
-              <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-canvas bg-emerald-500" />
-            </span>
-
-            {/* The composer surface that reveals itself as the bar stretches */}
-            <motion.span
-              animate={{ opacity: expanding ? 1 : 0, x: expanding ? 0 : 10 }}
-              transition={{ duration: 0.28, ease: EASE, delay: expanding ? 0.16 : 0 }}
-              className="min-w-0 flex-1 truncate whitespace-nowrap text-[13px] font-medium text-placeholder"
-            >
-              Ask {ASSISTANT_NAME} anything…
-            </motion.span>
-
-            <motion.span
-              animate={{ opacity: expanding ? 1 : 0, x: expanding ? 0 : 16 }}
-              transition={{ duration: 0.28, ease: EASE, delay: expanding ? 0.2 : 0 }}
-              className="mr-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-ink text-canvas"
-            >
-              <ArrowUp size={17} />
-            </motion.span>
+            <img
+              src={chatLogo}
+              alt=""
+              draggable={false}
+              className="h-11 w-11 select-none rounded-full border border-line object-cover"
+            />
+            <span className="absolute bottom-1 right-1 h-3 w-3 rounded-full border-2 border-surface bg-emerald-500" />
           </motion.button>
         )}
       </AnimatePresence>
 
-
-      {/* Chat panel */}
-      <AnimatePresence>
-        {open && (
+      {/* Vertical extension — grows upward out of the input pill */}
+      <AnimatePresence initial={false}>
+        {open && showPanel && (
           <motion.div
-            initial={{ opacity: 0, scaleX: 0.6, scaleY: 0.3, x: '36%', filter: 'blur(8px)' }}
-            animate={{ opacity: 1, scaleX: 1, scaleY: 1, x: 0, filter: 'blur(0px)' }}
+            initial={{ height: 0, opacity: 0, scaleY: 0.9, y: 12, filter: 'blur(6px)' }}
+            animate={{ height: 'auto', opacity: 1, scaleY: 1, y: 0, filter: 'blur(0px)' }}
             exit={{
+              height: 0,
               opacity: 0,
-              scaleX: 0.6,
-              scaleY: 0.3,
-              x: '36%',
+              scaleY: 0.94,
+              y: 8,
               filter: 'blur(6px)',
-              transition: { duration: 0.32, ease: EASE },
+              transition: { duration: 0.3, ease: EASE },
             }}
-            transition={{ duration: 0.6, ease: EASE }}
-            style={{ transformOrigin: '100% 100%' }}
-            className="fixed inset-x-0 bottom-0 z-[70] mx-auto flex h-[100svh] w-full flex-col overflow-hidden border border-line bg-surface shadow-[0_24px_64px_-16px_rgba(0,0,0,0.45)] sm:inset-x-4 sm:bottom-4 sm:h-[50vh] sm:max-h-[calc(100svh-2rem)] sm:max-w-2xl sm:rounded-3xl"
+            transition={{ duration: 0.55, ease: EASE }}
+            style={{ transformOrigin: 'center bottom' }}
+            className="overflow-hidden rounded-t-3xl rounded-b-xl border border-line border-b-0 bg-surface shadow-[0_24px_64px_-16px_rgba(0,0,0,0.45)]"
             role="dialog"
             aria-label={`Ask ${ASSISTANT_NAME} — Fraol's AI assistant`}
           >
@@ -544,7 +502,7 @@ export default function AskFraol() {
             </div>
 
             {/* Messages */}
-            <div ref={listRef} className="chat-scroll flex-1 space-y-4 overflow-y-auto px-4 py-4">
+                        <div ref={listRef} className="chat-scroll h-[min(58svh,450px)] space-y-4 overflow-y-auto px-4 py-4">
               {messages.map((msg, i) => (
                 <div
                   key={i}
@@ -624,54 +582,75 @@ export default function AskFraol() {
               )}
             </div>
 
-            {/* Composer */}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                void send(input);
-              }}
-              className="border-t border-line bg-canvas/60 p-3"
-            >
-              <div className="flex items-end gap-2 rounded-2xl border border-line bg-surface p-2">
-                <input
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder={listening ? 'Listening…' : `Ask ${ASSISTANT_NAME}…`}
-                  aria-label="Your message"
-                  className="min-w-0 flex-1 bg-transparent px-2 py-1.5 text-[13px] text-ink outline-none placeholder:text-placeholder"
-                />
-                {voiceSupported && (
-                  <button
-                    type="button"
-                    onClick={toggleListening}
-                    disabled={loading}
-                    aria-label={listening ? 'Stop voice input' : 'Start voice input'}
-                    className={`relative grid h-9 w-9 shrink-0 place-items-center rounded-xl border transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-30 ${
-                      listening
-                        ? 'border-transparent bg-ink text-canvas'
-                        : 'border-line bg-canvas/60 text-muted hover:text-ink'
-                    }`}
-                  >
-                    {listening && (
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-xl bg-ink opacity-20" />
-                    )}
-                    <Mic size={16} className="relative" />
-                  </button>
-                )}
-                <button
-                  type="submit"
-                  disabled={!input.trim() || loading}
-                  aria-label="Send message"
-                  className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-ink text-canvas transition-opacity duration-200 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-30"
-                >
-                  <ArrowUp size={16} />
-                </button>
-              </div>
-            </form>
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+
+      {/* The input pill — the resting state from the design. Focusing it or
+          pressing the arrow extends the chat section vertically above it. */}
+      {open && (
+      <motion.form
+        initial={{ opacity: 0, y: 10, scale: 0.94 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.5, ease: EASE }}
+        onSubmit={(e) => {
+          e.preventDefault();
+          // Empty submit = the arrow simply extends the chat section
+          if (!input.trim()) openChat();
+          else void send(input);
+        }}
+        className="mt-2.5 flex h-16 items-center gap-2.5 rounded-full border border-line bg-surface/95 p-2 shadow-[0_18px_40px_-18px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-colors duration-200 hover:border-line-strong"
+      >
+        <span className="relative ml-0.5 shrink-0">
+          <img
+            src={chatLogo}
+            alt=""
+            draggable={false}
+            className="h-10 w-10 select-none rounded-full border border-line object-cover"
+          />
+          <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-canvas bg-emerald-500" />
+        </span>
+
+        <input
+          ref={inputRef}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onFocus={openChat}
+          placeholder={listening ? 'Listening…' : `Ask ${ASSISTANT_NAME} anything…`}
+          aria-label={`Ask ${ASSISTANT_NAME} anything about Fraol`}
+          aria-expanded={open}
+          autoComplete="off"
+          className="min-w-0 flex-1 bg-transparent px-1 py-1.5 text-[13px] text-ink outline-none placeholder:text-placeholder"
+        />
+
+        {voiceSupported && (
+          <button
+            type="button"
+            onClick={toggleListening}
+            disabled={loading}
+            aria-label={listening ? 'Stop voice input' : 'Start voice input'}
+            className={`relative grid h-9 w-9 shrink-0 place-items-center rounded-full transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-30 ${
+              listening ? 'bg-ink text-canvas' : 'text-muted hover:text-ink'
+            }`}
+          >
+            {listening && (
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ink opacity-20" />
+            )}
+            <Mic size={16} className="relative" />
+          </button>
+        )}
+
+        <button
+          type="submit"
+          disabled={loading}
+          aria-label={input.trim() ? 'Send message' : `Open chat with ${ASSISTANT_NAME}`}
+          className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-ink text-canvas transition-all duration-200 hover:scale-105 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100"
+        >
+          <ArrowUp size={17} />
+        </button>
+      </motion.form>
+      )}
+    </motion.div>
   );
 }
 
